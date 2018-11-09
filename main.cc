@@ -1,13 +1,71 @@
 #include <entt/entt.hpp>
+#include <sdl/include/SDL.h>
 #include "components/position.h"
+#include <stdio.h>
+#include "window/window.h"
 #include <cstdint>
+#include <iostream>
 
-int main()
+using namespace std;
+
+int main(int argc, char* argv[]) //this is necessary for SDL
 {
+
     entt::registry entityRegistry;
-    std::uint64_t dt = 16;
+    std::uint64_t dt = 16; //delta time?
 
     auto entity = entityRegistry.create();
-
     entityRegistry.assign<Position>(entity, 1.f, 1.f);
+
+
+
+    Window d_window;
+    d_window.createWindow("my game window",
+                          SDL_WINDOWPOS_UNDEFINED,
+                          SDL_WINDOWPOS_UNDEFINED,
+                          640,
+                          480,
+                          SDL_WINDOW_OPENGL);
+
+    
+    // //temporary!
+    // SDL_Surface *temp = SDL_LoadBMP("textures/marbles.bmp");
+    // if (temp == nullptr)
+    //     SDL_Log("temp is nullptr");
+    
+    // SDL_Surface *background = SDL_ConvertSurfaceFormat(temp,SDL_PIXELFORMAT_UNKNOWN, 0);
+
+    // SDL_FreeSurface(temp);
+
+    SDL_Event event;
+
+    int gameover = 0;
+
+    while (!gameover)
+    {
+        if (SDL_PollEvent(&event))
+        {
+            switch (event.type)
+            {
+                case SDL_QUIT:
+                    gameover = 1;
+                    break;
+                case SDL_KEYDOWN:
+                    switch (event.key.keysym.sym)
+                    {
+                        case SDLK_ESCAPE:
+                            gameover =1;
+                            break;
+                    }
+                    break;
+            }
+        }
+    }
+
+    // SDL_Surface *screen = SDL_GetWindowSurface(window);
+    // SDL_BlitSurface(background, nullptr, screen, nullptr );
+
+    // SDL_Quit();
+
+    return 0; //necessary for SDL.
 }
