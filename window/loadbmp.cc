@@ -9,6 +9,5 @@ void Window::loadBMP(string filename)
     // actually apply the image!
 
     SDL_BlitSurface(d_image, nullptr, d_surface, nullptr); 
-    
     SDL_UpdateWindowSurface(d_window);
 }
