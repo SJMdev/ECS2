@@ -20,14 +20,14 @@ int main(int argc, char* argv[]) //this is necessary for SDL
 
 
     Window d_window;
-    d_window.createWindow("my game window",
+    d_window.createWindow("Lekker spelen",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
                           640,
                           480,
                           SDL_WINDOW_OPENGL);
 
-    
+    d_window.loadBMP("textures/marbles.bmp");    
     // //temporary!
     // SDL_Surface *temp = SDL_LoadBMP("textures/marbles.bmp");
     // if (temp == nullptr)

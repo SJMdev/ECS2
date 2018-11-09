@@ -8,4 +8,10 @@ void Window::createWindow(string title, int xPosition, int yPosition, int width,
                                 width,
                                 height,
                                 flags);
+    if (d_window == nullptr)
+    {
+        SDL_Log("window could not be created!");
+        exit(1);
+    }
+    d_surface = SDL_GetWindowSurface(d_window);
 }
