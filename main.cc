@@ -28,6 +28,7 @@ int main(int argc, char* argv[]) //this is necessary for SDL
                           SDL_WINDOW_OPENGL);
 
     d_window.loadBMP("textures/marbles.bmp");    
+    
     d_window.initializeGlew();
 
     SDL_Event event;
