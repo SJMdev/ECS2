@@ -28,14 +28,7 @@ int main(int argc, char* argv[]) //this is necessary for SDL
                           SDL_WINDOW_OPENGL);
 
     d_window.loadBMP("textures/marbles.bmp");    
-    // //temporary!
-    // SDL_Surface *temp = SDL_LoadBMP("textures/marbles.bmp");
-    // if (temp == nullptr)
-    //     SDL_Log("temp is nullptr");
-    
-    // SDL_Surface *background = SDL_ConvertSurfaceFormat(temp,SDL_PIXELFORMAT_UNKNOWN, 0);
-
-    // SDL_FreeSurface(temp);
+    d_window.initializeGlew();
 
     SDL_Event event;
 
