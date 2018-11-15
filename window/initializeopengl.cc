@@ -3,9 +3,7 @@
 bool Window::initializeOpenGL()
 {
     bool success = true;
-
     gProgramID = glCreateProgram();
-
     // create vertex shader
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -16,7 +14,7 @@ bool Window::initializeOpenGL()
     };
 
     // set vertex Source
-    glShaderSource(vertexShader, 1, vertexShaderSource, nullptr);
+    glShaderSource(vertexShader, 1, vertexShaderSource, NULL);
 
     // compile vertex source
     glCompileShader(vertexShader);
@@ -47,7 +45,7 @@ bool Window::initializeOpenGL()
         };
 
         //set fragment source
-        glShaderSource( fragmentShader, 1, fragmentShaderSource, nullptr);
+        glShaderSource( fragmentShader, 1, fragmentShaderSource, NULL);
 
         glCompileShader(fragmentShader);
 

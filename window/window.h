@@ -19,6 +19,8 @@ class Window
     GLint gVertexPos2DLocation = -1;
     GLuint gVBO = 0;
     GLuint gIBO = 0;
+    bool gRenderQuad = true;
+    
 
     //  // SDL openGL stuff!
     SDL_GLContext d_gContext;
@@ -34,6 +36,8 @@ class Window
 
         void printShaderLog(GLuint shader);
         void printProgramLog(GLuint program);
+
+        void render();
 
     
 };

@@ -27,9 +27,10 @@ int main(int argc, char* argv[]) //this is necessary for SDL
                           480,
                           SDL_WINDOW_OPENGL);
 
-    d_window.loadBMP("textures/marbles.bmp");    
+    // d_window.loadBMP("textures/marbles.bmp");    
     
     d_window.initializeGlew();
+    d_window.render();
 
     SDL_Event event;
 

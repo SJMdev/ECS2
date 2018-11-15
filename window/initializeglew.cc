@@ -10,6 +10,7 @@ void Window::initializeGlew()
     }
     else
     {
+        // SDL_Log("Window::initializeGlew");
         // initialize glew
         glewExperimental = GL_TRUE;
         GLenum glewError = glewInit();
