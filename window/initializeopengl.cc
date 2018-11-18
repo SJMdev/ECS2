@@ -4,14 +4,31 @@ bool Window::initializeOpenGL()
 {
     bool success = true;
     gProgramID = glCreateProgram();
+
+    // in openGL, we bind shaders to a program. we can then render this program (I think).
+
+
     // create vertex shader
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
     //get vertex source
-    const GLchar* vertexShaderSource[] =
-    {
-        "#version 140\nin vec2 LVertexPos2D; void main() { gl_Position = vec4( LVertexPos2D.x, LVertexPos2D.y, 0, 1 ); }"
-    };
+    const GLchar* vertexShaderSource[] ={ R"glsl(
+    #version 330 core
+    layout (location = 0) in vec2 position;
+    layout (location = 1) in vec3 color;
+
+    out vec3 interpolatedColor;
+
+    void main()
+    { 
+        interpolatedColor = color;
+        vec4 pos = vec4(position, 0, 1);
+        gl_Position = pos;
+    }
+    )glsl"};
+        
+
+    // We just wrote an inline shader. I would like to change this to a particular file. I believe the extension is GLSL.
 
     // set vertex Source
     glShaderSource(vertexShader, 1, vertexShaderSource, NULL);
@@ -22,27 +39,35 @@ bool Window::initializeOpenGL()
     // check vertex shader for errors
     GLint vShaderCompiled = GL_FALSE;
 
+
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vShaderCompiled);
 
     if (vShaderCompiled != GL_TRUE)
     {
-        SDL_Log("Window::InitializeOpenGL: unable to copmile vertex shader %d\n", vertexShader);
+        SDL_Log("Window::InitializeOpenGL: unable to compile vertex shader %d\n", vertexShader);
         printShaderLog(vertexShader);
         success = false;
     }
     else
     {
+        SDL_Log("Window::InitializeOpenGL: compiled the vertex shader!");
         // attach vertex shader to program
         glAttachShader( gProgramID, vertexShader);
-
         // create fragment shader
         GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
         // get fragment source
-        const GLchar* fragmentShaderSource[]=
+        const GLchar* fragmentShaderSource[]= {R"glsl(
+        #version 330 core
+        
+        in vec3 interpolatedColor;
+        out vec4 rgba;
+        
+        void main()
         {
-          "#version 140\nout vec4 LFragment; void main() { LFragment = vec4( 1.0, 1.0, 1.0, 1.0 ); }"  
-        };
+            rgba = vec4(interpolatedColor, 1);
+        }
+        )glsl"};
 
         //set fragment source
         glShaderSource( fragmentShader, 1, fragmentShaderSource, NULL);
