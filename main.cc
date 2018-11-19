@@ -30,7 +30,6 @@ int main(int argc, char* argv[]) //this is necessary for SDL
     // d_window.loadBMP("textures/marbles.bmp");    
     
     d_window.initializeGlew();
-    d_window.render();
 
     SDL_Event event;
 
@@ -55,6 +54,9 @@ int main(int argc, char* argv[]) //this is necessary for SDL
                     break;
             }
         }
+        d_window.render();
+
+        d_window.swapWindow();
     }
 
     // SDL_Surface *screen = SDL_GetWindowSurface(window);

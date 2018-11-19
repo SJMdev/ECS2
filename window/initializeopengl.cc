@@ -1,4 +1,6 @@
 #include "window.ih"
+#define BUFFER_OFFSET(i) ((void*)(i)) //hacky macro
+
 
 bool Window::initializeOpenGL()
 {
@@ -6,7 +8,6 @@ bool Window::initializeOpenGL()
     gProgramID = glCreateProgram();
 
     // in openGL, we bind shaders to a program. we can then render this program (I think).
-
 
     // create vertex shader
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -32,6 +33,9 @@ bool Window::initializeOpenGL()
 
     // set vertex Source
     glShaderSource(vertexShader, 1, vertexShaderSource, NULL);
+
+    //after setting the shader source, we need to free the vertexshadersource,
+    // as openGL now has a copy
 
     // compile vertex source
     glCompileShader(vertexShader);
@@ -71,8 +75,8 @@ bool Window::initializeOpenGL()
 
         //set fragment source
         glShaderSource( fragmentShader, 1, fragmentShaderSource, NULL);
-
         glCompileShader(fragmentShader);
+
 
         GLint fShaderCompiled = GL_FALSE;
         glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fShaderCompiled);
@@ -85,15 +89,17 @@ bool Window::initializeOpenGL()
         }
         else
         {
+            SDL_Log("Window::initializeOpenGL: compiled fragmentShader");
             // attach fragment shader to program
             glAttachShader(gProgramID, fragmentShader);
 
-            //link program?
+            //link program!
             glLinkProgram(gProgramID);
 
             //check for errors
             GLint programSuccess = GL_TRUE;
             glGetProgramiv(gProgramID, GL_LINK_STATUS, &programSuccess);
+
             if(programSuccess != GL_TRUE)
             {
                 SDL_Log("Window::InitializeOpenGL: error linking program %d\n", gProgramID);
@@ -102,41 +108,27 @@ bool Window::initializeOpenGL()
             }
             else
             {
-                // get vertex Attribute Location:
-                gVertexPos2DLocation = glGetAttribLocation( gProgramID, "LVertexPos2D");
-                if (gVertexPos2DLocation == -1)
-                {
-                    SDL_Log("Window::InitializeOpenGL: LVertexPos2d is not a valid glsl program variable!\n");
-                    success = false;
-                }
-                else
-                {
                     //initialize clear color!
-                    glClearColor( 0.f, 0.f, 0.f, 1.f); // r, g, b, a
+                    glClearColor(0.2f, 0.5f, 0.7f, 0.0f); // r, g, b, a
 
-                    //VBO data
-                    GLfloat vertexData[] =
-                    {
-                        -0.5f, -0.5f,
-                        0.5f, -0.5f,
-                        0.5f, 0.5f,
-                        -0.5f, 0.5f
-                    };
+                    int arrayLength = 3;
+                    std::vector<Point> verts = {{-1,0,1,0,0},{1,0,0,1,0},{0,1,0,0,1}};
 
-                    //IBO data;
-                    GLuint indexData[] = { 0, 1, 2, 3 };
+                    GLsizei triangleCount = 1;
 
                     //create VBO
-                    glGenBuffers( 1, &gVBO);
-                    glBindBuffer( GL_ARRAY_BUFFER, gVBO);
-                    glBufferData( GL_ARRAY_BUFFER, 2* 4 * sizeof(GLfloat), vertexData, GL_STATIC_DRAW);
+                    glGenBuffers( triangleCount, &gVBO);     // glsizei n, GLuint *buffers
+                    glGenVertexArrays(triangleCount, &gVAO); // glsizei n, GLuinbt *arrays
+                    glBindVertexArray(gVAO);
+                    glBindBuffer(GL_ARRAY_BUFFER, gVBO);
 
-                    //create IBO:
-                    glGenBuffers( 1, &gIBO);
-                    glBindBuffer(GL_ARRAY_BUFFER, gIBO);
-                    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4*sizeof(GLuint), indexData, GL_STATIC_DRAW);
-                
-                }
+                    glBufferData(GL_ARRAY_BUFFER, static_cast<int>(verts.size() * sizeof(Point)), verts.data(), GL_STATIC_DRAW);
+
+                    glEnableVertexAttribArray(0);
+                    glEnableVertexAttribArray(1);
+
+                    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Point), 0); // x , y
+                    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Point), BUFFER_OFFSET(2 * sizeof(float))); //r,g,b!          
             }
         }
     }

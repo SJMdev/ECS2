@@ -2,6 +2,10 @@
 
 void Window::initializeGlew()
 {
+    
+    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     d_gContext = SDL_GL_CreateContext(d_window);
     if (d_gContext == nullptr)
     {
@@ -26,6 +30,10 @@ void Window::initializeGlew()
         if (!initializeOpenGL())
         {
             SDL_Log("Window::initializeGlew: Unable to initialize OpenGL.\n");
+        }
+        else
+        {
+            SDL_Log("Window::initializeGlew: initialized openGL.");
         }
     }
 }

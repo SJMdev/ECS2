@@ -18,7 +18,8 @@ class Window
     GLuint gProgramID = 0;
     GLint gVertexPos2DLocation = -1;
     GLuint gVBO = 0;
-    GLuint gIBO = 0;
+    GLuint gVAO = 0;
+    //GLuint gIBO = 0;
     bool gRenderQuad = true;
     
 
@@ -38,7 +39,9 @@ class Window
         void printProgramLog(GLuint program);
 
         void render();
+        void swapWindow();
 
+        SDL_Window *windowHandle();
     
 };
 
