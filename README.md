@@ -14,3 +14,9 @@ Usually, this is not enough, as they require a DLL to operate. the compiler sear
 
 
 FWIW, this was the correct answer, at least in my case. I had to download the SDL2 windows development libraries, then copy \SDL2\lib\x64\SDL2.dll to C:\Windows\System32 and \SDL2\lib\x86\SDL2.dll to C:\Windows\SysWOW64. Voila. 
+
+do this not only for SDL, but for GLEW too.
+
+Additionally, use the x64 cl thing. in CMDer, settings->tasks, create a new task with the following command:
+
+cmd /k "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat" (e.g. the visual studio installer location.)
