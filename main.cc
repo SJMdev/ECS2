@@ -11,6 +11,7 @@ using namespace std;
 int main(int argc, char* argv[]) //this is necessary for SDL
 {
 
+    // set up  the entity registry!
     entt::registry entityRegistry;
     std::uint64_t dt = 16; //delta time?
 
@@ -19,8 +20,11 @@ int main(int argc, char* argv[]) //this is necessary for SDL
 
 
 
+
+    //window setup!
+
     Window d_window;
-    d_window.createWindow("Lekker spelen",
+    d_window.createWindow("Warlocks",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
                           640,
