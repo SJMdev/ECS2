@@ -5,14 +5,16 @@ void Window::addFragmentShaderFromSourceFile(string &filename)
     //open filestream
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
+    //@cleanup: maybe directly transfer to string?
     ifstream shaderFilestream;
 
     shaderFilestream.open("../shaders/" + filename);
-    std::stringStream shader;
+    std::stringstream ss;
 
-    shader << shaderFilestream;
+    ss << shaderFilestream.rdbuf();
+    string shader = ss.str();
 
-    glShaderSource(fragmentShader, 1, shader.str(), NULL);
+    glShaderSource(fragmentShader, 1, shader.c_str(), NULL);
 
     glCompileShader(fragmentShader);
 

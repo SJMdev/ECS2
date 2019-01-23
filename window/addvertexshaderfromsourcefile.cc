@@ -4,21 +4,23 @@ void Window::addVertexShaderFromSourceFile(string &filename)
 {
     //open filestream
     bool succes = true;
+
+
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
     ifstream shaderFilestream;
 
     shaderFilestream.open("../shaders/" + filename);
-    std::stringStream shader;
+    std::stringstream ss;
 
-    shader << shaderFilestream;
+    ss << shaderFilestream.rdbuf();
 
-    glShaderSource(vertexShader, 1, shader.str(), NULL);
+    string shader = ss.str();
 
+    glShaderSource(vertexShader, 1, shader.c_str(), NULL);
     glCompileShader(vertexShader);
 
     GLint vShaderCompiled = GL_FALSE;
-
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vShaderCompiled);
 
     if (vShaderCompiled != GL_TRUE)

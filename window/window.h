@@ -38,6 +38,10 @@ class Window
         void printShaderLog(GLuint shader);
         void printProgramLog(GLuint program);
 
+        void addFragmentShaderFromSourceFile(std::string &filename);
+        void addVertexShaderFromSourceFile(std::string &filename);
+
+
         void render();
         void swapWindow();
 

@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <sstream>
+#include <fstream>
 
 #include "../shared/point.h"
 
