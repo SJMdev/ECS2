@@ -7,6 +7,9 @@ cl /MP4 main.cc window/window1.cc window/loadbmp.cc window/destructor.cc window/
 # with openGL
 cl /MP4 main.cc window/window1.cc window/loadbmp.cc window/destructor.cc window/createwindow.cc window/initializeglew.cc window/initializeopengl.cc window/printprogramlog.cc window/printshaderlog.cc window/render.cc window/swapwindow.cc /EHsc /std:c++17  /I libraries /link libraries/sdl/lib/win64/SDL2.lib libraries/sdl/lib/win64/SDL2main.lib libraries/glew/lib/win64/glew32.lib libraries/glew/lib/win64/glew32s.lib openGL32.lib /SUBSYSTEM:WINDOWS
 
+# you can compile with wildcards!
+cl /MP4 *.cc window/*.cc  /EHsc /std:c++17 /I libraries /link libraries/sdl/lib/win64/SDL2.lib libraries/sdl/lib/win64/SDL2main.lib libraries/glew/lib/win64/glew32.lib libraries/glew/lib/win64/glew32s.lib openGL32.lib /SUBSYSTEM:WINDOWS
+
 # Installing a library
 link against the libraries using /link in the command line, e.g. /link libraries/sdl/lib/win64/sdl2.lib.
 
