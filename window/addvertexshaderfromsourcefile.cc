@@ -5,19 +5,22 @@ void Window::addVertexShaderFromSourceFile(string &filename)
     //open filestream
     bool succes = true;
 
-
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
     ifstream shaderFilestream;
-
-    shaderFilestream.open("../shaders/" + filename);
+    string fullName = "shaders/" + filename;
+    SDL_Log("loading file %s", fullName.c_str());
+    shaderFilestream.open(fullName);
     std::stringstream ss;
 
     ss << shaderFilestream.rdbuf();
+    std::string temp = ss.str();
+    SDL_Log("shader looks like: %s",temp.c_str());
 
-    string shader = ss.str();
+    char *shader = temp.data();
+    
 
-    glShaderSource(vertexShader, 1, shader.c_str(), NULL);
+    glShaderSource(vertexShader, 1, &shader, NULL);
     glCompileShader(vertexShader);
 
     GLint vShaderCompiled = GL_FALSE;
@@ -31,4 +34,8 @@ void Window::addVertexShaderFromSourceFile(string &filename)
 
     // do we do this here or somewhere else?
     glAttachShader( gProgramID, vertexShader);   
+
+
+    // reclaim memory?
+    delete shader;
 }

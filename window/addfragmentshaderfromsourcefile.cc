@@ -7,14 +7,17 @@ void Window::addFragmentShaderFromSourceFile(string &filename)
 
     //@cleanup: maybe directly transfer to string?
     ifstream shaderFilestream;
-
     shaderFilestream.open("../shaders/" + filename);
     std::stringstream ss;
 
+    // this is not preallocated.
     ss << shaderFilestream.rdbuf();
-    string shader = ss.str();
+    string shaderString = ss.str();
+    char *shader = shaderString.data();
 
-    glShaderSource(fragmentShader, 1, shader.c_str(), NULL);
+    SDL_Log("fragment shader:  %s", shader);
+
+    glShaderSource(fragmentShader, 1, &shader, NULL);
 
     glCompileShader(fragmentShader);
 
@@ -24,12 +27,11 @@ void Window::addFragmentShaderFromSourceFile(string &filename)
 
     if (vShaderCompiled != GL_TRUE)
     {
-        SDL_Log("Window::addFragmentShaderFromSourceFile: unable to compile vertex shader %d\n", vertexShader);
+        SDL_Log("Window::addFragmentShaderFromSourceFile: unable to compile fragment shader %d\n", fragmentShader);
         printShaderLog(fragmentShader);
     }
     
         // do we do this here or somewhere else?
     glAttachShader( gProgramID, fragmentShader);
-
 
 }

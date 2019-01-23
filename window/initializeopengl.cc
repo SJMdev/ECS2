@@ -10,53 +10,58 @@ bool Window::initializeOpenGL()
     // in openGL, we bind shaders to a program. we can then render this program (I think).
 
     // create vertex shader
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    // GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
-    //get vertex source
-    const GLchar* vertexShaderSource[] ={ R"glsl(
-    #version 330 core
-    layout (location = 0) in vec2 position;
-    layout (location = 1) in vec3 color;
+    // //get vertex source
+    // const GLchar* vertexShaderSource[] ={ R"glsl(
+    // #version 330 core
+    // layout (location = 0) in vec2 position;
+    // layout (location = 1) in vec3 color;
 
-    out vec3 interpolatedColor;
+    // out vec3 interpolatedColor;
 
-    void main()
-    { 
-        interpolatedColor = color;
-        vec4 pos = vec4(position, 0, 1);
-        gl_Position = pos;
-    }
-    )glsl"};
+    // void main()
+    // { 
+    //     interpolatedColor = color;
+    //     vec4 pos = vec4(position, 0, 1);
+    //     gl_Position = pos;
+    // }
+    // )glsl"};
         
 
-    // We just wrote an inline shader. I would like to change this to a particular file. I believe the extension is GLSL.
+    // // We just wrote an inline shader. I would like to change this to a particular file. I believe the extension is GLSL.
 
-    // set vertex Source
-    glShaderSource(vertexShader, 1, vertexShaderSource, NULL);
+    // // set vertex Source
+    // glShaderSource(vertexShader, 1, vertexShaderSource, NULL);
 
-    //after setting the shader source, we need to free the vertexshadersource,
-    // as openGL now has a copy
+    // //after setting the shader source, we need to free the vertexshadersource,
+    // // as openGL now has a copy
 
-    // compile vertex source
-    glCompileShader(vertexShader);
+    // // compile vertex source
+    // glCompileShader(vertexShader);
 
-    // check vertex shader for errors
-    GLint vShaderCompiled = GL_FALSE;
+    // // check vertex shader for errors
+    // GLint vShaderCompiled = GL_FALSE;
 
 
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vShaderCompiled);
+    // glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vShaderCompiled);
 
-    if (vShaderCompiled != GL_TRUE)
-    {
-        SDL_Log("Window::InitializeOpenGL: unable to compile vertex shader %d\n", vertexShader);
-        printShaderLog(vertexShader);
-        success = false;
-    }
+    // if (vShaderCompiled != GL_TRUE)
+    // {
+    //     SDL_Log("Window::InitializeOpenGL: unable to compile vertex shader %d\n", vertexShader);
+    //     printShaderLog(vertexShader);
+    //     success = false;
+    // }
+
+    addVertexShaderFromSourceFile(string("fragmentshader.glsl"));
+
+    if(0)
+        SDL_Log("test"); 
     else
     {
         SDL_Log("Window::InitializeOpenGL: compiled the vertex shader!");
         // attach vertex shader to program
-        glAttachShader( gProgramID, vertexShader);
+       // glAttachShader( gProgramID, vertexShader);
         // create fragment shader
         GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
