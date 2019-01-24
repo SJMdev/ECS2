@@ -12,7 +12,8 @@ void Window::render()
 
     //glClearColor(255,255,255,0); // set background color to white.
     
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    // glDrawArrays(GL_TRIANGLES, 0, d_activeModel.vertices.size());
+    glDrawElements(GL_TRIANGLES,0, d_activeModel.vertices.size());
     //unbind program
     glUseProgram(0); // NULL?
 

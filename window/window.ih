@@ -9,6 +9,11 @@
 #include <sstream>
 #include <fstream>
 
+// for cin
+#include <iostream>
+
 #include "../shared/point.h"
+#include "../shared/model.h"
+
 
 using namespace std;

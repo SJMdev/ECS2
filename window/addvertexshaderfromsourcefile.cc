@@ -1,10 +1,18 @@
 #include "window.ih"
 
+// - Create shader handle 
+// - load shader file from shaders/*
+// -  set shader source
+// - compile shader
+// - verify compilation
+// - attach Shader to program ID
+
 void Window::addVertexShaderFromSourceFile(string &filename)
 {
-    //open filestream
+    //want to use booleans instead of voids so we can check success?
     bool succes = true;
 
+    // create Shader handle
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
     ifstream shaderFilestream;
@@ -15,7 +23,7 @@ void Window::addVertexShaderFromSourceFile(string &filename)
 
     ss << shaderFilestream.rdbuf();
     std::string temp = ss.str();
-    SDL_Log("shader looks like: %s",temp.c_str());
+    SDL_Log("Vertex looks like: %s",temp.c_str());
 
     char *shader = temp.data();
     
@@ -24,6 +32,7 @@ void Window::addVertexShaderFromSourceFile(string &filename)
     glCompileShader(vertexShader);
 
     GLint vShaderCompiled = GL_FALSE;
+
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vShaderCompiled);
 
     if (vShaderCompiled != GL_TRUE)
@@ -34,8 +43,4 @@ void Window::addVertexShaderFromSourceFile(string &filename)
 
     // do we do this here or somewhere else?
     glAttachShader( gProgramID, vertexShader);   
-
-
-    // reclaim memory?
-    delete shader;
 }

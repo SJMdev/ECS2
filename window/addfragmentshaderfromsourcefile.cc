@@ -2,23 +2,24 @@
 
 void Window::addFragmentShaderFromSourceFile(string &filename)
 {
-    //open filestream
+    //create Shader
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
     //@cleanup: maybe directly transfer to string?
-    ifstream shaderFilestream;
-    shaderFilestream.open("../shaders/" + filename);
+     ifstream shaderFilestream;
+    string fullName = "shaders/" + filename;
+    SDL_Log("loading file %s", fullName.c_str());
+    shaderFilestream.open(fullName);
     std::stringstream ss;
 
-    // this is not preallocated.
     ss << shaderFilestream.rdbuf();
-    string shaderString = ss.str();
-    char *shader = shaderString.data();
+    std::string temp = ss.str();
+    SDL_Log("Fragment shader: %s",temp.c_str());
 
-    SDL_Log("fragment shader:  %s", shader);
-
+    char *shader = temp.data();
+    
+    
     glShaderSource(fragmentShader, 1, &shader, NULL);
-
     glCompileShader(fragmentShader);
 
     GLint vShaderCompiled = GL_FALSE;
