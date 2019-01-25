@@ -28,10 +28,12 @@ bool Window::initializeOpenGL()
     {
         SDL_Log("linked the program!");
         loadOBJFromSourceFile(string("bunny.obj"), d_activeModel);
-        calculateNormals(d_activeModel);
+        // calculateNormals(d_activeModel);
         SDL_Log("amount of vertices in file: %d", d_activeModel.vertices.size());
-        SDL_Log("amount of faces in file: %d", d_activeModel.faces.size());
-        SDL_Log("loaded object from source file");
+        SDL_Log("amount of indices in file: %d", d_activeModel.indices.size());
+
+        SDL_Log("loaded object from source file!");
+
         drawModel(d_activeModel);
         SDL_Log("after drawModel");
         // drawTriangle();

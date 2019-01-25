@@ -22,6 +22,8 @@ class Window
     GLuint gVBO = 0;
     GLuint gVAO = 0;
     //GLuint gIBO = 0;
+    GLuint gIBO = 0;
+
     bool gRenderQuad = true;
     
 
