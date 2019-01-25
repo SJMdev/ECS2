@@ -3,11 +3,9 @@
 
 void Window::drawModel(Model &model)
 {
-        SDL_Log("drawModel"); 
         glClearColor(0.2f, 0.5f, 0.7f, 0.0f); // r, g, b, a
-        // // int arrayLength = 3;
+        
         std::vector<Point3> verts;
-
         // for (int idx = 0; idx != model.vertices.size(); ++idx)
         // {
 
@@ -24,9 +22,9 @@ void Window::drawModel(Model &model)
         // naive solution, but i see something!
         for (int idx =0; idx != model.indices.size(); ++idx)
         {
-                Point3 temp = { model.vertices.at(model.indices.at(idx)).x * 2,
-                                model.vertices.at(model.indices.at(idx)).y * 2,
-                                model.vertices.at(model.indices.at(idx)).z * 2, 
+                Point3 temp = { model.vertices.at(model.indices.at(idx)).x * 3,
+                                model.vertices.at(model.indices.at(idx)).y * 3,
+                                model.vertices.at(model.indices.at(idx)).z * 3, 
                                 1,
                                 0,
                                 0
