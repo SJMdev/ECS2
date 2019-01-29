@@ -20,8 +20,8 @@ void Window::render()
     glDrawElements(GL_TRIANGLES,d_activeModel.vertices.size(), GL_FLOAT, (void*)0);
 
 
-
-    glDrawArrays(GL_TRIANGLES, 0, d_activeModel.vertices.size());
+    // was vertices.size();
+    glDrawArrays(GL_TRIANGLES, 0, d_activeModel.vertex_indices.size());
     //unbind program
     glUseProgram(0); // NULL?
 

@@ -10,8 +10,8 @@ struct Model
     std::vector<Vec2f> uvs;
     std::vector<Vec3f> normals;
     std::vector<Vec3f> faces;
-    std::vector<float> indices;
-    // std::vector<Point3> points;
+    std::vector<float> vertex_indices; //vector<int>?
+    std::vector<float> normal_indices; //vector<int>?
 
 };
 

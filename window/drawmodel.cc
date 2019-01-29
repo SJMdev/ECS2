@@ -6,31 +6,21 @@ void Window::drawModel(Model &model)
         glClearColor(0.2f, 0.5f, 0.7f, 0.0f); // r, g, b, a
         
         std::vector<Point3> verts;
-        // for (int idx = 0; idx != model.vertices.size(); ++idx)
-        // {
-
-        //         Point3 temp = { model.vertices.at(idx).x,
-        //                         model.vertices.at(idx).y,
-        //                         model.vertices.at(idx).z, 
-        //                         1,
-        //                         0,
-        //                         0
-        //                         };
-        //         verts.push_back(temp);
-        // }
 
         // naive solution, but i see something!
-        for (int idx =0; idx != model.indices.size(); ++idx)
+        for (int idx =0; idx != model.vertex_indices.size(); ++idx)
         {
-                Point3 temp = { model.vertices.at(model.indices.at(idx)).x * 3,
-                                model.vertices.at(model.indices.at(idx)).y * 3,
-                                model.vertices.at(model.indices.at(idx)).z * 3, 
-                                1,
-                                0,
-                                0
+                Point3 temp = { model.vertices.at(model.vertex_indices.at(idx)).x * 0.8,
+                                model.vertices.at(model.vertex_indices.at(idx)).y * 0.8,
+                                model.vertices.at(model.vertex_indices.at(idx)).z * 0.8, 
+                                model.normals.at(model.normal_indices.at(idx)).x,
+                                model.normals.at(model.normal_indices.at(idx)).y,
+                                model.normals.at(model.normal_indices.at(idx)).z                               
                 };
                 verts.push_back(temp);
         }
+
+        SDL_Log("verts.size: %i", verts.size());
         
 
         GLsizei objectCount = 1;
