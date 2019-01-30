@@ -1,6 +1,6 @@
 #include "matrix.ih"
 
-Mat4x4::Mat4x4(float x, float y, float z)
+Matrix4::MAtrix4(float x, float y, float z)
 :
     d_data(vector<float>{
         x, 0, 0, 0,

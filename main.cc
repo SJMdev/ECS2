@@ -12,31 +12,30 @@ int main(int argc, char* argv[]) //this is necessary for SDL
 {
 
     // set up  the entity registry!
-    entt::registry entityRegistry;
-    std::uint64_t dt = 16; //delta time?
+    // entt::registry entityRegistry;
+    // std::uint64_t dt = 16; //delta time?
 
-    auto entity = entityRegistry.create();
-    entityRegistry.assign<Position>(entity, 1.f, 1.f);
-
-
+    // auto entity = entityRegistry.create();
+    // entityRegistry.assign<Position>(entity, 1.f, 1.f);
 
 
     //window setup!
 
     Window d_window;
-    d_window.createWindow("Warlocks",
+    d_window.createWindow("Editor",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
                           640,
                           480,
-                          SDL_WINDOW_OPENGL);
+                          SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
     // d_window.loadBMP("textures/marbles.bmp");    
     
     d_window.initializeGlew();
 
-    SDL_Event event;
 
+
+    SDL_Event event;
     int gameover = 0;
 
     while (!gameover)

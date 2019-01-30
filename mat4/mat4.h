@@ -1,14 +1,14 @@
-#ifndef INCLUDED_MAT4X4
-#define INCLUDED_MAT4X4
+#ifndef INCLUDED_MATRIX4_
+#define INCLUDED_MATRIX4_
 #include <vector>
 
-class Mat4x4
+class Matrix4
 {
     vector<float> d_data; //4x4
 
     public:
         
-        Mat4x4(float x, float y, float z);
+        Matrix4(float x, float y, float z);
 
     Mat4x4 Identity()
     {

@@ -17,7 +17,7 @@ class Window
     SDL_Surface *d_image;
 
     //openGL stuff
-    GLuint gProgramID = 0;
+    GLuint d_gProgramID = 0;
     GLint  gVertexPos2DLocation = -1;
     GLuint gVBO = 0;
     GLuint gVAO = 0;

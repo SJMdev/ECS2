@@ -33,6 +33,6 @@ void Window::addFragmentShaderFromSourceFile(string &filename)
     }
     
         // do we do this here or somewhere else?
-    glAttachShader( gProgramID, fragmentShader);
+    glAttachShader( d_gProgramID, fragmentShader);
 
 }

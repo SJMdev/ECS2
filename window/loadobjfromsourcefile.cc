@@ -41,10 +41,10 @@ bool Window::loadOBJFromSourceFile(std::string &filename, Model &model)
             continue;
         }
 
-        //
+        // uv texture maps
         if (first_token == vt)
         {
-            SDL_Log("found vt!");
+            // SDL_Log("found vt!");
             Vec2f uv;
             string garbage;
             stringstream(line) >> garbage >> uv.u >> uv.v;
@@ -76,7 +76,7 @@ bool Window::loadOBJFromSourceFile(std::string &filename, Model &model)
                 thirdVertex -=1;
                 thirdNormal -=1;
 
-                SDL_Log("found %s, %d, %d, %d", garbage.c_str(), firstVertex, secondVertex, thirdVertex);
+                // SDL_Log("found %s, %d, %d, %d", garbage.c_str(), firstVertex, secondVertex, thirdVertex);
 
                 model.vertex_indices.push_back(firstVertex);
                 model.vertex_indices.push_back(secondVertex);
@@ -112,8 +112,11 @@ bool Window::loadOBJFromSourceFile(std::string &filename, Model &model)
                 model.vertex_indices.push_back(secondVertex);
                 model.vertex_indices.push_back(thirdVertex);  
                 //how does this look?
-                SDL_Log("found vector %s, %d, %d, %d", garbage.c_str(), firstVertex, secondVertex, thirdVertex);
-                SDL_Log("found normals %d, %d, %d", firstNormal, secondNormal, thirdNormal);
+                // SDL_Log("found vector %s, %d, %d, %d", garbage.c_str(), firstVertex, secondVertex, thirdVertex);
+                // SDL_Log("found normals %d, %d, %d", firstNormal, secondNormal, thirdNormal);
+                model.uv_indices.push_back(firstuv);
+                model.uv_indices.push_back(seconduv);
+                model.uv_indices.push_back(thirduv);
 
                 model.normal_indices.push_back(firstNormal);
                 model.normal_indices.push_back(secondNormal);
@@ -128,10 +131,11 @@ bool Window::loadOBJFromSourceFile(std::string &filename, Model &model)
                 model.vertex_indices.push_back(firstVertex);
                 model.vertex_indices.push_back(secondVertex);
                 model.vertex_indices.push_back(thirdVertex);  
-                SDL_Log("found %s, %d, %d, %d", garbage.c_str(), firstVertex, secondVertex, thirdVertex);
+                // SDL_Log("found %s, %d, %d, %d", garbage.c_str(), firstVertex, secondVertex, thirdVertex);
             }
         }   
 
+        // vertices.
         if (first_token == v)
         {
             // SDL_Log("found v!");
@@ -143,9 +147,6 @@ bool Window::loadOBJFromSourceFile(std::string &filename, Model &model)
         }
 
     }
-
-
-
 
     return success;
 }

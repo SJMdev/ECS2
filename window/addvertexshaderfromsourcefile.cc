@@ -42,5 +42,5 @@ void Window::addVertexShaderFromSourceFile(string &filename)
     }
 
     // do we do this here or somewhere else?
-    glAttachShader( gProgramID, vertexShader);   
+    glAttachShader( d_gProgramID, vertexShader);   
 }
