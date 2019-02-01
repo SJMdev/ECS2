@@ -11,12 +11,12 @@ void Window::render()
 
     // draw_game_3d()
 
-   // bind shader pprogram
+   // bind shader program (set_shader?)
     glUseProgram(d_gProgramID);
 
 
     
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIBO);
+    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIBO);
     glBindVertexArray(gVAO);
     
     // this is very naive.

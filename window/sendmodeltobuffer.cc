@@ -22,11 +22,24 @@ void Window::sendModelToBuffer(Model &model)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-    SDL_Log("texture width: %d", );
-    SDL_Log("texture height:");
+        
+    // struct Texture
+    // {
+    //     size_t width;
+    //     size_t height;
+    //     std::string filepath;
+    //     vector<;
+    // };
 
-    
+    Texture texture;
+    fillTexture(texture, string{"../textures/cat_norm.png"});
 
+    SDL_Log("texture width: %d", texture.width);
+    SDL_Log("texture height:%d", texture.height);
+    //image to bytes!
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texture.width, texture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.image.data());
+
+    // actually send the data to the buffer. We pass a reference to the raw data in interleaved vertices.
     glBufferData(GL_ARRAY_BUFFER, static_cast<int>(model.interleaved_vertices.size() * sizeof(Vertex)), model.interleaved_vertices.data(), GL_STATIC_DRAW);
      
     glEnableVertexAttribArray(0);

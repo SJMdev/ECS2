@@ -8,7 +8,7 @@
 #include <string>
 #include "../shared/vecf.h"
 #include "../shared/model.h"
-
+#include "../shared/texture.h"
 
 
 class Window
@@ -45,7 +45,7 @@ class Window
         void initializeSDL(); // parameters?
         void initializeGlew(); // does not require parameters.
         bool initializeOpenGL(); // not sure.
-
+        void fillTexture(Texture &texture, std::string &filename);
        
 
         void addShaderFromFile(std::string &filename, GLenum shaderType, GLuint &shader);
