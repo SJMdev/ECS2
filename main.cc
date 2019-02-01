@@ -5,6 +5,9 @@
 #include "window/window.h"
 #include <cstdint>
 #include <iostream>
+//not necessary but useful
+#include <vector>
+#include <string>
 
 using namespace std;
 
@@ -23,11 +26,17 @@ int main(int argc, char* argv[]) //this is necessary for SDL
     d_window.initializeSDL();
     d_window.initializeGlew(); 
     
-    if (!initializeOpenGL())
+    if (!d_window.initializeOpenGL())
     {
         SDL_Log("Unable to initialize OpenGL.");
     };
  
+
+    vector<string> modelNames { {"cat.obj"} };
+    
+    d_window.initializeModels(modelNames);
+
+
 
     // "game loop"
 

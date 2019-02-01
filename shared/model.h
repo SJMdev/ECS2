@@ -3,6 +3,7 @@
 #include "vecf.h"
 #include <vector>
 #include "point.h"
+#include "vertex.h"
 
 struct Model
 {
@@ -10,9 +11,13 @@ struct Model
     std::vector<Vec2f> uvs;
     std::vector<Vec3f> normals;
     std::vector<Vec3f> faces;
+
     std::vector<float> vertex_indices; //vector<int>?
     std::vector<float> normal_indices;
     std::vector<float> uv_indices;      //vector<int>?
+
+    std::vector<Vertex> interleaved_vertices;
+    std::string texturePath;
 };
 
 

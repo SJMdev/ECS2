@@ -19,8 +19,8 @@ void Window::render()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIBO);
     glBindVertexArray(gVAO);
     
-    // was vertices.size();
-    glDrawArrays(GL_TRIANGLES, 0, d_activeModel.vertex_indices.size());
+    // this is very naive.
+    glDrawArrays(GL_TRIANGLES, 0, d_models.at(0).interleaved_vertices.size());
     //unbind program
     glUseProgram(0); // NULL?
 

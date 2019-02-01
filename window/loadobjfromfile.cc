@@ -1,6 +1,6 @@
 #include "window.ih"
 
-bool Window::loadOBJFromSourceFile(std::string &filename, Model &model)
+bool Window::loadOBJFromFile(std::string &filename, Model &model)
 {
     bool success = true;
     ifstream file;

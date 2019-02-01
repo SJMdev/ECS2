@@ -1,5 +1,5 @@
   
-  at line 8
+  
   // set up  the entity registry!
     // entt::registry entityRegistry;
     // std::uint64_t dt = 16; //delta time?
@@ -11,7 +11,7 @@
     //window setup!
 
 
-was at line 54
+
   // SDL_Surface *screen = SDL_GetWindowSurface(window);
     // SDL_BlitSurface(background, nullptr, screen, nullptr );
 

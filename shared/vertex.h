@@ -13,6 +13,15 @@ struct Vertex
             float pos_z;
         };
     };
+    union
+    {
+        float uv[2];
+        struct
+        {
+            float u;
+            float v;
+        };
+    };
     union 
     {
         float n[3];
@@ -21,15 +30,6 @@ struct Vertex
             float n_x;
             float n_y;
             float n_z;
-        };
-    };
-    union
-    {
-        float uv[2];
-        struct
-        {
-            float u;
-            float v;
         };
     };
 };
