@@ -4,8 +4,10 @@
 bool Window::initializeOpenGL()
 {
     bool success = true;
-    d_gProgramID = glCreateProgram();
 
+
+    d_gProgramID = glCreateProgram();
+    
     addVertexShaderFromSourceFile(string("3dvertexshader.glsl"));
     SDL_Log("Window::InitializeOpenGL: compiled the vertex shader.");
 

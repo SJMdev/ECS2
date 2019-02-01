@@ -16,6 +16,9 @@ class Window
     SDL_Surface *d_surface;
     SDL_Surface *d_image;
 
+
+
+
     //openGL stuff
     GLuint d_gProgramID = 0;
     GLint  gVertexPos2DLocation = -1;
@@ -38,6 +41,8 @@ class Window
         ~Window();
         void createWindow(std::string title, int xPosition, int yPosition, int width, int height, Uint32 flags);
         void loadBMP(std::string filename);
+
+        void initializeSDL(); // parameters?
         void initializeGlew();
         bool initializeOpenGL();
 
@@ -48,7 +53,8 @@ class Window
 
         // stuff for initialize openGL.
         bool loadOBJFromSourceFile(std::string &filename, Model &model);
-        void calculateNormals(Model &model);
+        
+        //void calculateNormals(Model &model); deprecated
         
 
         void addFragmentShaderFromSourceFile(std::string &filename);

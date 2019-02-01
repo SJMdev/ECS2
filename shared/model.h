@@ -13,7 +13,6 @@ struct Model
     std::vector<float> vertex_indices; //vector<int>?
     std::vector<float> normal_indices;
     std::vector<float> uv_indices;      //vector<int>?
-
 };
 
 

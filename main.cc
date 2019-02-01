@@ -10,30 +10,26 @@ using namespace std;
 
 int main(int argc, char* argv[]) //this is necessary for SDL
 {
-
-    // set up  the entity registry!
-    // entt::registry entityRegistry;
-    // std::uint64_t dt = 16; //delta time?
-
-    // auto entity = entityRegistry.create();
-    // entityRegistry.assign<Position>(entity, 1.f, 1.f);
-
-
-    //window setup!
-
     Window d_window;
     d_window.createWindow("Editor",
-                          SDL_WINDOWPOS_UNDEFINED,
-                          SDL_WINDOWPOS_UNDEFINED,
+                          SDL_WINDOWPOS_UNDEFINED,  //starting xpos
+                          SDL_WINDOWPOS_UNDEFINED,  //starting ypos
                           640,
                           480,
-                          SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+                          SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
+                          ); 
+ 
 
-    // d_window.loadBMP("textures/marbles.bmp");    
+    d_window.initializeSDL();
+    d_window.initializeGlew(); 
     
-    d_window.initializeGlew();
+    if (!initializeOpenGL())
+    {
+        SDL_Log("Unable to initialize OpenGL.");
+    };
+ 
 
-
+    // "game loop"
 
     SDL_Event event;
     int gameover = 0;
@@ -62,10 +58,7 @@ int main(int argc, char* argv[]) //this is necessary for SDL
         d_window.swapWindow();
     }
 
-    // SDL_Surface *screen = SDL_GetWindowSurface(window);
-    // SDL_BlitSurface(background, nullptr, screen, nullptr );
 
-    // SDL_Quit();
 
     return 0; //necessary for SDL.
 }
