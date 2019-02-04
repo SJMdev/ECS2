@@ -34,6 +34,7 @@ int main(int argc, char* argv[]) //this is necessary for SDL
 
     vector<string> modelNames { {"cat.obj"} };
     
+    d_window.initializeScene();
     d_window.initializeModels(modelNames);
 
 

@@ -22,6 +22,5 @@
 #include "../shared/vertex.h"
 #include "../shared/texture.h"
 
-#include "../utility/picopng.h"
 
 using namespace std;

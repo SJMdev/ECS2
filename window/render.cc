@@ -15,10 +15,11 @@ void Window::render()
     glUseProgram(d_gProgramID);
 
 
-    
     // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIBO);
     glBindVertexArray(gVAO);
-    
+    glBindTexture(gTBO);
+
+
     // this is very naive.
     glDrawArrays(GL_TRIANGLES, 0, d_models.at(0).interleaved_vertices.size());
     //unbind program

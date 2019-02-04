@@ -1,10 +1,6 @@
-#ifndef INCLUDED_PICOPNG_
-#define INCLUDED_PICOPNG_
+#include "window.ih"
 
-#include <vector>
-
-
-int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width, unsigned long& image_height, const unsigned char* in_png, size_t in_size, bool convert_to_rgba32 = true)
+int Window::decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width, unsigned long& image_height, const unsigned char* in_png, size_t in_size, bool convert_to_rgba32)
 {
   
   static const unsigned long LENBASE[29] =  {3,4,5,6,7,8,9,10,11,13,15,17,19,23,27,31,35,43,51,59,67,83,99,115,131,163,195,227,258};
@@ -491,7 +487,7 @@ int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width,
 };
 
 
-void loadFile(std::vector<unsigned char>& buffer, const std::string& filename) //designed for loading files from hard disk in an std::vector
+void Window::loadPNG(std::vector<unsigned char>& buffer, const std::string& filename) //designed for loading files from hard disk in an std::vector
 {
   std::ifstream file(filename.c_str(), std::ios::in|std::ios::binary|std::ios::ate);
 
@@ -508,6 +504,3 @@ void loadFile(std::vector<unsigned char>& buffer, const std::string& filename) /
   }
   else buffer.clear();
 };
-
-#endif
-

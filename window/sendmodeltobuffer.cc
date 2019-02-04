@@ -22,21 +22,12 @@ void Window::sendModelToBuffer(Model &model)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-        
-    // struct Texture
-    // {
-    //     size_t width;
-    //     size_t height;
-    //     std::string filepath;
-    //     vector<;
-    // };
 
-    Texture texture;
-    fillTexture(texture, string{"../textures/cat_norm.png"});
+    Texture texture{};
+    fillTexture(texture, string{"cat_norm.png"}); // read data from the .png image and store it in the texture.
 
     SDL_Log("texture width: %d", texture.width);
     SDL_Log("texture height:%d", texture.height);
-    //image to bytes!
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texture.width, texture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.image.data());
 
     // actually send the data to the buffer. We pass a reference to the raw data in interleaved vertices.
@@ -44,8 +35,10 @@ void Window::sendModelToBuffer(Model &model)
      
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
     
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0); // x , y,z
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(5 * sizeof(float)));   //skip x,y,z,u,v. r,g,b!
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0); // x, y, z
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(3 * sizeof(float))); //  skip  3: u, v,
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(5 * sizeof(float)));   //skip 5: r, g, b.
 
 }
