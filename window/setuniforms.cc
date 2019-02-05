@@ -4,7 +4,7 @@ void Window::setUniforms(GLuint currentShaderProgram)
 {
     // for gouraud.
     d_materialLocation        = glGetUniformLocation(currentShaderProgram, "material");
-    d_lightPositionLocation   = glGetuniformLocation(currentShaderProgram, "lightPosition");
+    d_lightPositionLocation   = glGetUniformLocation(currentShaderProgram, "lightPosition");
     d_lightColorLocation      = glGetUniformLocation(currentShaderProgram, "lightColor");
     d_textureLocation         = glGetUniformLocation(currentShaderProgram, "textureUniform");
 

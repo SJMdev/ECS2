@@ -16,9 +16,10 @@ class Vec4f
     float z;
     float w;
     
-    Vec4f() {};
-    explicit Vec4f(float x, float y, float z, float w) { set( x , y, z, w)};
-    explicit Vec4f(float x) { set(x, x, x, x)};
+    Vec4f() {}
+    explicit Vec4f(float x, float y, float z, float w) { set( x , y, z, w);}
+
+    explicit Vec4f(float x) { set(x, x, x, x);}
     
     float operator[](const int index) const;
     float &operator[](const int index);
@@ -27,9 +28,10 @@ class Vec4f
     Vec4f operator-(const Vec4f &rhs) const;
     float operator*(const Vec4f &rhs) const;
     Vec4f operator*(const float rhs) const;
-    Vec4f operator/(const Vec4f &rhs) const;
+    Vec4f operator/(const float rhs) const;
     Vec4f &operator+=(const Vec4f &rhs);
     Vec4f &operator-=(const Vec4f &rhs);
+    Vec4f &operator-=(const float rhs);
     Vec4f &operator*=(const Vec4f &rhs);
     Vec4f &operator/=(const Vec4f &rhs);
     Vec4f &operator/=(const float rhs);
@@ -41,10 +43,10 @@ class Vec4f
     bool operator!=( const Vec4f &rhs) const;
 
     bool compare(const Vec4f &rhs) const;
-    float Normalize();
+    float normalize();
 
     void zero(); //sets all values to 0
-    void set();
+    void set(float x, float y, float z, float w);
 
     std::string toString();
     //linear interpolation between!
@@ -100,14 +102,16 @@ inline Vec4f Vec4f::operator-(const Vec4f &rhs) const
     return Vec4f(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
 }
 
+
 inline float Vec4f::operator*(const Vec4f &rhs) const
 {
     return x * rhs.x + y * rhs.y + z *rhs.z + w * rhs.w;  
 }
 
-inline Vec4f Vec4f::operator*(const float lhs, const Vec4f rhs)
+
+inline Vec4f operator*(const float lhs, const Vec4f rhs)
 {
-    return Vec4f(lhs *x, lhs * y, lhs * z, lhs * w);
+    return Vec4f(lhs *rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
 }
 
 inline Vec4f Vec4f::operator*(const float rhs) const
@@ -154,21 +158,21 @@ inline Vec4f &Vec4f::operator-=(const float rhs)
 
 inline Vec4f &Vec4f::operator/=(const Vec4f &rhs)
 {
-    x /= rhs.d_x;
-    y /= rhs.d_y;
-    z /= rhs.d_z;
-    w /= rhs.d_w;
+    x /= rhs.x;
+    y /= rhs.y;
+    z /= rhs.z;
+    w /= rhs.w;
 
     return *this;
 }
 
 inline Vec4f &Vec4f::operator/=(const float rhs)
 {
-    float inva = 1.0f/a;
-    x *= rhs;
-    y *= rhs;
-    z *= rhs;
-    w *= rhs;
+    float inv_rhs = 1.0f/rhs;
+    x *= inv_rhs;
+    y *= inv_rhs;
+    z *= inv_rhs;
+    w *= inv_rhs;
     
     return *this;
 }
@@ -182,12 +186,12 @@ inline Vec4f&Vec4f::operator*=(const float rhs)
 
     return *this;
 }
-inline bool Vec4f::operator==(const Vec4f &rhs)
+inline bool Vec4f::operator==(const Vec4f &rhs) const
 {
     return compare(rhs);
 }
 
-inline bool Vec4f::operator!=(const Vec4f &rhs)
+inline bool Vec4f::operator!=(const Vec4f &rhs) const
 {
     return !compare(rhs);
 }
