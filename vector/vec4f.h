@@ -1,20 +1,20 @@
 #ifndef INCLUDED_VEC4F_
 #define INCLUDED_VEC4F_
 #include "../utility/math.h"
-
+#include <string>
+#include <stringstream>
 
 //@Todo: implement move stuff in order for Vec4 to be aligned in memory to allow operator[] to access the correct thing. I still feel this is very dangerous.
-//@Todo: fix normalization via inverse square root!
 
 
 class Vec4f
 {
     public:
     
-    float d_x;
-    float d_y;
-    float d_z;
-    float d_w;
+    float x;
+    float y;
+    float z;
+    float w;
     
     Vec4f() {};
     explicit Vec4f(float x, float y, float z, float w) { set( x , y, z, w)};
@@ -46,7 +46,7 @@ class Vec4f
     void zero(); //sets all values to 0
     void set();
 
-    
+    std::string toString();
     //linear interpolation between!
     //void lerp?
 };
@@ -54,26 +54,26 @@ class Vec4f
 
 inline void Vec4f::set( float x, float y ,float z, float w)
 {
-    d_x = x;
-    d_y = y;
-    d_z = z;
-    d_w = w;
+    this->x = x;
+    this->y = y;
+    this->z = z;
+    this->w = w;
 }
 
 inline void Vec4f::zero()
 {
-    d_x = 0.0f;
-    d_y = 0.0f;
-    d_z = 0.0f;
-    d_w = 0.0f;
+    x = 0.0f;
+    y = 0.0f;
+    z = 0.0f;
+    w = 0.0f;
 }
 
 inline bool Vec4f::compare( const Vec4f &rhs) const
 {
-    return ( (d_x == rhs.d_x) &&
-             (d_y == rhs.d_y) &&
-             (d_z == rhs.d_z) &&
-             (d_w == rhs.d_w)
+    return ( (x == rhs.x) &&
+             (y == rhs.y) &&
+             (z == rhs.z) &&
+             (w == rhs.w)
             );
 }
 
@@ -92,61 +92,61 @@ inline float &Vec4f::operator[](int index)
 
 inline Vec4f Vec4f::operator-() const
 {
-    return Vec4f(-d_x,-d_y,-d_z,-d_w);
+    return Vec4f(-x,-y,-z,-w);
 }
 
 inline Vec4f Vec4f::operator-(const Vec4f &rhs) const
 {
-    return Vec4f(d_x - rhs.d_x, d_y - rhs.d_y, d_z - rhs.d_z, d_w - rhs.d_w);
+    return Vec4f(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
 }
 
 inline float Vec4f::operator*(const Vec4f &rhs) const
 {
-    return d_x * rhs.d_x + d_y * rhs.d_y + d_z *rhs.d_z + d_w * rhs.d_w;  
+    return x * rhs.x + y * rhs.y + z *rhs.z + w * rhs.w;  
 }
 
 inline Vec4f Vec4f::operator*(const float lhs, const Vec4f rhs)
 {
-    return Vec4f(lhs *d_x, lhs * d_y, lhs * d_z, lhs * d_w);
+    return Vec4f(lhs *x, lhs * y, lhs * z, lhs * w);
 }
 
 inline Vec4f Vec4f::operator*(const float rhs) const
 {
-    return Vec4f( d_x * rhs, d_y * rhs, d_z * rhs, d_w * rhs);
+    return Vec4f( x * rhs, y * rhs, z * rhs, w * rhs);
 }
 
 inline Vec4f Vec4f::operator/(const float rhs) const
 {
     float inv_rhs = 1.0f / rhs;
-    return Vec4f(d_x * inv_rhs, d_y * inv_rhs, d_z * inv_rhs, d_w * inv_rhs);
+    return Vec4f(x * inv_rhs, y * inv_rhs, z * inv_rhs, w * inv_rhs);
 }
 
 inline Vec4f &Vec4f::operator+=(const Vec4f &rhs)
 {
-    d_x += rhs.d_x;
-    d_y += rhs.d_y;
-    d_z += rhs.d_z;
-    d_w += rhs.d_w;
+    x += rhs.x;
+    y += rhs.y;
+    z += rhs.z;
+    w += rhs.w;
 
     return *this;
 }
 
 inline Vec4f &Vec4f::operator-=(const Vec4f &rhs)
 {
-    d_x -= rhs.d_x;
-    d_y -= rhs.d_y;
-    d_z -= rhs.d_z;
-    d_w -= rhs.d_w;
+    x -= rhs.x;
+    y -= rhs.y;
+    z -= rhs.z;
+    w -= rhs.w;
 
     return *this;
 }
 
 inline Vec4f &Vec4f::operator-=(const float rhs)
 {
-    d_x -= rhs;
-    d_y -= rhs;
-    d_z -= rhs;
-    d_w -= rhs;
+    x -= rhs;
+    y -= rhs;
+    z -= rhs;
+    w -= rhs;
 
     return *this;
 }
@@ -154,10 +154,10 @@ inline Vec4f &Vec4f::operator-=(const float rhs)
 
 inline Vec4f &Vec4f::operator/=(const Vec4f &rhs)
 {
-    d_x /= rhs.d_x;
-    d_y /= rhs.d_y;
-    d_z /= rhs.d_z;
-    d_w /= rhs.d_w;
+    x /= rhs.d_x;
+    y /= rhs.d_y;
+    z /= rhs.d_z;
+    w /= rhs.d_w;
 
     return *this;
 }
@@ -165,20 +165,20 @@ inline Vec4f &Vec4f::operator/=(const Vec4f &rhs)
 inline Vec4f &Vec4f::operator/=(const float rhs)
 {
     float inva = 1.0f/a;
-    d_x *= rhs;
-    d_y *= rhs;
-    d_z *= rhs;
-    d_w *= rhs;
+    x *= rhs;
+    y *= rhs;
+    z *= rhs;
+    w *= rhs;
     
     return *this;
 }
 
 inline Vec4f&Vec4f::operator*=(const float rhs)
 {
-    d_x *= rhs;
-    d_y *= rhs;
-    d_z *= rhs;
-    d_w *= rhs;
+    x *= rhs;
+    y *= rhs;
+    z *= rhs;
+    w *= rhs;
 
     return *this;
 }
@@ -195,20 +195,25 @@ inline bool Vec4f::operator!=(const Vec4f &rhs)
 inline float Vec4f::normalize()
 {
     float squareLength, inverseLength;
-    squareLength = d_x * d_x + d_y * d_y + d_z * d_z + d_w * d_w;
+    squareLength = x * x + y * y + z * z+ w * w;
     inverseLength = Math::invSqrt(squareLength);
-    d_x *= inverseLength;
-    d_y *= inverseLength;
-    d_z *= inverseLength;
-    d_w *= inverseLength;
+    x *= inverseLength;
+    y *= inverseLength;
+    z *= inverseLength;
+    w *= inverseLength;
     return inverseLength * squareLength;
+}
+
+inline std::string Vec4f::toString()
+{
+    std::stringstream ss;
+    ss << x <<  " , " << y << " , " << z << " , " << w << '\n';
+    return ss.str();
 }
 
 
 
 
-
-
-
+#endif
 
 

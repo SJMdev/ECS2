@@ -1,7 +1,9 @@
 #ifndef INCLUDED_MAT4_
 #define INCLUDED_MAT4_
 #include "../vector/vec4f.h"
-
+#include <string>
+#include <cstring> //memcpy
+#include <sstream>
 
 class Mat4
 {
@@ -46,7 +48,10 @@ class Mat4
         bool isIdentity();
         bool isDiagonal();
 
+        std:string toString();
+
 };
+
 
 inline Mat4::Mat4(const Vec4f &x, const Vec4f &y, const Vec4f &z, const Vec4f &w)
 {
@@ -65,6 +70,35 @@ inline  Mat4::Mat4(const float xx, const float xy, const float xz, const float x
     d_matrix[1][0]= yx; d_mat[1][1] =yy; d_mat[1][2] =yz; d_mat[1][3] =yw; 
     d_matrix[2][0]= zx; d_mat[2][1] =zy; d_mat[2][2] =zz; d_mat[2][3] =zw;
     d_matrix[3][0]= wx; d_mat[3][1] =wy; d_mat[2][2] =wz; d_mat[3][3] =ww;
+}
+
+inline void Mat4::zero()
+{
+	memset( d_matrix, 0, sizeof( Mat4 ) );
+}
+
+inline void Mat4::identity()
+{
+    memset( d_matrix, 0, sizeof( Mat4 ) );
+    d_matrix[0].x = 1;
+    d_matrix[1].y = 1;
+    d_matrix[2].z = 1;
+    d_matrix[3].w = 1;
+}
+
+inline bool Mat4::compare( const idMat4 &rhs ) const
+{
+	int i; //dword i;
+	const float *ptr1, *ptr2;
+
+	ptr1 = reinterpret_cast<const float *>(d_matrix);
+	ptr2 = reinterpret_cast<const float *>(rhs.d_matrix);
+	for ( i = 0; i < 4*4; i++ ) {
+		if ( ptr1[i] != ptr2[i] ) {
+			return false;
+		}
+	}
+	return true;
 }
 
 inline Mat4::Mat4( const float source[ 4 ][ 4 ] ) {
@@ -196,8 +230,62 @@ inline Mat4 &Mat4::operator+=(const Mat4 &rhs)
     return *this;
 }
 
+inline Mat4 &Mat4::operator-=(const Mat4 &rhs)
+{
+    d_matrix[0].x -= rhs; d_matrix[0].y -= rhs; d_matrix[0].z -= rhs; d_matrix[0].w -= rhs;
+    d_matrix[1].x -= rhs; d_matrix[1].y -= rhs; d_matrix[1].z -= rhs; d_matrix[1].w -= rhs;
+    d_matrix[2].x -= rhs; d_matrix[2].y -= rhs; d_matrix[2].z -= rhs; d_matrix[2].w -= rhs;
+    d_matrix[3].x -= rhs; d_matrix[3].y -= rhs; d_matrix[3].z -= rhs; d_matrix[3].w -= rhs;
+}
+
+inline Mat4 operator*(const float lhs, const Mat4 &rhs)
+{
+    return rhs * lhs; //matrix * float
+}
+
+inline Vec4f operator*(const Vec4f &lhs, const Mat4 &rhs)
+{
+    return rhs * lhs; //matrix * vector4;
+}
+
+// inline Vec3f opeartor*(const Vec3f &lhs, const Mat4 &rhs)
+// {
+//     return rhs * lhs; //matrix * vector3;
+// }
+
+inline Vec4f &operator*=(Vec4f &lhs, const Mat4 &rhs)
+{
+    lhs = rhs * lhs;
+    return lhs;
+}
+
+inline Vec3f &operator*=(Vec3f &lhs, const Mat4 &rhs)
+{
+    lhs = rhs * lhs;
+    return lhs;
+}
 
 
+inline bool Mat4::operator==(const Mat4 &rhs) const 
+{
+	return compare(rhs);
+}
+
+inline bool Mat4::operator!=(const Mat4 &rhs) const 
+{
+	return !compare(rhs);
+}
+
+inline std::string Mat4::toString()
+{
+    std::stringstream ss;
+    ss << d_matrix[0].x << " , " << d_matrix[0].y << " , " << d_matrix[0].z << " , " << << d_matrix[0].z << '\n'
+       << d_matrix[1].x << " , " << d_matrix[1].y << " , " << d_matrix[1].z << " , " << << d_matrix[1].z << '\n'  
+       << d_matrix[2].x << " , " << d_matrix[2].y << " , " << d_matrix[2].z << " , " << << d_matrix[2].z << '\n'
+       << d_matrix[3].x << " , " << d_matrix[3].y << " , " << d_matrix[3].z << " , " << << d_matrix[3].z << '\n';
+
+    return ss.str();
+}
 
 
 #endif
