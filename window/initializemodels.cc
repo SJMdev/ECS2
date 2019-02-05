@@ -5,11 +5,6 @@ void Window::initializeModels(vector<string> &modelNames)
     // create as many models as we have modelNames (preallocate?).
     // I won't do that here.
 
-
-
-    SDL_Log("texture width: %d", texture.width);
-    SDL_Log("texture height:%d", texture.height);
-
     for (auto &modelName : modelNames)
     {
         Model model;

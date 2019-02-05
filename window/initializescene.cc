@@ -7,7 +7,7 @@ void Window::initializeScene()
     d_lightTranslationMatrix = {
                                 1, 0, 0, 0,
         	                    0, 1, 0, 0,
-                                0, 0, 1, 0
+                                0, 0, 1, 0,
                                 0, 0, 0, 1
                                 };
 

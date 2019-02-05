@@ -2,22 +2,14 @@
 
 void Window::render()
 {
-     //bind program!
-    //glUseProgram(gProgramID);
+   // bind shader program (set_shader?)
+    glUseProgram(d_gProgramID);
     // clear color buffer
     glClearColor(0,0,0,1); // r,g,b,a
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-    // draw_game_3d()
-
-   // bind shader program (set_shader?)
-    glUseProgram(d_gProgramID);
-
-
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIBO);
     glBindVertexArray(gVAO);
-    glBindTexture(gTBO);
+    
+    glBindTexture(GL_TEXTURE_2D, gTBO);
 
 
     // this is very naive.

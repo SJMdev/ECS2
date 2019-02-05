@@ -1,18 +1,15 @@
 #include "window.ih"
 
-void Window::setUniforms()
+void Window::setUniforms(GLuint currentShaderProgram)
 {
-    // if(d_shaderMode != NORMAL)
-    {
-        d_lightPositionLocation   = current.uniformLocation("lightPosition");
-        d_lightColorLocation      = current.uniformLocation("lightColor");
-        d_materialLocation        = current.uniformLocation("material");
-        d_textureLocation         = current.uniformLocation("textureUniform");
-    }
+    // for gouraud.
+    d_materialLocation        = glGetUniformLocation(currentShaderProgram, "material");
+    d_lightPositionLocation   = glGetuniformLocation(currentShaderProgram, "lightPosition");
+    d_lightColorLocation      = glGetUniformLocation(currentShaderProgram, "lightColor");
+    d_textureLocation         = glGetUniformLocation(currentShaderProgram, "textureUniform");
 
-    d_modelLocation           = current.uniformLocation("modelMatrix");
-    d_viewMatrixLocation      = current.uniformLocation("viewMatrix");
-    d_projectionLocation      = current.uniformLocation("modelProjection");
-    d_normalTransformLocation = current.uniformLocation("normalTransform");
-}
+    d_modelLocation           = glGetUniformLocation(currentShaderProgram, "modelMatrix");
+    d_viewMatrixLocation      = glGetUniformLocation(currentShaderProgram, "viewMatrix");
+    d_projectionLocation      = glGetUniformLocation(currentShaderProgram, "modelProjection");
+    d_normalTransformLocation = glGetUniformLocation(currentShaderProgram, "normalTransform");
 }

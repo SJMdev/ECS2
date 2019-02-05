@@ -1,0 +1,24 @@
+
+
+the main loop of the program is as of now:
+
+create a window (through SDL)
+
+void initializeSDL() 
+    - sets major and minor openGL versions
+    - creates an openGL context to draw to/in/at.
+
+void initializeGlew(); // wrangle the graphics drivers for us.
+
+bool initializeOpenGL()
+    - create openGL program
+    - attach shaders from source files
+    - link shaders to program
+
+void initializeScene()
+    - initialize d_material (?)
+    - initialize lightTranslationMatrix
+    - initialize lightColor
+
+initializeModels(vector<string> modelnames)
+    -

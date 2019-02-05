@@ -9,7 +9,8 @@
 #include "../shared/vecf.h"
 #include "../shared/model.h"
 #include "../shared/texture.h"
-
+#include "../shared/object.h"
+#include "../matrix/mat4.h"
 
 class Window
 {
@@ -30,12 +31,18 @@ class Window
     // this is part of the scene. Maybe make a struct or something else.
     std::vector<float> d_material; // Vec4f? 
     std::vector<float> d_lightTranslationMatrix; // this should be a Matrix!
+    Mat4 d_viewMatrix;
     std::vector<float> d_lightColor; // Vec3f
 
-    d_lightPositionLocation   = current.uniformLocation("lightPosition");
-    d_lightColorLocation      = current.uniformLocation("lightColor");
-    d_materialLocation        = current.uniformLocation("material");
-    d_textureLocation         = current.uniformLocation("textureUniform");
+    GLuint d_modelLocation;       // If location is -1, this will make the program crash! (NICE)
+    GLuint d_projectionLocation;  // Idem
+    GLuint d_viewMatrixLocation;
+    GLuint d_normalTransformLocation;
+    GLuint d_lightPositionLocation;
+    GLuint d_lightColorLocation;
+    GLuint d_materialLocation;
+    GLuint d_textureLocation;
+
 
 
     bool gRenderQuad = true;
@@ -58,13 +65,17 @@ class Window
         bool initializeOpenGL(); // not sure.
 
 
-
+        //@Todo: what shader program do we attach these to?
         void addShaderFromFile(std::string &filename, GLenum shaderType, GLuint &shader);
-        void initilializeScene(); // set up the lighting color, material thing, and the light rotation matrix?
+
+
+        void initializeScene(); // set up the lighting color, material thing, and the light rotation matrix?
+        void initializeViewMatrix();
+
         void initializeModels(std::vector<std::string> &modelNames);
         void loadModel(std::string &filename,Model &model);
         bool loadOBJFromFile(std::string &filename, Model &model);
-        void setUniforms(); // set the uniforms for the current shader. We thus need to know what the active shader is.
+        void setUniforms(GLuint currentShaderProgram); // set the uniforms for the current shader. We thus need to know what the active shader is.
         void fillTexture(Texture &texture, std::string &filename);
         // this is not mine
         int decodePNG(std::vector<unsigned char>& out_image,
@@ -79,28 +90,27 @@ class Window
         void sendModelToBuffer(Model &model);
 
 
-      
-
-
-        void drawModel(Model &model);
 
 
 
-        void calculateNormals(Model &model); //deprecated
 
-
-
-        void addFragmentShaderFromSourceFile(std::string &filename);
-        void addVertexShaderFromSourceFile(std::string &filename);
-
-        void drawTriangle();
+       
         
 
         void render();
         void swapWindow();
 
+
+
+        //deprecated & tobe removed
+        void drawTriangle();
         void printShaderLog(GLuint shader);
         void printProgramLog(GLuint program);
+        void drawModel(Model &model);
+        void calculateNormals(Model &model); //deprecated   
+        void addFragmentShaderFromSourceFile(std::string &filename);
+        void addVertexShaderFromSourceFile(std::string &filename);
+
 
 
     private:

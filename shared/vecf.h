@@ -23,20 +23,20 @@ struct Vec3f
 };
 
 
-struct Vec4f
-{
-    union 
-    {
-        struct
-        {
-            float r;
-            float g;
-            float b;
-            float a;
-        }
-        float v[4];
-    }
-};
+// struct Vec4f
+// {
+//     union 
+//     {
+//         struct
+//         {
+//             float r;
+//             float g;
+//             float b;
+//             float a;
+//         };
+//         float v[4];
+//     };
+// };
 
 
 struct Vec2f

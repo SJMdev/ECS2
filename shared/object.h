@@ -3,15 +3,16 @@
 #include "texture.h"
 #include "vecf.h"
 #include "vertex.h"
+#include "../matrix/mat4.h"
 
-struct Object
-{
-    std::vector<Vec3f> raw_vertices;
-    std::vector<Vec2f> raw_uvs;
-    std::vector<Vec3f> raw_normals;
-    std::vector<Vertex> interleaved_vertices;
-    texture Texture;
-};
+
+// struct Object
+// {
+//     Mat4 transformationMatrix;
+//     Mat4 locationMatrix;
+//     Mat4 rotationMatrix;
+//     texture Texture;
+// };
 
 
 

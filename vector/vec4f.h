@@ -2,7 +2,7 @@
 #define INCLUDED_VEC4F_
 #include "../utility/math.h"
 #include <string>
-#include <stringstream>
+#include <sstream>
 
 //@Todo: implement move stuff in order for Vec4 to be aligned in memory to allow operator[] to access the correct thing. I still feel this is very dangerous.
 

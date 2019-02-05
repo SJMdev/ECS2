@@ -5,7 +5,6 @@ void Window::sendModelToBuffer(Model &model)
 {
     GLsizei objectCount = 1;
 
-
     // create VBO & VAO.
     glGenBuffers(objectCount, &gVBO);     // glsizei n, GLuint *buffers
     glGenVertexArrays(objectCount, &gVAO); // glsizei n, GLuinbt *arrays
