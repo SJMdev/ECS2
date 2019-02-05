@@ -18,7 +18,7 @@ class Vec4f
     
     Vec4f() {};
     explicit Vec4f(float x, float y, float z, float w) { set( x , y, z, w)};
-    explicit Vec4f(float x) { set(x, x, x, z)};
+    explicit Vec4f(float x) { set(x, x, x, x)};
     
     float operator[](const int index) const;
     float &operator[](const int index);
@@ -37,14 +37,16 @@ class Vec4f
       
     friend Vec4f operator*(const float lhs, const Vec4f rhs);
     
-    bool operator==( const idVec &rhs) const;
-    bool operator!=( const idVec &rhs) const;
+    bool operator==( const Vec4f &rhs) const;
+    bool operator!=( const Vec4f &rhs) const;
 
+    bool compare(const Vec4f &rhs) const;
     float Normalize();
 
     void zero(); //sets all values to 0
     void set();
 
+    
     //linear interpolation between!
     //void lerp?
 };
@@ -194,8 +196,11 @@ inline float Vec4f::normalize()
 {
     float squareLength, inverseLength;
     squareLength = d_x * d_x + d_y * d_y + d_z * d_z + d_w * d_w;
-    inverseLength = 2;
-
+    inverseLength = Math::invSqrt(squareLength);
+    d_x *= inverseLength;
+    d_y *= inverseLength;
+    d_z *= inverseLength;
+    d_w *= inverseLength;
     return inverseLength * squareLength;
 }
 
