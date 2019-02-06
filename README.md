@@ -10,11 +10,27 @@ cl /MP4 main.cc window/window1.cc window/loadbmp.cc window/destructor.cc window/
 # you can compile with wildcards!
 cl /MP4 *.cc window/*.cc  /EHsc /std:c++17 /I libraries /link libraries/sdl/lib/win64/SDL2.lib libraries/sdl/lib/win64/SDL2main.lib libraries/glew/lib/win64/glew32.lib libraries/glew/lib/win64/glew32s.lib openGL32.lib /SUBSYSTEM:WINDOWS
 
+
+
+# The gist of it.
+The system currently uses SDL for constructing a window. I may / may not want to switch to GLFW , which at least does not hijack my logprinting. The Vec3f, Vec4f, Mat3 and Mat4 implementations strongly resemble those of Doom 3. I am unsure whether or not they are meritous, as the way they allow access to their public data members through memory addresses is (very) error-prone.
+
+
+# TODO:
+rewrite model to object
+rewrite vec3f to be usable by mat3 and mat4
+implement debug mode 
+assert index retrieval for vec and mat works
+pull apart the windows class 
+
+
+
+
+
 # Installing a library
 link against the libraries using /link in the command line, e.g. /link libraries/sdl/lib/win64/sdl2.lib.
 
 Usually, this is not enough, as they require a DLL to operate. the compiler searches for DLLs in C:\Windows\System32 and in C:\Windows\SysWOW64. We need to copy our DLLs to here. I don't know yet how to include DLLs from another location. We do this for SDL and for glew.
-
 
 FWIW, this was the correct answer, at least in my case. I had to download the SDL2 windows development libraries, then copy \SDL2\lib\x64\SDL2.dll to C:\Windows\System32 and \SDL2\lib\x86\SDL2.dll to C:\Windows\SysWOW64. Voila. 
 
