@@ -31,7 +31,11 @@ void Window::render()
     for (auto &object : d_objects)
     {
         object.modelMatrix = object.translationMatrix * object.rotationMatrix * object.scaleMatrix;
+        SDL_Log("modelMatrix looks like \n%s", object.modelMatrix.toString().c_str());
         object.normalTransformMatrix = object.modelMatrix.normalMatrix();
+        SDL_Log("normal transform matrix is: \n%s", object.normalTransformMatrix.toString().c_str());
+
+
         glUniformMatrix4fv(d_modelLocation, 1, false, object.modelMatrix.data()); // I have no idea whether this will work or not.
         glUniformMatrix3fv(d_normalTransformLocation, 1, false, object.normalTransformMatrix.data());
 

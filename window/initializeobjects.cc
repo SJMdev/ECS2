@@ -15,7 +15,7 @@ void Window::initializeObjects(vector<string> &objectNames)
         object.translationMatrix.toIdentity();
         object.rotationMatrix.toIdentity();
         SDL_Log( "matrix: %s", object.scaleMatrix.toString().c_str());
-        object.translationMatrix[2][3] = 2;
+        object.translationMatrix[2][3] = -2;
         SDL_Log( "matrix: %s", object.translationMatrix.toString().c_str());
         object.modelMatrix = object.translationMatrix * object.rotationMatrix * object.scaleMatrix;
         d_objects.push_back(object);
