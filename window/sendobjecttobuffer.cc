@@ -1,7 +1,7 @@
 #include "window.ih"
 #define BUFFER_OFFSET(i) ((void*)(i)) //hacky macro
 
-void Window::sendModelToBuffer(Model &model)
+void Window::sendObjectToBuffer(Object &object)
 {
     GLsizei objectCount = 1;
 
@@ -21,16 +21,14 @@ void Window::sendModelToBuffer(Model &model)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+    fillTexture(object.texture, string{"cat_norm.png"}); // read data from the .png image and store it in the texture.
 
-    Texture texture{};
-    fillTexture(texture, string{"cat_norm.png"}); // read data from the .png image and store it in the texture.
-
-    SDL_Log("texture width: %d", texture.width);
-    SDL_Log("texture height:%d", texture.height);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texture.width, texture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.image.data());
+    SDL_Log("texture width: %d", object.texture.width);
+    SDL_Log("texture height:%d", object.texture.height);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, object.texture.width, object.texture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, object.texture.image.data());
 
     // actually send the data to the buffer. We pass a reference to the raw data in interleaved vertices.
-    glBufferData(GL_ARRAY_BUFFER, static_cast<int>(model.interleaved_vertices.size() * sizeof(Vertex)), model.interleaved_vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, static_cast<int>(object.interleaved_vertices.size() * sizeof(Vertex)), object.interleaved_vertices.data(), GL_STATIC_DRAW);
      
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);

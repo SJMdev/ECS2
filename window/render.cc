@@ -13,7 +13,7 @@ void Window::render()
 
 
     // this is very naive.
-    glDrawArrays(GL_TRIANGLES, 0, d_models.at(0).interleaved_vertices.size());
+    glDrawArrays(GL_TRIANGLES, 0, d_objects.at(0).interleaved_vertices.size());
     //unbind program
     glUseProgram(0); // NULL?
 

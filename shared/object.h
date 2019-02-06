@@ -10,8 +10,8 @@
 struct Object
 {
     //transformation
-    Mat4 transformationMatrix;
-    Mat4 locationMatrix;
+    Mat4 modelMatrix; //for MVP!
+    Mat4 translationMatrix;
     Mat4 rotationMatrix;
     Mat4 scaleMatrix;
 

@@ -1,6 +1,8 @@
 #ifndef INCLUDED_VERTEX_
 #define INCLUDED_VERTEX_
 
+//@TODO: this uses the old Vec3f.
+
 struct Vertex
 {
     union

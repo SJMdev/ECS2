@@ -1,11 +1,11 @@
 #include "window.ih"
 
-bool Window::loadOBJFromFile(std::string &filename, Model &model)
+bool Window::loadOBJFromFile(std::string &filename, Object &object)
 {
     bool success = true;
     ifstream file;
 
-    file.open("models/" + filename);
+    file.open("objects/" + filename);
 
     if (file.bad())
     {
@@ -37,7 +37,7 @@ bool Window::loadOBJFromFile(std::string &filename, Model &model)
             string garbage;
             stringstream(line) >> garbage >> vertex.x >> vertex.y >> vertex.z;
             // SDL_Log("found vns: %f %f %f", vertex.x, vertex.y, vertex.z);
-            model.normals.push_back(vertex);
+            object.rawData.normals.push_back(vertex);
             continue;
         }
 
@@ -48,7 +48,7 @@ bool Window::loadOBJFromFile(std::string &filename, Model &model)
             Vec2f uv;
             string garbage;
             stringstream(line) >> garbage >> uv.u >> uv.v;
-            model.uvs.push_back(uv);
+            object.rawData.uvs.push_back(uv);
             continue;
         }
 
@@ -78,13 +78,13 @@ bool Window::loadOBJFromFile(std::string &filename, Model &model)
 
                 // SDL_Log("found %s, %d, %d, %d", garbage.c_str(), firstVertex, secondVertex, thirdVertex);
 
-                model.vertex_indices.push_back(firstVertex);
-                model.vertex_indices.push_back(secondVertex);
-                model.vertex_indices.push_back(thirdVertex);  
+                object.rawData.vertex_indices.push_back(firstVertex);
+                object.rawData.vertex_indices.push_back(secondVertex);
+                object.rawData.vertex_indices.push_back(thirdVertex);  
 
-                model.normal_indices.push_back(firstNormal);
-                model.normal_indices.push_back(secondNormal);
-                model.normal_indices.push_back(thirdNormal);
+                object.rawData.normal_indices.push_back(firstNormal);
+                object.rawData.normal_indices.push_back(secondNormal);
+                object.rawData.normal_indices.push_back(thirdNormal);
             }
             else if (foundSingleSlash != string::npos)
             {
@@ -108,19 +108,19 @@ bool Window::loadOBJFromFile(std::string &filename, Model &model)
                 thirdNormal -=1;
                 thirduv -=1;
 
-                model.vertex_indices.push_back(firstVertex);
-                model.vertex_indices.push_back(secondVertex);
-                model.vertex_indices.push_back(thirdVertex);  
+                object.rawData.vertex_indices.push_back(firstVertex);
+                object.rawData.vertex_indices.push_back(secondVertex);
+                object.rawData.vertex_indices.push_back(thirdVertex);  
                 //how does this look?
                 // SDL_Log("found vector %s, %d, %d, %d", garbage.c_str(), firstVertex, secondVertex, thirdVertex);
                 // SDL_Log("found normals %d, %d, %d", firstNormal, secondNormal, thirdNormal);
-                model.uv_indices.push_back(firstuv);
-                model.uv_indices.push_back(seconduv);
-                model.uv_indices.push_back(thirduv);
+                object.rawData.uv_indices.push_back(firstuv);
+                object.rawData.uv_indices.push_back(seconduv);
+                object.rawData.uv_indices.push_back(thirduv);
 
-                model.normal_indices.push_back(firstNormal);
-                model.normal_indices.push_back(secondNormal);
-                model.normal_indices.push_back(thirdNormal);
+                object.rawData.normal_indices.push_back(firstNormal);
+                object.rawData.normal_indices.push_back(secondNormal);
+                object.rawData.normal_indices.push_back(thirdNormal);
             }
             else
             {
@@ -128,9 +128,9 @@ bool Window::loadOBJFromFile(std::string &filename, Model &model)
                 firstVertex -=1;
                 secondVertex -=1;
                 thirdVertex -=1;
-                model.vertex_indices.push_back(firstVertex);
-                model.vertex_indices.push_back(secondVertex);
-                model.vertex_indices.push_back(thirdVertex);  
+                object.rawData.vertex_indices.push_back(firstVertex);
+                object.rawData.vertex_indices.push_back(secondVertex);
+                object.rawData.vertex_indices.push_back(thirdVertex);  
                 // SDL_Log("found %s, %d, %d, %d", garbage.c_str(), firstVertex, secondVertex, thirdVertex);
             }
         }   
@@ -142,7 +142,7 @@ bool Window::loadOBJFromFile(std::string &filename, Model &model)
             Vec3f vertex;
             string garbage;
             stringstream(line) >> garbage >> vertex.x >> vertex.y >> vertex.z;
-            model.vertices.push_back(vertex);
+            object.rawData.vertices.push_back(vertex);
             continue;
         }
 

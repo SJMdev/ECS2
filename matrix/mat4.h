@@ -43,7 +43,7 @@ class Mat4
         bool operator!=(const Mat4 &rhs) const;
 
         void zero();
-        void identity();
+        void toIdentity();
 
         bool isIdentity();
         bool isDiagonal();
@@ -77,7 +77,7 @@ inline void Mat4::zero()
 	memset( d_matrix, 0, sizeof( Mat4 ) );
 }
 
-inline void Mat4::identity()
+inline void Mat4::toIdentity()
 {
     memset( d_matrix, 0, sizeof( Mat4 ) );
     d_matrix[0].x = 1;

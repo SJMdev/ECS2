@@ -18,7 +18,7 @@ class Window
     SDL_Surface *d_surface;
     SDL_Surface *d_image;
 
-    std::vector<Model> d_models;
+    std::vector<Object> d_objects;
 
 
     //openGL stuff
@@ -33,12 +33,17 @@ class Window
     // this is part of the scene. Maybe make a struct or something else.
     std::vector<float> d_material; // Vec4f? 
     std::vector<float> d_lightTranslationMatrix; // this should be a Matrix!
+    Mat4 d_modelMatrix;
     Mat4 d_viewMatrix;
-    Mat4 d_viewTranslationMatrix;
+    Mat4 d_projectionMatrix;
     std::vector<float> d_lightColor; // Vec3f
+    
+    Mat4 d_viewTranslationMatrix;
+    Mat4 d_viewRotationMatrix;
+    Mat4 d_viewScaleMatrix;
 
-
-    GLuint d_modelLocation;       // If location is -1, this will make the program crash! (NICE)
+    GLuint d_modelLocation;
+    GLuint d_objectLocation;       // If location is -1, this will make the program crash! (NICE)
     GLuint d_projectionLocation;  // Idem
     GLuint d_viewMatrixLocation;
     GLuint d_normalTransformLocation;
@@ -55,7 +60,7 @@ class Window
     // SDL openGL stuff!
     SDL_GLContext d_gContext;
     
-    Model d_activeModel;
+    //Model d_activeModel;
 
 
     public:
@@ -74,14 +79,26 @@ class Window
 
 
         void initializeScene(); // set up the lighting color, material thing, and the light rotation matrix?
-        void initializeViewMatrix();
+       // void initializeViewMatrix();
 
-        void initializeModels(std::vector<std::string> &modelNames);
-        void loadModel(std::string &filename,Model &model);
-        bool loadOBJFromFile(std::string &filename, Model &model);
+        void initializeObjects(std::vector<std::string> &objectNames);
+        void loadObject(std::string &filename,Object &object);
+        bool loadOBJFromFile(std::string &filename, Object &object);
         void setUniforms(GLuint currentShaderProgram); // set the uniforms for the current shader. We thus need to know what the active shader is.
         void fillTexture(Texture &texture, std::string &filename);
-        // this is not mine
+
+
+
+        //this belongs in object related stuff. 
+        void generateVertices(Object &object);
+        void sendObjectToBuffer(Object &object);
+
+
+        void render();
+        void swapWindow();
+
+
+        //this belongs in utility, and not in window
         int decodePNG(std::vector<unsigned char>& out_image,
                     unsigned long& image_width,
                     unsigned long& image_height,
@@ -89,15 +106,6 @@ class Window
                     size_t in_size,
                     bool convert_to_rgba32 = true);
         void loadPNG(std::vector<unsigned char>& buffer, const std::string& filename); //designed for loading files from hard disk in an std::vector
-        
-        void generateVertices(Model &model);
-        void sendModelToBuffer(Model &model);
-
-
-        void render();
-        void swapWindow();
-
-
 
         //deprecated & tobe removed
         void drawTriangle();
