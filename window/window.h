@@ -42,6 +42,9 @@ class Window
     Mat4 d_viewRotationMatrix;
     Mat4 d_viewScaleMatrix;
 
+    std::vector<float> d_lightTranslationVector;
+    
+
     GLuint d_modelLocation;
     GLuint d_objectLocation;       // If location is -1, this will make the program crash! (NICE)
     GLuint d_projectionLocation;  // Idem
