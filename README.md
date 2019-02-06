@@ -17,15 +17,18 @@ The system currently uses SDL for constructing a window. I may / may not want to
 
 
 # TODO:
-rewrite model to object
+fix matrices.
 
-rewrite vec3f to be usable by mat3 and mat4
+implement mat4.translate, mat4.rotate and mat4.scale (disallow shear)
 
-implement debug mode 
+window.addshaderfromfile should have a pointer to the current active program.
 
-assert index retrieval for vec and mat works
+unify buffers.
 
-pull apart the windows class 
+
+
+
+
 
 
 
