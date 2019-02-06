@@ -18,9 +18,13 @@ The system currently uses SDL for constructing a window. I may / may not want to
 
 # TODO:
 rewrite model to object
+
 rewrite vec3f to be usable by mat3 and mat4
+
 implement debug mode 
+
 assert index retrieval for vec and mat works
+
 pull apart the windows class 
 
 
