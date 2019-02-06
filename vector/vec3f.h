@@ -6,7 +6,6 @@
 
 //@Todo: implement move stuff in order for Vec3 to be aligned in memory to allow operator[] to access the correct thing. I still feel this is very dangerous.
 
-
 class Vec3f
 {
     public:
@@ -49,6 +48,8 @@ class Vec3f
     std::string toString();
     //linear interpolation between!
     //void lerp?
+    const float *data() const;
+    float *data();
 };
 
 
@@ -198,11 +199,14 @@ inline float Vec3f::normalize()
 inline std::string Vec3f::toString()
 {
     std::stringstream ss;
-    ss << x <<  " , " << y << " , " << z '\n';
+    ss << x <<  " , " << y << " , " << z << '\n';
     return ss.str();
 }
 
-
+inline float *Vec3f::data()
+{
+    return &x;
+}
 
 
 #endif

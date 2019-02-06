@@ -4,7 +4,6 @@
 #include <string>
 #include <cstddef>
 #include <vector>
-#include "vecf.h"
 
 
 struct Texture

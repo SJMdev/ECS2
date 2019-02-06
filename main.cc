@@ -30,12 +30,12 @@ int main(int argc, char* argv[]) //this is necessary for SDL
     {
         SDL_Log("Unable to initialize OpenGL.");
     };
- 
 
     vector<string> objectNames { {"cat.obj"} };
     
     d_window.initializeScene();
     d_window.initializeObjects(objectNames);
+    d_window.initializeViewMatrices();
 
 
 

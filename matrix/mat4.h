@@ -1,9 +1,11 @@
 #ifndef INCLUDED_MAT4_
 #define INCLUDED_MAT4_
 #include "../vector/vec4f.h"
+#include "../vector/vec3f.h"
 #include <string>
 #include <cstring> //memcpy
 #include <sstream>
+#include "mat3.h"
 
 class Mat4
 {
@@ -23,7 +25,7 @@ class Mat4
         Vec4f & operator[](int index);
         Mat4 operator*(const float rhs) const;
         Vec4f operator*(const Vec4f &rhs) const;
-        // Vec3f operator*(const Vec3f &rhs) const;
+        Vec3f operator*(const Vec3f &rhs) const;
         Mat4 operator*(const Mat4 &rhs) const;
         Mat4 operator+(const Mat4 &rhs) const;
         Mat4 operator-(const Mat4 &rhs) const;
@@ -42,6 +44,13 @@ class Mat4
         bool operator==(const Mat4 &rhs) const;
         bool operator!=(const Mat4 &rhs) const;
 
+        //Hacky stuff here.
+
+        Mat3 toMat3() const;
+        Mat3 normalMatrix() const;
+
+        Mat4 &inverse() const;
+
         void zero();
         void toIdentity();
 
@@ -49,6 +58,9 @@ class Mat4
         bool isDiagonal();
 
         std::string toString();
+        
+        const float *data() const;
+        float *data();
 
 };
 
@@ -136,29 +148,29 @@ inline Vec4f Mat4::operator*(const Vec4f &rhs) const
                 );
 }
 
-// inline Vec3f Mat4::operator*(const Vec3f &rhs) const
-// {
-//     float s = d_matrix[3].x * rhs.x + d_matrix[3].y * rhs.y + d_matrix[3].z * rhs.z + d_matrix[4].w;
-//     if (s = 0.0f)
-//         return Vec3f( 0.0f, 0.0f, 0.0f);
-//     if (s == 1.0f)
-//     {
-//         return Vec3f(
-//                       d_matrix[0].x * rhs.x + d_matrix[0].y * rhs.y + d_matrix[0].z * rhs.z + d_matrix[0].w;
-//                       d_matrix[1].x * rhs.x + d_matrix[1].y * rhs.y + d_matrix[1].z * rhs.z + d_matrix[1].w;
-//                       d_matrix[2].x * rhs.x + d_matrix[2].y * rhs.y + d_matrix[2].z * rhs.z + d_matrix[2].w; 
-//                     );                    
-//     }
-//     else
-//     {
-//         float invS = 1.0f / s;
-//         return Vec3f(
-//                       (d_matrix[0].x * rhs.x + d_matrix[0].y * rhs.y + d_matrix[0].z * rhs.z + d_matrix[0].w) * invS,
-//                       (d_matrix[1].x * rhs.x + d_matrix[1].y * rhs.y + d_matrix[1].z * rhs.z + d_matrix[1].w) * invS,
-//                       (d_matrix[2].x * rhs.x + d_matrix[2].y * rhs.y + d_matrix[2].z * rhs.z + d_matrix[2].w) * invS 
-//                     );
-//     }
-// }
+inline Vec3f Mat4::operator*(const Vec3f &rhs) const
+{
+    float s = d_matrix[3].x * rhs.x + d_matrix[3].y * rhs.y + d_matrix[3].z * rhs.z + d_matrix[4].w;
+    if (s = 0.0f)
+        return Vec3f( 0.0f, 0.0f, 0.0f);
+    if (s == 1.0f)
+    {
+        return Vec3f(
+                      d_matrix[0].x * rhs.x + d_matrix[0].y * rhs.y + d_matrix[0].z * rhs.z + d_matrix[0].w,
+                      d_matrix[1].x * rhs.x + d_matrix[1].y * rhs.y + d_matrix[1].z * rhs.z + d_matrix[1].w,
+                      d_matrix[2].x * rhs.x + d_matrix[2].y * rhs.y + d_matrix[2].z * rhs.z + d_matrix[2].w 
+                    );                    
+    }
+    else
+    {
+        float invS = 1.0f / s;
+        return Vec3f(
+                      (d_matrix[0].x * rhs.x + d_matrix[0].y * rhs.y + d_matrix[0].z * rhs.z + d_matrix[0].w) * invS,
+                      (d_matrix[1].x * rhs.x + d_matrix[1].y * rhs.y + d_matrix[1].z * rhs.z + d_matrix[1].w) * invS,
+                      (d_matrix[2].x * rhs.x + d_matrix[2].y * rhs.y + d_matrix[2].z * rhs.z + d_matrix[2].w) * invS 
+                    );
+    }
+}
 
 inline Mat4 Mat4::operator*(const Mat4 &rhs) const
 {
@@ -250,10 +262,10 @@ inline Vec4f operator*(const Vec4f &lhs, const Mat4 &rhs)
     return rhs * lhs; //matrix * vector4;
 }
 
-// inline Vec3f opeartor*(const Vec3f &lhs, const Mat4 &rhs)
-// {
-//     return rhs * lhs; //matrix * vector3;
-// }
+inline Vec3f operator*(const Vec3f &lhs, const Mat4 &rhs)
+{
+    return rhs * lhs; //matrix * vector3;
+}
 
 inline Vec4f &operator*=(Vec4f &lhs, const Mat4 &rhs)
 {
@@ -261,11 +273,11 @@ inline Vec4f &operator*=(Vec4f &lhs, const Mat4 &rhs)
     return lhs;
 }
 
-// inline Vec3f &operator*=(Vec3f &lhs, const Mat4 &rhs)
-// {
-//     lhs = rhs * lhs;
-//     return lhs;
-// }
+inline Vec3f &operator*=(Vec3f &lhs, const Mat4 &rhs)
+{
+    lhs = rhs * lhs;
+    return lhs;
+}
 
 
 inline bool Mat4::operator==(const Mat4 &rhs) const 
@@ -287,6 +299,34 @@ inline std::string Mat4::toString()
        << std::to_string(d_matrix[3].x) << " , " << std::to_string(d_matrix[3].y) << " , " << std::to_string(d_matrix[3].z) << " , " << std::to_string(d_matrix[3].w) << '\n';
 
     return ss.str();
+}
+
+inline float *Mat4::data()
+{
+    return d_matrix[0].data();
+}
+
+inline const float *Mat4::data() const
+{
+    return d_matrix[0].data();
+}
+
+inline Mat3 Mat4::toMat3() const
+{
+    //mat3 is column forward, so it should be transposed:
+    Mat3 matrix(d_matrix[0][0],  d_matrix[1][0], d_matrix[2][0],
+                d_matrix[0][1],  d_matrix[1][1], d_matrix[2][1],
+                d_matrix[0][2],  d_matrix[1][2], d_matrix[2][2]
+                );
+    return matrix;
+}
+
+inline Mat3 Mat4::normalMatrix() const
+{
+    Mat3 matrix = toMat3(); //i n toMat3, we invert before creating, so we get the right numbers in the right place.
+    matrix.inverseSelf();
+    matrix.transposeSelf();
+    return matrix;
 }
 
 

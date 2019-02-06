@@ -5,13 +5,16 @@
 #include <cstring> //memcpy
 #include <sstream>
 
+#define MATRIX_INVERSE_EPSILON		1e-14
+#define MATRIX_EPSILON				1e-6
+
 class Mat3
 {
     Vec3f d_matrix[3];
 
     public:
         Mat3() {};
-        explicit Mat3(const Vec4f &x, const Vec4f &y, const Vec4f &z);
+        explicit Mat3(const Vec3f &x, const Vec3f &y, const Vec3f &z);
 
         explicit Mat3(const float xx, const float xy, const float xz,
                       const float yx, const float yy, const float yz, 
@@ -23,7 +26,7 @@ class Mat3
         const Vec3f &operator[](int index) const;
         Vec3f & operator[](int index);
         Mat3 operator*(const float rhs) const;
-        Vec3f operator*(const Vec4f &rhs) const;
+        Vec3f operator*(const Vec3f &rhs) const;
         // Vec3f operator*(const Vec3f &rhs) const;
         Mat3 operator*(const Mat3 &rhs) const;
         Mat3 operator+(const Mat3 &rhs) const;
@@ -50,7 +53,14 @@ class Mat3
         bool isIdentity();
         bool isDiagonal();
 
+        Mat3 &transposeSelf();
+        Mat3 inverse();
+        //Mat3 transpose();
+        bool inverseSelf();
         std::string toString();
+
+        const float *data() const;
+        float *data();
 
 };
 
@@ -63,8 +73,8 @@ inline Mat3::Mat3(const Vec3f &x, const Vec3f &y, const Vec3f &z)
 }
 
 inline  Mat3::Mat3(const float xx, const float xy, const float xz,
-                      const float yx, const float yy, const float yz
-                      const float zx, const float zy, const float zz
+                   const float yx, const float yy, const float yz,
+                   const float zx, const float zy, const float zz
                   )
 {
     d_matrix[0][0]= xx; d_matrix[0][1] =xy; d_matrix[0][2] =xz;
@@ -79,9 +89,9 @@ inline Mat3::Mat3( const float source[ 3 ][ 3 ] ) {
 
 inline bool Mat3::compare(const Mat3 &rhs) const
 {
-	if (d_matrix[0].Compare(rhs[0]) &&
-		d_matrix[1].Compare(rhs[1]) &&
-		d_matrix[2].Compare(rhs[2])) 
+	if (d_matrix[0].compare(rhs[0]) &&
+		d_matrix[1].compare(rhs[1]) &&
+		d_matrix[2].compare(rhs[2])) 
     {
 		return true;
 	}
@@ -173,11 +183,11 @@ inline Mat3 Mat3::operator-(const Mat3 &rhs) const
 
 inline Mat3 &Mat3::operator*=(const float rhs) 
 {
-    d_matrix[0].x *= rhs; d_matrix[0].y *= rhs; d_matrix[0].z *= rhs; d_matrix[0].w *= rhs;
-    d_matrix[1].x *= rhs; d_matrix[1].y *= rhs; d_matrix[1].z *= rhs; d_matrix[1].w *= rhs;
-    d_matrix[2].x *= rhs; d_matrix[2].y *= rhs; d_matrix[2].z *= rhs; d_matrix[2].w *= rhs;
-    d_matrix[3].x *= rhs; d_matrix[3].y *= rhs; d_matrix[3].z *= rhs; d_matrix[3].w *= rhs;
-    
+    d_matrix[0].x *= rhs; d_matrix[0].y *= rhs; d_matrix[0].z *= rhs;
+    d_matrix[1].x *= rhs; d_matrix[1].y *= rhs; d_matrix[1].z *= rhs; 
+    d_matrix[2].x *= rhs; d_matrix[2].y *= rhs; d_matrix[2].z *= rhs;
+    d_matrix[3].x *= rhs; d_matrix[3].y *= rhs; d_matrix[3].z *= rhs;
+
     return *this;
 }
 
@@ -188,7 +198,7 @@ inline Mat3 &Mat3::operator*=(const Mat3 &rhs)
 	float *m1Ptr, dst[3];
 
 	m1Ptr = reinterpret_cast<float *>(this);
-	m2Ptr = reinterpret_cast<const float *>(&a);
+	m2Ptr = reinterpret_cast<const float *>(&rhs);
 
 	for ( i = 0; i < 3; i++ ) {
 		for ( j = 0; j < 3; j++ ) {
@@ -231,14 +241,15 @@ inline Mat3 operator*(const float lhs, const Mat3 &rhs)
 }
 
 
-inline Vec4f &operator*=(Vec3f &lhs, const Mat3 &rhs)
+inline Vec3f &operator*=(Vec3f &lhs, const Mat3 &rhs)
 {
     float x = rhs[ 0 ].x * lhs.x + rhs[ 1 ].x * lhs.y + rhs[ 2 ].x * lhs.z;
 	float y = rhs[ 0 ].y * lhs.x + rhs[ 1 ].y * lhs.y + rhs[ 2 ].y * lhs.z;
 	lhs.z = rhs[ 0 ].z * lhs.x + rhs[ 1 ].z * lhs.y + rhs[ 2 ].z * lhs.z;
 	lhs.x = x;
 	lhs.y = y;  
-return vec;
+
+    return lhs;
 }
 
 inline bool Mat3::operator==(const Mat3 &rhs) const 
@@ -254,10 +265,9 @@ inline bool Mat3::operator!=(const Mat3 &rhs) const
 inline std::string Mat3::toString()
 {
     std::stringstream ss;
-    ss << std::to_string(d_matrix[0].x) << " , " << std::to_string(d_matrix[0].y) << " , " << std::to_string(d_matrix[0].z) << " , " << std::to_string(d_matrix[0].w) << '\n'
-       << std::to_string(d_matrix[1].x) << " , " << std::to_string(d_matrix[1].y) << " , " << std::to_string(d_matrix[1].z) << " , " << std::to_string(d_matrix[1].w) << '\n'  
-       << std::to_string(d_matrix[2].x) << " , " << std::to_string(d_matrix[2].y) << " , " << std::to_string(d_matrix[2].z) << " , " << std::to_string(d_matrix[2].w) << '\n'
-       << std::to_string(d_matrix[3].x) << " , " << std::to_string(d_matrix[3].y) << " , " << std::to_string(d_matrix[3].z) << " , " << std::to_string(d_matrix[3].w) << '\n';
+    ss << std::to_string(d_matrix[0].x) << " , " << std::to_string(d_matrix[0].y) << " , " << std::to_string(d_matrix[0].z) << " , " << '\n'
+       << std::to_string(d_matrix[1].x) << " , " << std::to_string(d_matrix[1].y) << " , " << std::to_string(d_matrix[1].z) << " , " << '\n'  
+       << std::to_string(d_matrix[2].x) << " , " << std::to_string(d_matrix[2].y) << " , " << std::to_string(d_matrix[2].z) << " , " << '\n';
 
     return ss.str();
 }
@@ -274,6 +284,76 @@ inline void Mat3::toIdentity()
     d_matrix[1].y = 1;
     d_matrix[2].z = 1;
 }
+
+inline Mat3 &Mat3::transposeSelf()
+{
+	float tmp0, tmp1, tmp2;
+
+	tmp0 = d_matrix[0][1];
+	d_matrix[0][1] = d_matrix[1][0];
+	d_matrix[1][0] = tmp0;
+	tmp1 = d_matrix[0][2];
+	d_matrix[0][2] = d_matrix[2][0];
+	d_matrix[2][0] = tmp1;
+	tmp2 = d_matrix[1][2];
+	d_matrix[1][2] = d_matrix[2][1];
+	d_matrix[2][1] = tmp2;
+
+	return *this;
+}
+
+
+inline bool Mat3::inverseSelf()
+{
+    // 18+3+9 = 30 multiplications
+	//			 1 division
+	Mat3 inverse;
+	double det, invDet;
+
+	inverse[0][0] = d_matrix[1][1] * d_matrix[2][2] - d_matrix[1][2] * d_matrix[2][1];
+	inverse[1][0] = d_matrix[1][2] * d_matrix[2][0] - d_matrix[1][0] * d_matrix[2][2];
+	inverse[2][0] = d_matrix[1][0] * d_matrix[2][1] - d_matrix[1][1] * d_matrix[2][0];
+
+	det = d_matrix[0][0] * inverse[0][0] + d_matrix[0][1] * inverse[1][0] + d_matrix[0][2] * inverse[2][0];
+
+	if ( fabs(det) < MATRIX_INVERSE_EPSILON ) {
+		return false;
+	}
+
+	invDet = 1.0f / det;
+
+	inverse[0][1] = d_matrix[0][2] * d_matrix[2][1] - d_matrix[0][1] * d_matrix[2][2];
+	inverse[0][2] = d_matrix[0][1] * d_matrix[1][2] - d_matrix[0][2] * d_matrix[1][1];
+	inverse[1][1] = d_matrix[0][0] * d_matrix[2][2] - d_matrix[0][2] * d_matrix[2][0];
+	inverse[1][2] = d_matrix[0][2] * d_matrix[1][0] - d_matrix[0][0] * d_matrix[1][2];
+	inverse[2][1] = d_matrix[0][1] * d_matrix[2][0] - d_matrix[0][0] * d_matrix[2][1];
+	inverse[2][2] = d_matrix[0][0] * d_matrix[1][1] - d_matrix[0][1] * d_matrix[1][0];
+
+	d_matrix[0][0] = inverse[0][0] * invDet;
+	d_matrix[0][1] = inverse[0][1] * invDet;
+	d_matrix[0][2] = inverse[0][2] * invDet;
+
+	d_matrix[1][0] = inverse[1][0] * invDet;
+	d_matrix[1][1] = inverse[1][1] * invDet;
+	d_matrix[1][2] = inverse[1][2] * invDet;
+
+	d_matrix[2][0] = inverse[2][0] * invDet;
+	d_matrix[2][1] = inverse[2][1] * invDet;
+	d_matrix[2][2] = inverse[2][2] * invDet;
+
+	return true;
+}
+
+inline const float *Mat3::data() const
+{
+    return d_matrix[0].data();
+} 
+
+inline float *Mat3::data()
+{
+    return d_matrix[0].data();
+}
+
 
 
 

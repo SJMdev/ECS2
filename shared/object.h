@@ -1,7 +1,6 @@
 #ifndef INCLUDED_OBJECT
 #define INCLUDED_OBJECT
 #include "texture.h"
-#include "vecf.h"
 #include "vertex.h"
 #include "../matrix/mat4.h"
 #include "rawdata.h"
@@ -14,6 +13,8 @@ struct Object
     Mat4 translationMatrix;
     Mat4 rotationMatrix;
     Mat4 scaleMatrix;
+    //
+    Mat3 normalTransformMatrix;
 
     //drawing
     Texture texture;

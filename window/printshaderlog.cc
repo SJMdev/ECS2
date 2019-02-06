@@ -17,13 +17,13 @@ void Window::printShaderLog(GLuint shader)
         if (infoLogLength > 0)
         { 
             //Print Log 
-            printf( "%s\n", infoLog );
+            SDL_Log( "%s\n", infoLog);
         } 
         //Deallocate string 
         delete[] infoLog;
     }
     else
     {
-        printf( "Name %d is not a shader\n", shader ); 
+        SDL_Log( "Name %d is not a shader\n", shader ); 
     } 
 }

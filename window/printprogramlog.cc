@@ -20,7 +20,7 @@ void Window::printProgramLog(GLuint program)
         if (infoLogLength > 0)
         {
             //print log
-            printf("%s\n", infoLog);
+            SDL_Log("%s\n", infoLog);
         }
 
         //Deallocate string
@@ -28,6 +28,6 @@ void Window::printProgramLog(GLuint program)
     }
     else
     {
-        printf(" Name %d is not a program\n", program);
+        SDL_Log(" Name %d is not a program\n", program);
     }
 }

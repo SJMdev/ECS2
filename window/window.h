@@ -6,7 +6,6 @@
 #include <gl\glu.h>
 #include <stdio.h>
 #include <string>
-#include "../shared/vecf.h"
 #include "../shared/model.h"
 #include "../shared/texture.h"
 #include "../shared/object.h"
@@ -28,26 +27,33 @@ class Window
     GLuint gVAO = 0;
     GLuint gTBO = 0; // Texture buffer object. Should be a part of an object together with VBO VAO? or a manager?
 
-
-
     // this is part of the scene. Maybe make a struct or something else.
     std::vector<float> d_material; // Vec4f? 
-    std::vector<float> d_lightTranslationMatrix; // this should be a Matrix!
+
+
+    Mat4 d_lightTranslationMatrix; // this should be a Matrix!
+    Mat4 d_lightModelMatrix;
+
+    std::vector<float> d_lightTranslationVector; //Vec3f?
+    std::vector<float> d_lightPositionVector; //Vec3f?
+
+    Mat4 d_rotationMatrix;
+    Mat4 d_scaleMatrix;
+
     Mat4 d_modelMatrix;
     Mat4 d_viewMatrix;
     Mat4 d_projectionMatrix;
     std::vector<float> d_lightColor; // Vec3f
     
-    Mat4 d_viewTranslationMatrix;
+    Mat4 d_viewTranslationMatrix; // we set this after we have loaded all the objects.
     Mat4 d_viewRotationMatrix;
     Mat4 d_viewScaleMatrix;
 
-    std::vector<float> d_lightTranslationVector;
-    
+    Mat4 d_projectionTransformation;
 
     GLuint d_modelLocation;
     GLuint d_objectLocation;       // If location is -1, this will make the program crash! (NICE)
-    GLuint d_projectionLocation;  // Idem
+    GLuint d_projectionLocation;   // Idem
     GLuint d_viewMatrixLocation;
     GLuint d_normalTransformLocation;
     GLuint d_lightPositionLocation;
@@ -82,7 +88,7 @@ class Window
 
 
         void initializeScene(); // set up the lighting color, material thing, and the light rotation matrix?
-       // void initializeViewMatrix();
+        void initializeViewMatrices();
 
         void initializeObjects(std::vector<std::string> &objectNames);
         void loadObject(std::string &filename,Object &object);
@@ -96,9 +102,14 @@ class Window
         void generateVertices(Object &object);
         void sendObjectToBuffer(Object &object);
 
+        void calculateTransformation(); //absolutely meaningless.
+        void calculateViewTransformation(); // ??
 
+        //openGL final steps.
         void render();
         void swapWindow();
+        void printShaderLog(GLuint shader); // helper functions
+        void printProgramLog(GLuint program);// helper functions
 
 
         //this belongs in utility, and not in window
@@ -110,14 +121,13 @@ class Window
                     bool convert_to_rgba32 = true);
         void loadPNG(std::vector<unsigned char>& buffer, const std::string& filename); //designed for loading files from hard disk in an std::vector
 
-        //deprecated & tobe removed
-        void drawTriangle();
-        void printShaderLog(GLuint shader);
-        void printProgramLog(GLuint program);
-        void drawModel(Model &model);
-        void calculateNormals(Model &model); //deprecated   
-        void addFragmentShaderFromSourceFile(std::string &filename);
-        void addVertexShaderFromSourceFile(std::string &filename);
+        //deprecated & to be removed
+        // void drawTriangle();
+
+        // void drawModel(Model &model);
+        // void calculateNormals(Model &model); //deprecated   
+        // void addFragmentShaderFromSourceFile(std::string &filename);
+        // void addVertexShaderFromSourceFile(std::string &filename);
 
     private:
         SDL_Window *windowHandle();

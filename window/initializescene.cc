@@ -1,4 +1,6 @@
 #include "window.ih"
+
+//@TODO: replace d_material by a vec4f.
 // sets up:
 // d_material
 // d_lightTranslationMatrix

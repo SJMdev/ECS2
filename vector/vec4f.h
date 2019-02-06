@@ -49,6 +49,10 @@ class Vec4f
     void set(float x, float y, float z, float w);
 
     std::string toString();
+
+    float *data();
+    const float *data() const;
+
     //linear interpolation between!
     //void lerp?
 };
@@ -216,6 +220,15 @@ inline std::string Vec4f::toString()
 }
 
 
+inline float *Vec4f::data()
+{
+    return &x;
+}
+
+inline const float *Vec4f::data() const
+{
+    return &x;
+}
 
 
 #endif
