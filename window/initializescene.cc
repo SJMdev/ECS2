@@ -11,5 +11,13 @@ void Window::initializeScene()
                                 0, 0, 0, 1
                                 };
 
+    d_viewTranslationMatrix = {
+                                1, 0, 0, 0,
+                                0, 1, 0, 0,
+                                0, 0, 1, -2,
+                                0, 0, 0, 1
+                              };
+                              
+
     d_lightColor = std::vector<float> { 1.0, 0.0, 0.0};
 }

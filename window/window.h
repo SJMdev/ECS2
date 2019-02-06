@@ -28,11 +28,15 @@ class Window
     GLuint gVAO = 0;
     GLuint gTBO = 0; // Texture buffer object. Should be a part of an object together with VBO VAO? or a manager?
 
+
+
     // this is part of the scene. Maybe make a struct or something else.
     std::vector<float> d_material; // Vec4f? 
     std::vector<float> d_lightTranslationMatrix; // this should be a Matrix!
     Mat4 d_viewMatrix;
+    Mat4 d_viewTranslationMatrix;
     std::vector<float> d_lightColor; // Vec3f
+
 
     GLuint d_modelLocation;       // If location is -1, this will make the program crash! (NICE)
     GLuint d_projectionLocation;  // Idem
@@ -90,13 +94,6 @@ class Window
         void sendModelToBuffer(Model &model);
 
 
-
-
-
-
-       
-        
-
         void render();
         void swapWindow();
 
@@ -110,8 +107,6 @@ class Window
         void calculateNormals(Model &model); //deprecated   
         void addFragmentShaderFromSourceFile(std::string &filename);
         void addVertexShaderFromSourceFile(std::string &filename);
-
-
 
     private:
         SDL_Window *windowHandle();

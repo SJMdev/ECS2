@@ -11,8 +11,8 @@ bool Window::initializeOpenGL()
 
     GLuint vertexShader;
     GLuint fragmentShader;
-     addShaderFromFile(string("3dvertexshader.glsl"), GL_VERTEX_SHADER, vertexShader);
-     addShaderFromFile(string("fragmentshader.glsl"), GL_FRAGMENT_SHADER, fragmentShader);
+    addShaderFromFile(string("3dvertexshader.glsl"), GL_VERTEX_SHADER, vertexShader);
+    addShaderFromFile(string("fragmentshader.glsl"), GL_FRAGMENT_SHADER, fragmentShader);
     //addShaderFromFile(string("gouraud_vertexshader.glsl"), GL_VERTEX_SHADER, vertexShader);
     //addShaderFromFile(string("gouraud_fragmentshader.glsl"), GL_FRAGMENT_SHADER, fragmentShader);
     glAttachShader(d_gProgramID, vertexShader);
