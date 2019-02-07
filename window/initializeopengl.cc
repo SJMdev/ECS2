@@ -9,6 +9,7 @@ bool Window::initializeOpenGL()
     bool success = true;
     d_gProgramID = glCreateProgram();
 
+    glEnable(GL_DEPTH_TEST);
     GLuint vertexShader;
     GLuint fragmentShader;
     //addShaderFromFile(string("3dvertexshader.glsl"), GL_VERTEX_SHADER, vertexShader);

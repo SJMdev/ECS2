@@ -1,5 +1,13 @@
 #include "window.ih"
 
+// clear the color & depth buffer
+// state which program to use 
+// calculate the view transformation
+// set up the light position vector (currently at 0,0, -0.5, 1)/
+
+
+
+
 void Window::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -8,36 +16,40 @@ void Window::render()
     // bind shader program (set_shader?)
     glUseProgram(d_gProgramID);
 
-    calculateTransformation();
     calculateViewTransformation();
 
     
 
     // shader mode stuff:
     //if shadermode is something:
-    d_lightPositionVector = {0, 0, 0, 1};
+    d_lightPositionVector = {0, 0, 0.5, 1};
     glUniform4fv(d_lightPositionLocation, 1, d_lightPositionVector.data());
     glUniform3fv(d_lightColorLocation,    1, d_lightColor.data());
     glUniform4fv(d_materialLocation,      1, d_material.data());
     
 
     glActiveTexture(GL_TEXTURE0);
-    d_projectionTransformation.toIdentity();
+ 
+    
     glUniformMatrix4fv(d_viewMatrixLocation,      1, false, d_viewMatrix.data());
-    glUniformMatrix4fv(d_projectionLocation,      1, false, d_projectionTransformation.data());
+    d_projectionMatrix.toIdentity();
+    glUniformMatrix4fv(d_projectionMatrixLocation,      1, false, d_projectionMatrix.data());
 
 
     //for all objects, c:
     for (auto &object : d_objects)
     {
+        //calculate object model matrix
         object.modelMatrix = object.translationMatrix * object.rotationMatrix * object.scaleMatrix;
-        SDL_Log("modelMatrix looks like \n%s", object.modelMatrix.toString().c_str());
+        SDL_Log("obj modelmatrix: %s", object.modelMatrix.toString().c_str());
         object.normalTransformMatrix = object.modelMatrix.normalMatrix();
-        SDL_Log("normal transform matrix is: \n%s", object.normalTransformMatrix.toString().c_str());
+
+        glUniformMatrix4fv(d_modelMatrixLocation, 1, false, object.modelMatrix.data());
+
+        // the modelmatrix is nonzero, so that's good.
 
 
-        glUniformMatrix4fv(d_modelLocation, 1, false, object.modelMatrix.data()); // I have no idea whether this will work or not.
-        glUniformMatrix3fv(d_normalTransformLocation, 1, false, object.normalTransformMatrix.data());
+        glUniformMatrix3fv(d_normalTransformMatrixLocation, 1, false, object.normalTransformMatrix.data());
 
         glBindVertexArray(gVAO);
         glBindTexture(GL_TEXTURE_2D, gTBO);

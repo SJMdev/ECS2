@@ -17,8 +17,8 @@ int main(int argc, char* argv[]) //this is necessary for SDL
     d_window.createWindow("Editor",
                           SDL_WINDOWPOS_UNDEFINED,  //starting xpos
                           SDL_WINDOWPOS_UNDEFINED,  //starting ypos
-                          640,
-                          480,
+                          1280,
+                          1024,
                           SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
                           ); 
  
