@@ -54,6 +54,8 @@ void Window::render()
         glBindVertexArray(gVAO);
         glBindTexture(GL_TEXTURE_2D, gTBO);
 
+
+        glUniform1i(d_textureLocation, 0);
         glDrawArrays(GL_TRIANGLES, 0, d_objects.at(0).interleaved_vertices.size());
     }
 

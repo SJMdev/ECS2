@@ -11,7 +11,7 @@ void Window::fillTexture(Texture &texture, std::string &filename)
     unsigned long width = 0;
     unsigned long height = 0;
     loadPNG(buffer, path);
-    int error = decodePNG(texture.image, width, height, buffer.empty() ? 0 : &buffer[0], (unsigned long)buffer.size());
+    int error = decodePNG(texture.image, width, height, buffer.empty() ? 0 : &buffer[0], (unsigned long)buffer.size(), true);
     
     texture.width = width;
     texture.height = height;

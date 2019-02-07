@@ -15,7 +15,7 @@ void Window::initializeScene()
     d_lightTranslationMatrix = {
                                 1, 0, 0, 0,
         	                    0, 1, 0, 0,
-                                0, 0, 1, -0.5,
+                                0, 0, 1, 0,
                                 0, 0, 0, 1
                                 };
     d_lightRotationMatrix = {
@@ -32,7 +32,7 @@ void Window::initializeScene()
                                 };
                                 
     
-    d_lightColor = std::vector<float> { 1.0, 0.0, 0.0};
+    d_lightColor = std::vector<float> { 1.0, 1.0, 1.0};
 
     d_modelMatrix.toIdentity();
     
