@@ -27,6 +27,13 @@ unify buffers.
 
 
 
+# LONG HAUL:
+Parallelize reading in files (fread, split buffer by openMP).
+
+unify buffers & textures.
+
+
+
 
 
 
