@@ -6,9 +6,9 @@ void Window::generateVertices(Object &object)
     for (size_t idx =0; idx != object.rawData.vertex_indices.size(); ++idx)
     {
         Vertex temp = { 
-                        object.rawData.vertices.at(object.rawData.vertex_indices.at(idx)).x * 0.8f,  //vx
-                        object.rawData.vertices.at(object.rawData.vertex_indices.at(idx)).y * 0.8f,  //vy
-                        object.rawData.vertices.at(object.rawData.vertex_indices.at(idx)).z * 0.8f,  //vz
+                        object.rawData.vertices.at(object.rawData.vertex_indices.at(idx)).x, //vx
+                        object.rawData.vertices.at(object.rawData.vertex_indices.at(idx)).y,  //vy
+                        object.rawData.vertices.at(object.rawData.vertex_indices.at(idx)).z,  //vz
                         object.rawData.uvs.at(object.rawData.uv_indices.at(idx)).u,                  //u                                       //u
                         object.rawData.uvs.at(object.rawData.uv_indices.at(idx)).v,                  //v
                         object.rawData.normals.at(object.rawData.normal_indices.at(idx)).x,          //nx
