@@ -21,15 +21,17 @@ void Window::initializeObjects(vector<ObjectFilePaths>  &objectFilePaths)
         object.translationMatrix.toIdentity();
         object.rotationMatrix.toIdentity();
 		
-		object.translationMatrix.translate(0.0f,0.0f,0.0f); // x, y, ,z.
+		//object.translationMatrix.translate(0.0f,0.0f,0.0f); // x, y, ,z.
 		
-        SDL_Log( "matrix: %s", object.scaleMatrix.toString().c_str());
-        SDL_Log( "matrix: %s", object.translationMatrix.toString().c_str());
+		//object.translationMatrix[3][0] = 0.5;
+		
+        //SDL_Log( "matrix: %s", object.scaleMatrix.toString().c_str());
+        //SDL_Log( "matrix: %s", object.translationMatrix.toString().c_str());
 
         object.modelMatrix = object.rotationMatrix * object.scaleMatrix;
 		object.modelMatrix = object.translationMatrix * object.modelMatrix; 
-		
-		SDL_Log( "object.modelMatrix: %s", object.modelMatrix.toString().c_str());
+	  	
+//		SDL_Log( "object.modelMatrix: %s", object.modelMatrix.toString().c_str());
 		
 		
 		

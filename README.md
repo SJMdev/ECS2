@@ -13,7 +13,17 @@ cl /MP4 *.cc window/*.cc  /EHsc /std:c++17 /I libraries /link libraries/sdl/lib/
 
 
 # The gist of it.
-The system currently uses SDL for constructing a window. I may / may not want to switch to GLFW , which at least does not hijack my logprinting. The Vec3f, Vec4f, Mat3 and Mat4 implementations strongly resemble those of Doom 3. I am unsure whether or not they are meritous, as the way they allow access to their public data members through memory addresses is (very) error-prone.
+The system currently uses SDL for constructing a window. I may / may not want to switch to GLFW , which at least does not hijack my logprinting. The Vec3f, Vec4f, Mat3 and Mat4 implementations strongly resemble those of Doom 3. I am unsure whether or not they are meritous, as the way they allow access to their public data members through memory addresses is (very) 
+error-prone.
+
+
+
+# What are we currently doing?
+I found some problems w.r.t openGL being  column-major. it explains a lot that I had trouble simply translating the cat. I should first figure this out, and then continue from there.
+I am as of now unsure whether or not the perspective projection works.
+
+Maybe we need to switch to column major. I am not sure yet.
+We fixed the perspective projection. We use a current z of 0->-1. The cat is now projected at somewhere around z =0. We thus want to shift our frustrum i guess (or translate the cat).
 
 
 # TODO:

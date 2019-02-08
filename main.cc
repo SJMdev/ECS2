@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) //this is necessary for SDL
     ObjectFilePaths filePaths
 	{
 		"cat.obj", 
-		"cat_diff_rot_flipped.png"
+		"cat_norm_rot_flipped.png"
 	};
 	
 	vector<ObjectFilePaths> d_objects;

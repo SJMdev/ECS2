@@ -2,13 +2,13 @@
 #define INCLUDED_MAT4_
 #include "../vector/vec4f.h"
 #include "../vector/vec3f.h"
-#include <string>
+#include <string> //for toString
 #include <cstring> //memcpy
-#include <cmath>
-#include <sstream>
+#include <cmath> //tanh
+#include <sstream> // for toString
 #include "mat3.h"
 
-#define PI 3.14159265358979323846f
+#define PI 3.14159265358979323846f //@Cleanup: move these to math
 #define DEG2RAD  PI / 180.0f
 #define RAD2DEG  180.f / PI
 
@@ -348,11 +348,16 @@ inline Mat4 &Mat4::translate(float x, float y, float z)
 
 inline void Mat4::toPerspective(float fov, float aspectRatio, float nearPlane, float farPlane)
 {
-	d_matrix[0][0] = 1.0f / aspectRatio * (tanf(fov / 2.0f) * RAD2DEG);
-	d_matrix[1][1] = 1.0f / (tanf(fov / 2.0f) * RAD2DEG );
-	d_matrix[2][2] = - ((farPlane + nearPlane) / (farPlane - nearPlane));
-	d_matrix[2][3] = (2.0f * farPlane * nearPlane) / (farPlane - nearPlane);
-	d_matrix[3][2] = -1;
+	float rad_fov = fov * DEG2RAD;
+	
+	float tan_half_fov = tanf(rad_fov / 2.0f);
+	
+	d_matrix[0][0] = 1.0f /(aspectRatio * tan_half_fov);
+	d_matrix[1][1] = 1.0f / tan_half_fov;
+	d_matrix[2][2] = - (farPlane + nearPlane) / (farPlane - nearPlane);
+	d_matrix[3][2] = - (2.0f * farPlane * nearPlane) / (farPlane - nearPlane);
+	d_matrix[2][3] = -1;
+	d_matrix[3][3] = 0;
 }
 
 #endif

@@ -54,9 +54,14 @@ class Window
     Mat4 d_viewRotationMatrix;
     Mat4 d_viewScaleMatrix;
 
-
     //PROJECTION
     Mat4 d_projectionTransformationMatrix; // we're gonna ignore this for now.
+	
+
+	// book stuff
+	Mat4 d_viewPortMatrix;
+	
+	
 	
 	
     Mat4 d_projectionMatrix; // this is being set in resizeGL. call everything verbosely.
