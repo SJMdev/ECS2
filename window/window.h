@@ -6,6 +6,7 @@
 #include <gl\glu.h>
 #include <stdio.h>
 #include <string>
+#include "../shared/objectfilepaths.h"
 #include "../shared/model.h"
 #include "../shared/texture.h"
 #include "../shared/object.h"
@@ -13,10 +14,13 @@
 
 class Window
 {
+
+
     SDL_Window  *d_window;
     SDL_Surface *d_surface;
     SDL_Surface *d_image;
-
+    int d_windowWidth;
+    int d_windowHeight;
     std::vector<Object> d_objects;
 
     //openGL stuff
@@ -41,7 +45,6 @@ class Window
     std::vector<float> d_lightColor; // Vec3f
     
 
-
     //MODEL
     Mat4 d_modelMatrix;
 
@@ -53,25 +56,23 @@ class Window
 
 
     //PROJECTION
-    Mat4 d_projectionTransformationMatrix;
-    Mat4 d_projectionMatrix;
+    Mat4 d_projectionTransformationMatrix; // we're gonna ignore this for now.
+	
+	
+    Mat4 d_projectionMatrix; // this is being set in resizeGL. call everything verbosely.
 
 
 
     // uniforms.
-    GLint d_modelMatrixLocation = 3;
-    GLint d_viewMatrixLocation = 3;
-    GLint d_projectionMatrixLocation =3 ; 
-    GLint d_normalTransformMatrixLocation = 3;
+    GLint d_modelMatrixLocation = 0;
+    GLint d_viewMatrixLocation = 0;
+    GLint d_projectionMatrixLocation = 0; 
+    GLint d_normalTransformMatrixLocation = 0;
     // ???
-
-
-
-
-    GLint d_lightPositionLocation = 3;
-    GLint d_lightColorLocation = 3;
-    GLint d_materialLocation = 3;
-    GLint d_textureLocation = 3;
+    GLint d_lightPositionLocation = 0;
+    GLint d_lightColorLocation = 0;
+    GLint d_materialLocation = 0;
+    GLint d_textureLocation = 0;
 
 
     // GLuint d_objectLocation;       // If location is -1, this will make the program crash! (NICE)
@@ -85,19 +86,25 @@ class Window
     public:
         Window();
         ~Window();
-        void createWindow(std::string title, int xPosition, int yPosition, int width, int height, Uint32 flags);
+        void createWindow(std::string title,
+					      int xPosition,
+					      int yPosition,
+					      int width,
+					      int height,
+					      Uint32 flags);
 
 
         void initializeSDL(); // parameters?
         void initializeGlew(); // does not require parameters.
         bool initializeOpenGL(); // not sure.
 
-        //@Todo: what shader program do we attach these to?
-        void addShaderFromFile(std::string &filename, GLenum shaderType, GLuint &shader);
 
+	
         void initializeScene(); // set up the lighting color, material thing, and the light rotation matrix?
+	
         void initializeViewMatrices();
-        void initializeObjects(std::vector<std::string> &objectNames);
+    	void initializeProjectionMatrix();
+        void initializeObjects(std::vector<ObjectFilePaths> &filepaths);
        
         void setUniforms(GLuint currentShaderProgram); // set the uniforms for the current shader. We thus need to know what the active shader is.
         void fillTexture(Texture &texture, std::string &filename);
@@ -111,13 +118,20 @@ class Window
         void calculateTransformation(); //absolutely meaningless.
         void calculateViewTransformation(); // ??
 
+
+	
         //openGL final steps.
         void render();
         void swapWindow();
+ 
+
+        //openGL helper functions
+    	//@Todo: what shader program do we attach these to?
+        void addShaderFromFile(std::string &filename, GLenum shaderType, GLuint &shader);	
         void printShaderLog(GLuint shader); // helper functions
-        void printProgramLog(GLuint program);// helper functions
-
-
+    	void printProgramLog(GLuint program);// helper functions
+    	void resizeGL(int width, int height);
+	
         // object helper functions
         void loadObject(std::string &filename,Object &object);
         bool loadOBJFromFile(std::string &filename, Object &object);

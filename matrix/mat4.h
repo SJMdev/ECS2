@@ -4,8 +4,14 @@
 #include "../vector/vec3f.h"
 #include <string>
 #include <cstring> //memcpy
+#include <cmath>
 #include <sstream>
 #include "mat3.h"
+
+#define PI 3.14159265358979323846f
+#define DEG2RAD  PI / 180.0f
+#define RAD2DEG  180.f / PI
+
 
 class Mat4
 {
@@ -50,7 +56,9 @@ class Mat4
         Mat3 normalMatrix() const;
 
         Mat4 &inverse() const;
-
+	    Mat4 &translate(float x, float y, float z);
+	void toPerspective(float fov, float aspectRatio, float nearPlane, float farPlane);
+	
         void zero();
         void toIdentity();
 
@@ -323,11 +331,28 @@ inline Mat3 Mat4::toMat3() const
 
 inline Mat3 Mat4::normalMatrix() const
 {
-    Mat3 matrix = toMat3(); //i n toMat3, we invert before creating, so we get the right numbers in the right place.
+    Mat3 matrix = toMat3(); //in toMat3, we invert before creating, so we get the right numbers in the right place.
     matrix.inverseSelf();
     matrix.transposeSelf();
     return matrix;
 }
 
+inline Mat4 &Mat4::translate(float x, float y, float z)
+{
+	d_matrix[0][3] = x;
+	d_matrix[1][3] = y;
+	d_matrix[2][3] = z;
+	
+	return *this;
+}
+
+inline void Mat4::toPerspective(float fov, float aspectRatio, float nearPlane, float farPlane)
+{
+	d_matrix[0][0] = 1.0f / aspectRatio * (tanf(fov / 2.0f) * RAD2DEG);
+	d_matrix[1][1] = 1.0f / (tanf(fov / 2.0f) * RAD2DEG );
+	d_matrix[2][2] = - ((farPlane + nearPlane) / (farPlane - nearPlane));
+	d_matrix[2][3] = (2.0f * farPlane * nearPlane) / (farPlane - nearPlane);
+	d_matrix[3][2] = -1;
+}
 
 #endif

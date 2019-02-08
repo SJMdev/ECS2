@@ -6,8 +6,6 @@
 // set up the light position vector (currently at 0,0, -0.5, 1)/
 
 
-
-
 void Window::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -29,10 +27,12 @@ void Window::render()
     
 
     glActiveTexture(GL_TEXTURE0);
- 
-    
+
+    // set the view matrix 
     glUniformMatrix4fv(d_viewMatrixLocation,      1, false, d_viewMatrix.data());
-    d_projectionMatrix.toIdentity();
+	
+	
+    //use the projection matrix, set in the beginning:
     glUniformMatrix4fv(d_projectionMatrixLocation,      1, false, d_projectionMatrix.data());
 
 
@@ -45,10 +45,6 @@ void Window::render()
         object.normalTransformMatrix = object.modelMatrix.normalMatrix();
 
         glUniformMatrix4fv(d_modelMatrixLocation, 1, false, object.modelMatrix.data());
-
-        // the modelmatrix is nonzero, so that's good.
-
-
         glUniformMatrix3fv(d_normalTransformMatrixLocation, 1, false, object.normalTransformMatrix.data());
 
         glBindVertexArray(gVAO);

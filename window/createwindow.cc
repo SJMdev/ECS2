@@ -14,7 +14,8 @@ void Window::createWindow(string title, int xPosition, int yPosition, int width,
         exit(1);
     }
     d_surface = SDL_GetWindowSurface(d_window);
-
+    d_windowWidth = width;
+    d_windowHeight = height;
     // initialize openGL
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );

@@ -21,7 +21,7 @@ void Window::sendObjectToBuffer(Object &object)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    fillTexture(object.texture, string{"cat_diff_rot_flipped.png"}); // read data from the .png image and store it in the texture.
+   // fillTexture(object.texture, string{"cat_diff_rot_flipped.png"}); // read data from the .png image and store it in the texture.
 
     SDL_Log("texture width: %d", object.texture.width);
     SDL_Log("texture height:%d", object.texture.height);

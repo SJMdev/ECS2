@@ -9,6 +9,8 @@
 #include <vector>
 #include <string>
 
+#include "shared/objectfilepaths.h"
+
 using namespace std;
 
 int main(int argc, char* argv[]) //this is necessary for SDL
@@ -21,8 +23,8 @@ int main(int argc, char* argv[]) //this is necessary for SDL
                           1024,
                           SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
                           ); 
- 
-
+    
+    
     d_window.initializeSDL();
     d_window.initializeGlew(); 
     
@@ -30,20 +32,28 @@ int main(int argc, char* argv[]) //this is necessary for SDL
     {
         SDL_Log("Unable to initialize OpenGL.");
     };
-
-    vector<string> objectNames { {"cat.obj"} };
+    
+    ObjectFilePaths filePaths
+	{
+		"cat.obj", 
+		"cat_diff_rot_flipped.png"
+	};
+	
+	vector<ObjectFilePaths> d_objects;
+	
+	d_objects.push_back(filePaths);
     
     d_window.initializeScene();
-    d_window.initializeObjects(objectNames);
+    d_window.initializeObjects(d_objects);
     d_window.initializeViewMatrices();
-
-
-
+    d_window.initializeProjectionMatrix();
+    
+    
     // "game loop"
-
+    
     SDL_Event event;
     int gameover = 0;
-
+    
     while (!gameover)
     {
         if (SDL_PollEvent(&event))
@@ -51,24 +61,24 @@ int main(int argc, char* argv[]) //this is necessary for SDL
             switch (event.type)
             {
                 case SDL_QUIT:
-                    gameover = 1;
-                    break;
+                gameover = 1;
+                break;
                 case SDL_KEYDOWN:
-                    switch (event.key.keysym.sym)
-                    {
-                        case SDLK_ESCAPE:
-                            gameover =1;
-                            break;
-                    }
+                switch (event.key.keysym.sym)
+                {
+                    case SDLK_ESCAPE:
+                    gameover =1;
                     break;
+                }
+                break;
             }
         }
         d_window.render();
-
+        
         d_window.swapWindow();
     }
-
-
-
+    
+    
+    
     return 0; //necessary for SDL.
 }
