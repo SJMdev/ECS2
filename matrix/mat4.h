@@ -57,7 +57,8 @@ class Mat4
 
         Mat4 &inverse() const;
 	    Mat4 &translate(float x, float y, float z);
-	void toPerspective(float fov, float aspectRatio, float nearPlane, float farPlane);
+    	Mat4 &transposeSelf();
+	    void toPerspective(float fov, float aspectRatio, float nearPlane, float farPlane);
 	
         void zero();
         void toIdentity();
@@ -346,18 +347,40 @@ inline Mat4 &Mat4::translate(float x, float y, float z)
 	return *this;
 }
 
+
 inline void Mat4::toPerspective(float fov, float aspectRatio, float nearPlane, float farPlane)
 {
 	float rad_fov = fov * DEG2RAD;
-	
 	float tan_half_fov = tanf(rad_fov / 2.0f);
+	
+	
 	
 	d_matrix[0][0] = 1.0f /(aspectRatio * tan_half_fov);
 	d_matrix[1][1] = 1.0f / tan_half_fov;
-	d_matrix[2][2] = - (farPlane + nearPlane) / (farPlane - nearPlane);
-	d_matrix[3][2] = - (2.0f * farPlane * nearPlane) / (farPlane - nearPlane);
-	d_matrix[2][3] = -1;
+	d_matrix[2][2] = -  (farPlane + nearPlane) / (farPlane - nearPlane);
+	d_matrix[2][3] = - (2.0f * farPlane * nearPlane) / (farPlane - nearPlane);
+	d_matrix[3][2] = -1;
 	d_matrix[3][3] = 0;
 }
 
+inline Mat4 &Mat4::transposeSelf()
+{
+	float temp;
+	int row, col;
+	
+	for (row = 0; row <4; row++)
+	{
+		for (col = row +1; col < 4; col++)
+		{
+			temp = d_matrix[row][col];
+			d_matrix[row][col] = d_matrix[col][row];
+			d_matrix[col][row] = temp;
+		}
+		
+	}
+	return *this;
+}
+	
+
 #endif
+

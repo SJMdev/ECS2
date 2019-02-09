@@ -19,6 +19,11 @@ error-prone.
 
 
 # What are we currently doing?
+I fixed the projection matrix. The problem with openGL being column major still exists though. hmm. Maybe I want to rewrite the class.
+
+Furthermore, I don't properly understand near/far plane as of now. What we need to remember is that both of these should be positive (as the openGL perspective projection matrix is sign-flipped (as we are looking in negative Z direction for x/y alignment). sigh.
+
+
 I found some problems w.r.t openGL being  column-major. it explains a lot that I had trouble simply translating the cat. I should first figure this out, and then continue from there.
 I am as of now unsure whether or not the perspective projection works.
 

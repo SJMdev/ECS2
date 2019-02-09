@@ -32,8 +32,10 @@ void Window::render()
     glUniformMatrix4fv(d_viewMatrixLocation,      1, false, d_viewMatrix.data());
 	
 	// what if we reset projection matrix?
-	d_projectionMatrix.toIdentity();
-     	
+    //d_projectionMatrix.toIdentity();
+	
+	
+    SDL_Log("projection matrix; %s", d_projectionMatrix.toString().c_str());
     //use the projection matrix, set in the beginning:
     glUniformMatrix4fv(d_projectionMatrixLocation,      1, false, d_projectionMatrix.data());
 
