@@ -422,6 +422,8 @@ inline Mat4 &Mat4::rotateSelf(int degrees_x, int degrees_y, int degrees_z)
                     0,     0,     1,   0,
                     0,     0,     0,   1};
     
+    
+    
 }
 
 
