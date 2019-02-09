@@ -61,8 +61,9 @@ class Mat4
 	    Mat4 &translate(float x, float y, float z); 
 		Mat4 &transposeSelf();
 		Mat4 &scaleSelf(float factor);
+        Mat4 &rotateSelf(int degrees_x, int degrees_y, int degrees_z);
 	    void toPerspective(float fov, float aspectRatio, float nearPlane, float farPlane);
-
+    
     
 	
         void zero();
@@ -396,7 +397,34 @@ inline Mat4 &Mat4::scaleSelf(float factor)
     return *this;
 }
 					
-					
+inline Mat4 &Mat4::rotateSelf(int degrees_x, int degrees_y, int degrees_z)
+{
+    // the matrix should be in identity.
+    
+    float cosx = cos(degrees_x);
+    float sinx = sin(degrees_x);
+    
+    float cosy = cos(degrees_y);
+    float cosz = cos(degrees_z);
+    
+    Mat4 x_axis = {1,   0,      0,   0,
+                   0,  cosx, -sinx,  0,
+                   0,  sinx,  cosx,  0,
+                   0,  0,      0,    1};
+    
+    Mat4 y_axis = {cosy,  0,   siny,   0,
+                   0,     1,      0,   0
+                   -siny, 0,    cosy,  0,
+                   0,     0,      0,   1};
+    
+    Mat4 z_axis = {cosz, -sinz,   0,   0,
+                   sinz,  cosz,   0,   0,
+                    0,     0,     1,   0,
+                    0,     0,     0,   1};
+    
+}
+
+
 					
 #endif
 

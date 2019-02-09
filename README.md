@@ -35,6 +35,9 @@ parse object filepaths (objectname, texturename?).
 Object now has a uint for a TBO (texture binding object, texture buffer object, whatever).
 The size of GLuint is predetermined, uint is not. I want to fix this.
 
+
+
+
 rewrite Mat4 to be column-major instead of row-major.
 
 fix matrices.
