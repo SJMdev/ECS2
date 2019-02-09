@@ -20,6 +20,10 @@ struct Object
     Texture texture;
     std::vector<Vertex> interleaved_vertices; //x,y,z,u,v,r,g,b
     RawData rawData;
+    
+    //openGL texture;
+    unsigned int TBO;
+    
 };
 
 

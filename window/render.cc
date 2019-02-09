@@ -50,7 +50,7 @@ void Window::render()
         glUniformMatrix3fv(d_normalTransformMatrixLocation, 1, false, object.normalTransformMatrix.data());
 
         glBindVertexArray(gVAO);
-        glBindTexture(GL_TEXTURE_2D, gTBO);
+        glBindTexture(GL_TEXTURE_2D, object.TBO);
 
 
         glUniform1i(d_textureLocation, 0);

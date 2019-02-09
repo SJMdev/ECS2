@@ -17,7 +17,6 @@ The system currently uses SDL for constructing a window. I may / may not want to
 error-prone.
 
 
-
 # What are we currently doing?
 I fixed the projection matrix. The problem with openGL being column major still exists though. hmm. Maybe I want to rewrite the class.
 
@@ -28,10 +27,16 @@ I found some problems w.r.t openGL being  column-major. it explains a lot that I
 I am as of now unsure whether or not the perspective projection works.
 
 Maybe we need to switch to column major. I am not sure yet.
-We fixed the perspective projection. We use a current z of 0->-1. The cat is now projected at somewhere around z =0. We thus want to shift our frustrum i guess (or translate the cat).
 
 
 # TODO:
+parse object filepaths (objectname, texturename?).
+
+Object now has a uint for a TBO (texture binding object, texture buffer object, whatever).
+The size of GLuint is predetermined, uint is not. I want to fix this.
+
+rewrite Mat4 to be column-major instead of row-major.
+
 fix matrices.
 
 implement mat4.translate, mat4.rotate and mat4.scale (disallow shear)

@@ -12,8 +12,8 @@ void Window::sendObjectToBuffer(Object &object)
     glBindBuffer(GL_ARRAY_BUFFER, gVBO);
 
     // Generate textures
-    glGenTextures(objectCount, &gTBO);   
-    glBindTexture(GL_TEXTURE_2D, gTBO);
+    glGenTextures(objectCount, &object.TBO);   
+    glBindTexture(GL_TEXTURE_2D, object.TBO);
     
     // Do some texture management here.
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

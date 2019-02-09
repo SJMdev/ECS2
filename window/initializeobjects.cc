@@ -27,12 +27,15 @@ void Window::initializeObjects(vector<ObjectFilePaths>  &objectFilePaths)
 		object.modelMatrix = object.translationMatrix * object.modelMatrix; 
 	  			
 
-		
-        d_objects.push_back(object);
+        d_objects.push_back(object);    
     }
-    SDL_Log("found %d objects.", d_objects.size());
-
-
-    sendObjectToBuffer(d_objects.at(0));
-
+    
+    
+    d_objects.at(1).translationMatrix[3][0] = 1.0;
+    
+    for (auto &object: d_objects)
+        sendObjectToBuffer(object);
+   
+    
+    SDL_Log("found %d objects.", d_objects.size());   
 }

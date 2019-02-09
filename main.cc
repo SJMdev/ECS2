@@ -33,15 +33,22 @@ int main(int argc, char* argv[]) //this is necessary for SDL
         SDL_Log("Unable to initialize OpenGL.");
     };
     
-    ObjectFilePaths filePaths
+    ObjectFilePaths cat1
 	{
 		"cat.obj", 
 		"cat_norm_rot_flipped.png"
 	};
 	
+    ObjectFilePaths cat2
+	{
+		"cat.obj", 
+		"cat_diff_rot_flipped.png"
+	};
+    
 	vector<ObjectFilePaths> d_objects;
 	
-	d_objects.push_back(filePaths);
+	d_objects.push_back(cat1);
+    d_objects.push_back(cat2);
     
     d_window.initializeScene();
     d_window.initializeObjects(d_objects);
