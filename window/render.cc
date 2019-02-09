@@ -14,9 +14,9 @@ void Window::render()
     // bind shader program (set_shader?)
     glUseProgram(d_gProgramID);
     calculateViewTransformation();
-	//d_viewMatrix[3][2] = 1.0f;
-
-	SDL_Log("viewmatrix: %s", d_viewMatrix.toString().c_str());
+	
+	
+	//SDL_Log("viewmatrix: %s", d_viewMatrix.toString().c_str());
 	
 	
     // shader mode stuff:
@@ -28,24 +28,22 @@ void Window::render()
     
     glActiveTexture(GL_TEXTURE0);
 
-    // set the view matrix 
+    // bind the view matrix to the uniform. 
     glUniformMatrix4fv(d_viewMatrixLocation,      1, false, d_viewMatrix.data());
 	
-	// what if we reset projection matrix?
-    //d_projectionMatrix.toIdentity();
 	
-	
-    SDL_Log("projection matrix; %s", d_projectionMatrix.toString().c_str());
+    //SDL_Log("projection matrix; %s", d_projectionMatrix.toString().c_str());	
     //use the projection matrix, set in the beginning:
     glUniformMatrix4fv(d_projectionMatrixLocation,      1, false, d_projectionMatrix.data());
 
 
-    //for all objects, c:
+    //for all objects, draw:
     for (auto &object : d_objects)
     {
         //calculate object model matrix
         object.modelMatrix = object.translationMatrix * object.rotationMatrix * object.scaleMatrix;
         //SDL_Log("obj modelmatrix: %s", object.modelMatrix.toString().c_str());
+		
         object.normalTransformMatrix = object.modelMatrix.normalMatrix();
 
         glUniformMatrix4fv(d_modelMatrixLocation, 1, false, object.modelMatrix.data());

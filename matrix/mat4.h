@@ -17,6 +17,7 @@ class Mat4
 {
     Vec4f d_matrix[4];
 
+
     public:
         Mat4() {};
         explicit Mat4(const Vec4f &x, const Vec4f &y, const Vec4f &z, const Vec4f &w);
@@ -27,6 +28,7 @@ class Mat4
         // explicit Mat4(const  Mat3 &rotation, const Vec3 &translation); we'll see how to fix this!
         explicit Mat4(const float source[4][4]);
 
+	
         const Vec4f &operator[](int index) const;
         Vec4f & operator[](int index);
         Mat4 operator*(const float rhs) const;
@@ -56,9 +58,12 @@ class Mat4
         Mat3 normalMatrix() const;
 
         Mat4 &inverse() const;
-	    Mat4 &translate(float x, float y, float z);
-    	Mat4 &transposeSelf();
+	    Mat4 &translate(float x, float y, float z); 
+		Mat4 &transposeSelf();
+		Mat4 &scaleSelf(float factor);
 	    void toPerspective(float fov, float aspectRatio, float nearPlane, float farPlane);
+
+    
 	
         void zero();
         void toIdentity();
@@ -276,6 +281,7 @@ inline Vec3f operator*(const Vec3f &lhs, const Mat4 &rhs)
     return rhs * lhs; //matrix * vector3;
 }
 
+
 inline Vec4f &operator*=(Vec4f &lhs, const Mat4 &rhs)
 {
     lhs = rhs * lhs;
@@ -352,16 +358,17 @@ inline void Mat4::toPerspective(float fov, float aspectRatio, float nearPlane, f
 {
 	float rad_fov = fov * DEG2RAD;
 	float tan_half_fov = tanf(rad_fov / 2.0f);
-	
-	
-	
+		
 	d_matrix[0][0] = 1.0f /(aspectRatio * tan_half_fov);
 	d_matrix[1][1] = 1.0f / tan_half_fov;
 	d_matrix[2][2] = -  (farPlane + nearPlane) / (farPlane - nearPlane);
 	d_matrix[2][3] = - (2.0f * farPlane * nearPlane) / (farPlane - nearPlane);
 	d_matrix[3][2] = -1;
 	d_matrix[3][3] = 0;
+					
+					
 }
+					
 
 inline Mat4 &Mat4::transposeSelf()
 {
@@ -376,11 +383,20 @@ inline Mat4 &Mat4::transposeSelf()
 			d_matrix[row][col] = d_matrix[col][row];
 			d_matrix[col][row] = temp;
 		}
-		
 	}
 	return *this;
 }
 	
-
+inline Mat4 &Mat4::scaleSelf(float factor)
+{
+    d_matrix[0][0] = factor;
+    d_matrix[1][1] = factor;
+    d_matrix[2][2] = factor;
+	
+    return *this;
+}
+					
+					
+					
 #endif
 
