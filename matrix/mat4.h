@@ -405,25 +405,31 @@ inline Mat4 &Mat4::rotateSelf(int degrees_x, int degrees_y, int degrees_z)
     float sinx = sin(degrees_x);
     
     float cosy = cos(degrees_y);
-    float cosz = cos(degrees_z);
+    float siny = sin(degrees_y);
     
-    Mat4 x_axis = {1,   0,      0,   0,
+    float cosz = cos(degrees_z);
+    float sinz = sin(degrees_z);
+    
+    Mat4 x_axis(1,   0,      0,   0,
                    0,  cosx, -sinx,  0,
                    0,  sinx,  cosx,  0,
-                   0,  0,      0,    1};
+                0,  0,      0,    1);
     
-    Mat4 y_axis = {cosy,  0,   siny,   0,
-                   0,     1,      0,   0
-                   -siny, 0,    cosy,  0,
-                   0,     0,      0,   1};
+    Mat4 y_axis(cosy,  0,   siny,   0,
+                0,     1,      0,   0,
+               -siny,  0,    cosy,  0,
+                0,     0,      0,   1);
     
-    Mat4 z_axis = {cosz, -sinz,   0,   0,
-                   sinz,  cosz,   0,   0,
-                    0,     0,     1,   0,
-                    0,     0,     0,   1};
+    Mat4 z_axis(cosz, -sinz,   0,   0,
+                sinz,  cosz,   0,   0,
+                0,     0,     1,   0,
+                0,     0,     0,   1);
     
-    
-    
+    *this * x_axis; 
+    *this * y_axis;
+    *this * z_axis;
+
+    return *this;
 }
 
 

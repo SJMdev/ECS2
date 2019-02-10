@@ -31,7 +31,8 @@ void Window::initializeObjects(vector<ObjectFilePaths>  &objectFilePaths)
     }
     
     
-    d_objects.at(1).translationMatrix[3][0] = 1.0;
+    d_objects.at(1).translationMatrix[3][0] = 0.8;
+    //d_objects.at(1).rotationMatrix.rotateSelf(90,0,0);
     
     for (auto &object: d_objects)
         sendObjectToBuffer(object);

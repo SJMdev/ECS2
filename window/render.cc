@@ -43,7 +43,7 @@ void Window::render()
         //calculate object model matrix
         object.modelMatrix = object.translationMatrix * object.rotationMatrix * object.scaleMatrix;
         //SDL_Log("obj modelmatrix: %s", object.modelMatrix.toString().c_str());
-		
+        //object.modelMatrix.transposeSelf()
         object.normalTransformMatrix = object.modelMatrix.normalMatrix();
 
         glUniformMatrix4fv(d_modelMatrixLocation, 1, false, object.modelMatrix.data());
