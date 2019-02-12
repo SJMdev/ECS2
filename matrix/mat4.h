@@ -12,6 +12,7 @@
 #define DEG2RAD  PI / 180.0f
 #define RAD2DEG  180.f / PI
 
+// This is a column-major matrix class. I want to make sure that construction etc is still the same. 
 
 class Mat4
 {
@@ -79,6 +80,7 @@ class Mat4
 
 };
 
+// this behavior is not yet correct. Do we want to feed column vectors here too?
 
 inline Mat4::Mat4(const Vec4f &x, const Vec4f &y, const Vec4f &z, const Vec4f &w)
 {
@@ -88,15 +90,16 @@ inline Mat4::Mat4(const Vec4f &x, const Vec4f &y, const Vec4f &z, const Vec4f &w
     d_matrix[3] = w;
 }
 
+// note: the internal data is thus "transposed".
 inline  Mat4::Mat4(const float xx, const float xy, const float xz, const float xw,
                       const float yx, const float yy, const float yz, const float yw,
                       const float zx, const float zy, const float zz, const float zw,
                       const float wx, const float wy, const float wz, const float ww)
 {
-    d_matrix[0][0]= xx; d_matrix[0][1] =xy; d_matrix[0][2] =xz; d_matrix[0][3] =xw;
-    d_matrix[1][0]= yx; d_matrix[1][1] =yy; d_matrix[1][2] =yz; d_matrix[1][3] =yw; 
-    d_matrix[2][0]= zx; d_matrix[2][1] =zy; d_matrix[2][2] =zz; d_matrix[2][3] =zw;
-    d_matrix[3][0]= wx; d_matrix[3][1] =wy; d_matrix[2][2] =wz; d_matrix[3][3] =ww;
+    d_matrix[0][0]= xx; d_matrix[1][0] =xy; d_matrix[2][0] =xz; d_matrix[3][0] =xw;
+    d_matrix[0][1]= yx; d_matrix[1][1] =yy; d_matrix[2][1] =yz; d_matrix[3][1] =yw; 
+    d_matrix[0][2]= zx; d_matrix[1][2] =zy; d_matrix[2][2] =zz; d_matrix[3][2] =zw;
+    d_matrix[0][3]= wx; d_matrix[1][3] =wy; d_matrix[2][3] =wz; d_matrix[3][3] =ww;
 }
 
 inline void Mat4::zero()
@@ -107,10 +110,10 @@ inline void Mat4::zero()
 inline void Mat4::toIdentity()
 {
     memset( d_matrix, 0, sizeof( Mat4 ) );
-    d_matrix[0].x = 1;
-    d_matrix[1].y = 1;
-    d_matrix[2].z = 1;
-    d_matrix[3].w = 1;
+    d_matrix[0][0] = 1;
+    d_matrix[1][1] = 1;
+    d_matrix[2][2] = 1;
+    d_matrix[3][3] = 1;
 }
 
 inline bool Mat4::compare(const Mat4 &rhs) const
@@ -146,26 +149,29 @@ inline Vec4f &Mat4::operator[](int index)
 inline Mat4 Mat4::operator*(const float rhs) const
 {
     return Mat4 (
-                    d_matrix[0].x * rhs, d_matrix[0].y * rhs, d_matrix[0].z * rhs, d_matrix[0].w * rhs,
-                    d_matrix[1].x * rhs, d_matrix[1].y * rhs, d_matrix[1].z * rhs, d_matrix[1].w * rhs,
-                    d_matrix[2].x * rhs, d_matrix[2].y * rhs, d_matrix[2].z * rhs, d_matrix[2].w * rhs,
-                    d_matrix[3].x * rhs, d_matrix[3].y * rhs, d_matrix[3].z * rhs, d_matrix[3].w * rhs
+                    d_matrix[0][0] * rhs, d_matrix[1][0] * rhs, d_matrix[2][0] * rhs, d_matrix[3][0] * rhs,
+                    d_matrix[0][1] * rhs, d_matrix[1][1] * rhs, d_matrix[2][1] * rhs, d_matrix[3][1] * rhs,
+                    d_matrix[0][2] * rhs, d_matrix[1][2] * rhs, d_matrix[2][2] * rhs, d_matrix[3][2] * rhs,
+                    d_matrix[0][3] * rhs, d_matrix[1][3] * rhs, d_matrix[2][3] * rhs, d_matrix[3][3] * rhs
                 );
 }
 
 inline Vec4f Mat4::operator*(const Vec4f &rhs) const
 {
     return Vec4f(
-                    d_matrix[0].x * rhs.x + d_matrix[0].y * rhs.y + d_matrix[0].z * rhs.z + d_matrix[0].w * rhs.w,
-                    d_matrix[1].x * rhs.x + d_matrix[1].y * rhs.y + d_matrix[1].z * rhs.z + d_matrix[1].w * rhs.w,
-                    d_matrix[2].x * rhs.x + d_matrix[2].y * rhs.y + d_matrix[2].z * rhs.z + d_matrix[2].w * rhs.w,
-                    d_matrix[3].x * rhs.x + d_matrix[3].y * rhs.y + d_matrix[3].z * rhs.z + d_matrix[3].w * rhs.w
+                    d_matrix[0][0] * rhs.x + d_matrix[1][0] * rhs.y + d_matrix[2][0] * rhs.z + d_matrix[3][0] * rhs.w,
+                    d_matrix[0][1] * rhs.x + d_matrix[1][1] * rhs.y + d_matrix[2][1] * rhs.z + d_matrix[3][1] * rhs.w,
+                    d_matrix[0][2] * rhs.x + d_matrix[1][2] * rhs.y + d_matrix[2][2] * rhs.z + d_matrix[3][2] * rhs.w,
+                    d_matrix[0][3] * rhs.x + d_matrix[1][3] * rhs.y + d_matrix[2][3] * rhs.z + d_matrix[3][3] * rhs.w
                 );
 }
 
+/*
 inline Vec3f Mat4::operator*(const Vec3f &rhs) const
 {
     float s = d_matrix[3].x * rhs.x + d_matrix[3].y * rhs.y + d_matrix[3].z * rhs.z + d_matrix[4].w;
+    
+    
     if (s = 0.0f)
         return Vec3f( 0.0f, 0.0f, 0.0f);
     if (s == 1.0f)
@@ -186,6 +192,8 @@ inline Vec3f Mat4::operator*(const Vec3f &rhs) const
                     );
     }
 }
+
+*/
 
 inline Mat4 Mat4::operator*(const Mat4 &rhs) const
 {
@@ -211,32 +219,33 @@ inline Mat4 Mat4::operator*(const Mat4 &rhs) const
     return dst;
 }
 
+
 inline Mat4 Mat4::operator+(const Mat4 &rhs) const
 {
     return Mat4(
-                d_matrix[0].x + rhs[0].x, d_matrix[0].y + rhs[0].y, d_matrix[0].z + rhs[0].z, d_matrix[0].w + rhs[0].w,
-                d_matrix[1].x + rhs[1].x, d_matrix[1].y + rhs[1].y, d_matrix[1].z + rhs[1].z, d_matrix[1].w + rhs[1].w,
-                d_matrix[2].x + rhs[2].x, d_matrix[2].y + rhs[2].y, d_matrix[2].z + rhs[2].z, d_matrix[2].w + rhs[2].w,
-                d_matrix[3].x + rhs[3].x, d_matrix[3].y + rhs[3].y, d_matrix[3].z + rhs[3].z, d_matrix[3].w + rhs[3].w
+                d_matrix[0][0] + rhs[0][0], d_matrix[1][0] + rhs[1][0], d_matrix[2][0] + rhs[2][0], d_matrix[3][0] + rhs[3][0],
+                d_matrix[0][1] + rhs[0][1], d_matrix[1][1] + rhs[1][1], d_matrix[2][1] + rhs[2][1], d_matrix[3][1] + rhs[3][1],
+                d_matrix[0][2] + rhs[0][2], d_matrix[1][2] + rhs[1][2], d_matrix[2][2] + rhs[2][2], d_matrix[3][2] + rhs[3][2],
+                d_matrix[0][3] + rhs[0][3], d_matrix[1][3] + rhs[1][3], d_matrix[2][3] + rhs[2][3], d_matrix[3][3] + rhs[3][3]
                );
 } 
 
 inline Mat4 Mat4::operator-(const Mat4 &rhs) const
 {
     return Mat4(
-                d_matrix[0].x - rhs[0].x, d_matrix[0].y - rhs[0].y, d_matrix[0].z - rhs[0].z, d_matrix[0].w - rhs[0].w,
-                d_matrix[1].x - rhs[1].x, d_matrix[1].y - rhs[1].y, d_matrix[1].z - rhs[1].z, d_matrix[1].w - rhs[1].w,
-                d_matrix[2].x - rhs[2].x, d_matrix[2].y - rhs[2].y, d_matrix[2].z - rhs[2].z, d_matrix[2].w - rhs[2].w,
-                d_matrix[3].x - rhs[3].x, d_matrix[3].y - rhs[3].y, d_matrix[3].z - rhs[3].z, d_matrix[3].w - rhs[3].w
+                d_matrix[0][0] - rhs[0][0], d_matrix[1][0] - rhs[1][0], d_matrix[2][0] - rhs[2][0], d_matrix[3][0] - rhs[3][0],
+                d_matrix[0][1] - rhs[0][1], d_matrix[1][1] - rhs[1][1], d_matrix[2][1] - rhs[2][1], d_matrix[3][1] - rhs[3][1],
+                d_matrix[0][2] - rhs[0][2], d_matrix[1][2] - rhs[1][2], d_matrix[2][2] - rhs[2][2], d_matrix[3][2] - rhs[3][2],
+                d_matrix[0][3] - rhs[0][3], d_matrix[1][3] - rhs[1][3], d_matrix[2][3] - rhs[2][3], d_matrix[3][3] - rhs[3][3]
                );
 }
 
 inline Mat4 &Mat4::operator*=(const float rhs) 
 {
-    d_matrix[0].x *= rhs; d_matrix[0].y *= rhs; d_matrix[0].z *= rhs; d_matrix[0].w *= rhs;
-    d_matrix[1].x *= rhs; d_matrix[1].y *= rhs; d_matrix[1].z *= rhs; d_matrix[1].w *= rhs;
-    d_matrix[2].x *= rhs; d_matrix[2].y *= rhs; d_matrix[2].z *= rhs; d_matrix[2].w *= rhs;
-    d_matrix[3].x *= rhs; d_matrix[3].y *= rhs; d_matrix[3].z *= rhs; d_matrix[3].w *= rhs;
+    d_matrix[0][0] *= rhs; d_matrix[1][0] *= rhs; d_matrix[2][0] *= rhs; d_matrix[3][0] *= rhs;
+    d_matrix[0][1] *= rhs; d_matrix[1][1] *= rhs; d_matrix[2][1] *= rhs; d_matrix[3][1] *= rhs;
+    d_matrix[0][2] *= rhs; d_matrix[1][2] *= rhs; d_matrix[2][2] *= rhs; d_matrix[3][2] *= rhs;
+    d_matrix[0][3] *= rhs; d_matrix[1][3] *= rhs; d_matrix[2][3] *= rhs; d_matrix[3][3] *= rhs;
     
     return *this;
 }
@@ -249,20 +258,20 @@ inline Mat4 &Mat4::operator*=(const Mat4 &rhs)
 
 inline Mat4 &Mat4::operator+=(const Mat4 &rhs)
 {
-    d_matrix[0].x += rhs[0].x; d_matrix[0].y += rhs[0].y; d_matrix[0].z += rhs[0].z; d_matrix[0].w += rhs[0].w;
-    d_matrix[1].x += rhs[1].x; d_matrix[1].y += rhs[1].y; d_matrix[1].z += rhs[1].z; d_matrix[1].w += rhs[1].w;
-    d_matrix[2].x += rhs[2].x; d_matrix[2].y += rhs[2].y; d_matrix[2].z += rhs[2].z; d_matrix[2].w += rhs[2].w;
-    d_matrix[3].x += rhs[3].x; d_matrix[3].y += rhs[3].y; d_matrix[3].z += rhs[3].z; d_matrix[3].w += rhs[3].w;
+    d_matrix[0][0] += rhs[0][0]; d_matrix[1][0] += rhs[1][0]; d_matrix[2][0] += rhs[2][0]; d_matrix[3][0] += rhs[3][0];
+    d_matrix[0][1] += rhs[0][1]; d_matrix[1][1] += rhs[1][1]; d_matrix[2][1] += rhs[2][1]; d_matrix[3][1] += rhs[3][1];
+    d_matrix[0][2] += rhs[0][2]; d_matrix[1][2] += rhs[1][2]; d_matrix[2][2] += rhs[2][2]; d_matrix[3][2] += rhs[3][2];
+    d_matrix[0][3] += rhs[0][3]; d_matrix[1][3] += rhs[1][3]; d_matrix[2][3] += rhs[2][3]; d_matrix[3][3] += rhs[3][3];
     
     return *this;
 }
 
 inline Mat4 &Mat4::operator-=(const Mat4 &rhs)
 {
-    d_matrix[0].x -= rhs[0].x; d_matrix[0].y -= rhs[0].y; d_matrix[0].z -= rhs[0].z; d_matrix[0].w -= rhs[0].w;
-    d_matrix[1].x -= rhs[1].x; d_matrix[1].y -= rhs[1].y; d_matrix[1].z -= rhs[1].z; d_matrix[1].w -= rhs[1].w;
-    d_matrix[2].x -= rhs[2].x; d_matrix[2].y -= rhs[2].y; d_matrix[2].z -= rhs[2].z; d_matrix[2].w -= rhs[2].w;
-    d_matrix[3].x -= rhs[3].x; d_matrix[3].y -= rhs[3].y; d_matrix[3].z -= rhs[3].z; d_matrix[3].w -= rhs[3].w;
+    d_matrix[0][0] -= rhs[0][0]; d_matrix[1][0] -= rhs[1][0]; d_matrix[2][0] -= rhs[2][0]; d_matrix[3][0] -= rhs[3][0];
+    d_matrix[0][1] -= rhs[0][1]; d_matrix[1][1] -= rhs[1][1]; d_matrix[2][1] -= rhs[2][1]; d_matrix[3][1] -= rhs[3][1];
+    d_matrix[0][2] -= rhs[0][2]; d_matrix[1][2] -= rhs[1][2]; d_matrix[2][2] -= rhs[2][2]; d_matrix[3][2] -= rhs[3][2];
+    d_matrix[0][3] -= rhs[0][3]; d_matrix[1][3] -= rhs[1][3]; d_matrix[2][3] -= rhs[2][3]; d_matrix[3][3] -= rhs[3][3];
 
     return *this;
 }
@@ -289,12 +298,13 @@ inline Vec4f &operator*=(Vec4f &lhs, const Mat4 &rhs)
     return lhs;
 }
 
+/*
 inline Vec3f &operator*=(Vec3f &lhs, const Mat4 &rhs)
 {
     lhs = rhs * lhs;
     return lhs;
 }
-
+*/
 
 inline bool Mat4::operator==(const Mat4 &rhs) const 
 {
