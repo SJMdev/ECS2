@@ -21,7 +21,7 @@ void Window::initializeObjects(vector<ObjectFilePaths>  &objectFilePaths)
         object.translationMatrix.toIdentity();
         object.rotationMatrix.toIdentity();
 
-	    object.translationMatrix[3][2] = -3; 
+	    //object.translationMatrix.translateSelf(0,0,-3);
         object.scaleMatrix.scaleSelf(0.05f);
         object.modelMatrix = object.rotationMatrix * object.scaleMatrix;
 		object.modelMatrix = object.translationMatrix * object.modelMatrix; 
@@ -31,7 +31,7 @@ void Window::initializeObjects(vector<ObjectFilePaths>  &objectFilePaths)
     }
     
     
-    d_objects.at(1).translationMatrix[3][0] = 0.8;
+    d_objects.at(1).translationMatrix.translateSelf(0.8,0,0);
     //d_objects.at(1).rotationMatrix.rotateSelf(90,0,0);
     
     for (auto &object: d_objects)
