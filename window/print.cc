@@ -1,3 +1,6 @@
-#include "window.ih"
+// #include "window.ih"
 
-void Window::print()
+// void Window::print()
+// {
+
+// }

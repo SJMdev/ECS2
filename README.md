@@ -30,23 +30,30 @@ Maybe we need to switch to column major. I am not sure yet.
 
 
 # TODO:
+wrap all SDL_Log by own print function (so that if we swap, we can replace it!)
+
+better .obj file parsing.
+
+learn vertex stretching?
+
 parse object filepaths (objectname, texturename?).
 
 Object now has a uint for a TBO (texture binding object, texture buffer object, whatever).
 The size of GLuint is predetermined, uint is not. I want to fix this.
 
+window.addshaderfromfile should have a pointer to the current active program.
+
+unify buffers.
 
 
 
+#DONE:
 rewrite Mat4 to be column-major instead of row-major.
 
 fix matrices.
 
 implement mat4.translate, mat4.rotate and mat4.scale (disallow shear)
 
-window.addshaderfromfile should have a pointer to the current active program.
-
-unify buffers.
 
 
 
