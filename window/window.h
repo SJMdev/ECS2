@@ -110,7 +110,9 @@ class Window
         void initializeViewMatrices();
     	void initializeProjectionMatrix();
         void initializeObjects(std::vector<ObjectFilePaths> &filepaths);
-       
+        void initializeBuffers();
+
+
         void setUniforms(GLuint currentShaderProgram); // set the uniforms for the current shader. We thus need to know what the active shader is.
         void fillTexture(Texture &texture, std::string &filename);
 
@@ -119,6 +121,7 @@ class Window
         //this belongs in object related stuff. 
         void generateVertices(Object &object);
         void sendObjectToBuffer(Object &object);
+        void sendTextureToBuffer(Object &object);
 
         void calculateTransformation(); //absolutely meaningless.
         void calculateViewTransformation(); // ??

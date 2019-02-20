@@ -36,7 +36,10 @@ void Window::initializeObjects(vector<ObjectFilePaths>  &objectFilePaths)
     //d_objects.at(1).rotationMatrix.rotateSelf(90,0,0);
     
     for (auto &object: d_objects)
+    {
         sendObjectToBuffer(object);
+        sendTextureToBuffer(object);
+    }
    
     
     SDL_Log("found %d objects.", d_objects.size());   

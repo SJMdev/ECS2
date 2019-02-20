@@ -1,42 +1,16 @@
-#include <entt/entt.hpp>
-#include <sdl/include/SDL.h>
-#include "components/position.h"
-#include <stdio.h>
-#include "window/window.h"
-#include <cstdint>
-#include <iostream>
-//not necessary but useful
-#include <vector>
-#include <string>
+#include "window.ih"
 
-#include "shared/objectfilepaths.h"
-
-using namespace std;
-
-int main(int argc, char* argv[]) //this is necessary for SDL
+void Window::mainLoop()
 {
-    Window d_window;
-    d_window.createWindow("Editor",
-                          SDL_WINDOWPOS_UNDEFINED,  //starting xpos
-                          SDL_WINDOWPOS_UNDEFINED,  //starting ypos
-                          1280,
-                          1024,
-                          SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
-                          ); 
     
-    
-    
-    d_window.initializeSDL();
-    d_window.initializeGlew(); 
-    
+    // Initialize everything.
+    initializeSDL();
+    initializeGlew(); 
     if (!d_window.initializeOpenGL())
-    {
         SDL_Log("Unable to initialize OpenGL.");
-    };
-    
     d_window.initializeBuffers();
     
-    
+
     ObjectFilePaths cat1
 	{
 		"cat.obj", 
@@ -48,14 +22,11 @@ int main(int argc, char* argv[]) //this is necessary for SDL
 		"cat.obj", 
 		"cat_diff_rot_flipped.png"
 	};
-    
 	vector<ObjectFilePaths> d_objects;
-	
 	d_objects.push_back(cat1);
     d_objects.push_back(cat2);
-    
     d_window.initializeScene();
-    d_window.initializeObjects(d_objects);
+    d_window.initializeObjects(d_objects); // sendObjectToBuffer,sendTextureToBuffer.
     d_window.initializeViewMatrices();
     d_window.initializeProjectionMatrix();    
     
@@ -87,8 +58,10 @@ int main(int argc, char* argv[]) //this is necessary for SDL
         
         d_window.swapWindow();
     }
-    
-    
-    
-    return 0; //necessary for SDL.
+
+    while(true)
+    {
+
+    }
+
 }
