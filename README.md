@@ -52,7 +52,7 @@ better .obj file parsing.
 unify buffers. 
 
 
-#DONE:
+# DONE:
 
 parse object filepaths (objectname, texturename?).
 
