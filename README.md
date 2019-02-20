@@ -29,30 +29,43 @@ I am as of now unsure whether or not the perspective projection works.
 Maybe we need to switch to column major. I am not sure yet.
 
 
-# TODO:
-wrap all SDL_Log by own print function (so that if we swap, we can replace it!)
+# TODO (in order of importance!):
 
-better .obj file parsing.
+write / finish  Vec3f.
+
+Pull apart window into more managable classes. Maybe a LOADER class in the first place.
+
+wrap all SDL_Log by own print function (so that if/when we swap to GLFW, we can replace it!)
+
+Pull apart window even more: Light needs a struct. Clearer matrix stuff.
+
+Maybe a drawable(blergh) class.
+
+learn IBOs.
 
 learn vertex stretching?
 
-parse object filepaths (objectname, texturename?).
-
-Object now has a uint for a TBO (texture binding object, texture buffer object, whatever).
-The size of GLuint is predetermined, uint is not. I want to fix this.
-
 window.addshaderfromfile should have a pointer to the current active program.
 
-unify buffers.
+better .obj file parsing.
 
+unify buffers. 
 
 
 #DONE:
+
+parse object filepaths (objectname, texturename?).
+
 rewrite Mat4 to be column-major instead of row-major.
 
 fix matrices.
 
 implement mat4.translate, mat4.rotate and mat4.scale (disallow shear)
+
+split sendObjectTobuffer into initializeBuffer & initializeTexture.
+
+empty main.cc and create a mainLoop in window.
+
 
 
 
@@ -62,6 +75,9 @@ Parallelize reading in files (fread, split buffer by openMP).
 
 unify buffers & textures.
 
+
+Object now has a uint for a TBO (texture binding object, texture buffer object, whatever).
+The size of GLuint is predetermined, uint is not. We need to replace variable size primitives.
 
 
 

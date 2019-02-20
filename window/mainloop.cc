@@ -6,9 +6,9 @@ void Window::mainLoop()
     // Initialize everything.
     initializeSDL();
     initializeGlew(); 
-    if (!d_window.initializeOpenGL())
+    if (initializeOpenGL())
         SDL_Log("Unable to initialize OpenGL.");
-    d_window.initializeBuffers();
+    initializeBuffers();
     
 
     ObjectFilePaths cat1
@@ -25,10 +25,10 @@ void Window::mainLoop()
 	vector<ObjectFilePaths> d_objects;
 	d_objects.push_back(cat1);
     d_objects.push_back(cat2);
-    d_window.initializeScene();
-    d_window.initializeObjects(d_objects); // sendObjectToBuffer,sendTextureToBuffer.
-    d_window.initializeViewMatrices();
-    d_window.initializeProjectionMatrix();    
+    initializeScene();
+    initializeObjects(d_objects); // sendObjectToBuffer,sendTextureToBuffer.
+    initializeViewMatrices();
+    initializeProjectionMatrix();    
     
     // "game loop"
     
@@ -54,14 +54,11 @@ void Window::mainLoop()
                 break;
             }
         }
-        d_window.render();
+        render();
         
-        d_window.swapWindow();
+        swapWindow();
     }
 
-    while(true)
-    {
-
-    }
+ 
 
 }

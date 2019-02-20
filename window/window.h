@@ -14,8 +14,7 @@
 
 class Window
 {
-
-
+    // Window properties.
     SDL_Window  *d_window;
     SDL_Surface *d_surface;
     SDL_Surface *d_image;
@@ -23,19 +22,24 @@ class Window
     int d_windowHeight;
     std::vector<Object> d_objects;
 
-    //openGL stuff
+    // openGL stuff
     GLuint d_gProgramID = 0;
     GLint  gVertexPos2DLocation = -1;
     GLuint gVBO = 0;
     GLuint gVAO = 0;
-    GLuint gTBO = 0; // Texture buffer object. Should be a part of an object together with VBO VAO? or a manager?
-    bool gRenderQuad = true;
+    bool gRenderQuad = true; // this is not used?
+    
+    
+    
 
     // this is part of the scene. Maybe make a struct or something else.
     std::vector<float> d_material; // Vec4f? 
 
-
-    Mat4 d_lightTranslationMatrix; // this should be a Matrix!
+    
+    
+    // LIGHT!
+    
+    Mat4 d_lightTranslationMatrix;
     Mat4 d_lightRotationMatrix;
     Mat4 d_lightScaleMatrix;
     Mat4 d_lightModelMatrix;
@@ -43,11 +47,13 @@ class Window
     std::vector<float> d_lightTranslationVector; //Vec3f?
     std::vector<float> d_lightPositionVector; //Vec3f?
     std::vector<float> d_lightColor; // Vec3f
-    
+
+ 
 
     //MODEL
     Mat4 d_modelMatrix;
 
+    
     // VIEW
     Mat4 d_viewMatrix;
     Mat4 d_viewTranslationMatrix; // we set this after we have loaded all the objects.
@@ -55,10 +61,10 @@ class Window
     Mat4 d_viewScaleMatrix;
 
     //PROJECTION
-    Mat4 d_projectionTransformationMatrix; // we're gonna ignore this for now.
-	
-
-	// book stuff
+    Mat4 d_projectionTransformationMatrix;
+    
+    
+    // BOOK
 	Mat4 d_viewPortMatrix;
 	
 	
@@ -144,8 +150,6 @@ class Window
         void loadObject(std::string &filename,Object &object);
         bool loadOBJFromFile(std::string &filename, Object &object);
 
-
-
         //this belongs in utility, and not in window
         int decodePNG(std::vector<unsigned char>& out_image,
                     unsigned long& image_width,
@@ -155,6 +159,12 @@ class Window
                     bool convert_to_rgba32 = true);
         void loadPNG(std::vector<unsigned char>& buffer, const std::string& filename); //designed for loading files from hard disk in an std::vector
 
+    
+    
+        void mainLoop();
+    
+    
+    
         //deprecated & to be removed
         // void drawTriangle();
 

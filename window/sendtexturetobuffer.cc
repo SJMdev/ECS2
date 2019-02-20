@@ -3,6 +3,9 @@
 void Window::sendTextureToBuffer(Object &object)
 {
  
+    // We allocate one texture buffer.
+    GLsizei bufferCount = 1;
+    
     // Generate textures
     glGenTextures(bufferCount, &object.TBO);   
     glBindTexture(GL_TEXTURE_2D, object.TBO);
