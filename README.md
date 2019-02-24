@@ -31,11 +31,15 @@ Maybe we need to switch to column major. I am not sure yet.
 
 # TODO (in order of importance!):
 
+wrap all SDL_Log by own print function (so that if/when we swap to GLFW, we can replace it!) -> create a logger! Logger.log().
+
+Keep the initialization of initSDL, initGLEW, and initOpenGL. but we need some sort of alternative for the rest. The window class is getting cluttered.
+
+Some is World Modeling stuff, some of it is not. Split!
+
 write / finish  Vec3f.
 
 Pull apart window into more managable classes. Maybe a LOADER class in the first place.
-
-wrap all SDL_Log by own print function (so that if/when we swap to GLFW, we can replace it!)
 
 Pull apart window even more: Light needs a struct. Clearer matrix stuff.
 
@@ -53,6 +57,10 @@ unify buffers.
 
 
 # DONE:
+
+
+
+create a Light object.
 
 parse object filepaths (objectname, texturename?).
 

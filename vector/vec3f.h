@@ -15,8 +15,10 @@ class Vec3f
     float z;
     
     Vec3f() {}
+  
     explicit Vec3f(float x, float y, float z) { set(x , y, z);}
     explicit Vec3f(float x) { set(x, x, x);}
+    
     
     float operator[](const int index) const;
     float &operator[](const int index);
@@ -48,6 +50,7 @@ class Vec3f
     std::string toString();
     //linear interpolation between!
     //void lerp?
+    
     const float *data() const;
     float *data();
 };

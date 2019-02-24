@@ -3,10 +3,14 @@
 #include "../shared/vecf.h"
 
 //@Todo: this uses the old Vec3f.
-struct LightSource 
+struct Light 
 {
     Vec3f color; // r, g, b.
     Vec3f position;   
+    
+    Mat4 scaleMatrix;
+    Mat4 rotationmatrix;
+    Mat4 translationMatrix;
 };
 
 

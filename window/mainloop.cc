@@ -8,6 +8,8 @@ void Window::mainLoop()
     initializeGlew(); 
     if (initializeOpenGL())
         SDL_Log("Unable to initialize OpenGL.");
+
+    
     initializeBuffers();
     
 
@@ -23,9 +25,13 @@ void Window::mainLoop()
 		"cat_diff_rot_flipped.png"
 	};
 	vector<ObjectFilePaths> d_objects;
+    
 	d_objects.push_back(cat1);
     d_objects.push_back(cat2);
-    initializeScene();
+    
+    initializeScene(); // currently, this sets light as well.
+    setUniforms(d_gProgramID);
+    
     initializeObjects(d_objects); // sendObjectToBuffer,sendTextureToBuffer.
     initializeViewMatrices();
     initializeProjectionMatrix();    

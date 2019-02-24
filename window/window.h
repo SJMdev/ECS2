@@ -38,6 +38,8 @@ class Window
     
     
     // LIGHT!
+
+    Light d_light; // d_lightful!
     
     Mat4 d_lightTranslationMatrix;
     Mat4 d_lightRotationMatrix;
