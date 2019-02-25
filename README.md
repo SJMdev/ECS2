@@ -12,26 +12,26 @@ cl /MP4 *.cc window/*.cc  /EHsc /std:c++17 /I libraries /link libraries/sdl/lib/
 
 
 
+# THINGS TO THINK ABOUT:
+Matrix multiplication order is reversed in the c++ code because of my column-major implementation. That sucks.
+This affects all the calculations.
+
+
 # The gist of it.
 The system currently uses SDL for constructing a window. I may / may not want to switch to GLFW , which at least does not hijack my logprinting. The Vec3f, Vec4f, Mat3 and Mat4 implementations strongly resemble those of Doom 3. I am unsure whether or not they are meritous, as the way they allow access to their public data members through memory addresses is (very) 
 error-prone.
 
 
 # What are we currently doing?
-I fixed the projection matrix. The problem with openGL being column major still exists though. hmm. Maybe I want to rewrite the class.
-
-Furthermore, I don't properly understand near/far plane as of now. What we need to remember is that both of these should be positive (as the openGL perspective projection matrix is sign-flipped (as we are looking in negative Z direction for x/y alignment). sigh.
-
-
-I found some problems w.r.t openGL being  column-major. it explains a lot that I had trouble simply translating the cat. I should first figure this out, and then continue from there.
-I am as of now unsure whether or not the perspective projection works.
-
-Maybe we need to switch to column major. I am not sure yet.
 
 
 # TODO (in order of importance!):
 
+implement rotation & try to figure out quaternion rotation!
+
 wrap all SDL_Log by own print function (so that if/when we swap to GLFW, we can replace it!) -> create a logger! Logger.log().
+
+use light object.
 
 Keep the initialization of initSDL, initGLEW, and initOpenGL. but we need some sort of alternative for the rest. The window class is getting cluttered.
 
@@ -58,8 +58,6 @@ unify buffers.
 
 # DONE:
 
-
-
 create a Light object.
 
 parse object filepaths (objectname, texturename?).
@@ -74,6 +72,14 @@ split sendObjectTobuffer into initializeBuffer & initializeTexture.
 
 empty main.cc and create a mainLoop in window.
 
+I fixed the projection matrix. The problem with openGL being column major still exists though. hmm. Maybe I want to rewrite the class.
+
+Furthermore, I don't properly understand near/far plane as of now. What we need to remember is that both of these should be positive (as the openGL perspective projection matrix is sign-flipped (as we are looking in negative Z direction for x/y alignment). sigh.
+
+I found some problems w.r.t openGL being  column-major. it explains a lot that I had trouble simply translating the cat. I should first figure this out, and then continue from there.
+I am as of now unsure whether or not the perspective projection works.
+
+Maybe we need to switch to column major. I am not sure yet.
 
 
 

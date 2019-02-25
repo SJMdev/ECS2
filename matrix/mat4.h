@@ -400,9 +400,9 @@ inline Mat4 &Mat4::transposeSelf()
 	
 inline Mat4 &Mat4::scaleSelf(float factor)
 {
-    d_matrix[0][0] = factor;
-    d_matrix[1][1] = factor;
-    d_matrix[2][2] = factor;
+    d_matrix[0][0] *= factor;
+    d_matrix[1][1] *= factor;
+    d_matrix[2][2] *= factor;
 	
     return *this;
 }

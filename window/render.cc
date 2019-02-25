@@ -40,7 +40,8 @@ void Window::render()
     for (auto &object : d_objects)
     {
         //calculate object model matrix
-        object.modelMatrix = object.translationMatrix * object.rotationMatrix * object.scaleMatrix;
+//        object.modelMatrix = object.translationMatrix * object.rotationMatrix * object.scaleMatrix;
+        object.modelMatrix = object.scaleMatrix * object.rotationMatrix * object.translationMatrix;
         object.normalTransformMatrix = object.modelMatrix.normalMatrix();
 
         glUniformMatrix4fv(d_modelMatrixLocation, 1, false, object.modelMatrix.data());

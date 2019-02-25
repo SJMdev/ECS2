@@ -11,6 +11,7 @@
 #include "../shared/texture.h"
 #include "../shared/object.h"
 #include "../matrix/mat4.h"
+#include "../camera/lightsource.h"
 
 class Window
 {
@@ -133,9 +134,9 @@ class Window
 
         void calculateTransformation(); //absolutely meaningless.
         void calculateViewTransformation(); // ??
-
-
-	
+      
+        void handle_input();
+        //void simulate(); 
         //openGL final steps.
         void render();
         void swapWindow();

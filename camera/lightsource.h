@@ -1,6 +1,6 @@
 #ifndef INCLUDED_LIGHTSOURCE_
 #define INCLUDED_LIGHTSOURCE_
-#include "../shared/vecf.h"
+#include "../vector/vec3f.h"
 
 //@Todo: this uses the old Vec3f.
 struct Light 
@@ -9,7 +9,7 @@ struct Light
     Vec3f position;   
     
     Mat4 scaleMatrix;
-    Mat4 rotationmatrix;
+    Mat4 rotationMatrix;
     Mat4 translationMatrix;
 };
 
