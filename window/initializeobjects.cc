@@ -23,7 +23,7 @@ void Window::initializeObjects(vector<ObjectFilePaths>  &objectFilePaths)
 
 	    //object.translationMatrix.translateSelf(0,0,-3);
         object.scaleMatrix.scaleSelf(0.2f);
-        object.translationMatrix.translateSelf(0, 0, -1.0f);
+        object.translationMatrix.translateSelf(0, 0, -0.8f);
         object.modelMatrix = object.translationMatrix * object.rotationMatrix * object.scaleMatrix;
         SDL_Log("object modelmatrix : %s", object.modelMatrix.toString().c_str());
 	  			
