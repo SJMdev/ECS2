@@ -3,6 +3,8 @@
 
 // data class.
 
+// https://learnopengl.com/Lighting/Materials
+
 class Material
 {
 

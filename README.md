@@ -22,16 +22,20 @@ The system currently uses SDL for constructing a window. I may / may not want to
 error-prone.
 
 
-# What are we currently doing?
-
-
 # TODO (in order of importance!):
 
-implement rotation & try to figure out quaternion rotation!
+create a material data class -> see openGL stuff. 
 
-wrap all SDL_Log by own print function (so that if/when we swap to GLFW, we can replace it!) -> create a logger! Logger.log().
+refactor window with a Scene class -> refactor use light object.
 
-use light object.
+see if we can fix the matrix multiplication. check the GLM matmul stuff.
+
+
+try to figure out quaternion rotation!
+
+wrap all SDL_Log by own print function -> create a logger! Logger.log() -> global object(?). This is a more complicated task. see the stackoverflow post.
+
+
 
 Keep the initialization of initSDL, initGLEW, and initOpenGL. but we need some sort of alternative for the rest. The window class is getting cluttered.
 
@@ -57,6 +61,8 @@ unify buffers.
 
 
 # DONE:
+
+implement rotation.
 
 create a Light object.
 
