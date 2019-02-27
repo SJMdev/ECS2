@@ -1,0 +1,10 @@
+#ifndef INCLUDED_LOGGER_
+#define INCLUDED_LOGGER_
+
+class Logger
+{
+	
+
+};
+
+#endif

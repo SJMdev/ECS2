@@ -21,37 +21,39 @@ class Window
     SDL_Surface *d_image;
     int d_windowWidth;
     int d_windowHeight;
+
+
     std::vector<Object> d_objects;
+
+
 
     // openGL stuff
     GLuint d_gProgramID = 0;
     GLint  gVertexPos2DLocation = -1;
     GLuint gVBO = 0;
     GLuint gVAO = 0;
-    bool gRenderQuad = true; // this is not used?
+    // bool gRenderQuad = true; // this is not used?
     
-    
-    
-
-    // this is part of the scene. Maybe make a struct or something else.
     std::vector<float> d_material; // Vec4f? 
 
-    
-    
-    // LIGHT!
+    // scene stuff.
+    // this is part of the scene. Maybe make a struct or something else.
+   
 
+    // LIGHT!
     Light d_light; // d_lightful!
-    
     Mat4 d_lightTranslationMatrix;
     Mat4 d_lightRotationMatrix;
     Mat4 d_lightScaleMatrix;
     Mat4 d_lightModelMatrix;
-
     std::vector<float> d_lightTranslationVector; //Vec3f?
     std::vector<float> d_lightPositionVector; //Vec3f?
     std::vector<float> d_lightColor; // Vec3f
 
  
+
+
+
 
     //MODEL
     Mat4 d_modelMatrix;
@@ -70,9 +72,8 @@ class Window
     // BOOK
 	Mat4 d_viewPortMatrix;
 	
-	
-	
-	
+
+
     Mat4 d_projectionMatrix; // this is being set in resizeGL. call everything verbosely.
 
 

@@ -7,18 +7,19 @@
 // set up the light position vector (currently at 0,0, -0.5, 1)
 /////////////////////////////////////////////////////////////////
 
+
 void Window::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // clear color buffer
     glClearColor(0,0,0,1); // r,g,b,a
 
-    
     // bind shader program (set_shader?)
     glUseProgram(d_gProgramID);
     
     calculateViewTransformation();
 	
+
     // shader mode stuff:
     //if shadermode is something:
     d_lightPositionVector = {0, 0, 0.5, 1};
@@ -26,7 +27,9 @@ void Window::render()
     glUniform3fv(d_lightColorLocation,    1, d_lightColor.data());
     glUniform4fv(d_materialLocation,      1, d_material.data());
     
-    glActiveTexture(GL_TEXTURE0);
+
+
+    // glActiveTexture(GL_TEXTURE0);
 
     // bind the view matrix to the uniform. 
     glUniformMatrix4fv(d_viewMatrixLocation,      1, false, d_viewMatrix.data());
@@ -39,6 +42,7 @@ void Window::render()
     //for all objects, draw:
     for (auto &object : d_objects)
     {
+        glActiveTexture(GL_TEXTURE0);
         //calculate object model matrix
 //        object.modelMatrix = object.translationMatrix * object.rotationMatrix * object.scaleMatrix;
         object.modelMatrix = object.scaleMatrix * object.rotationMatrix * object.translationMatrix;
