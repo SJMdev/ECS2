@@ -8,8 +8,8 @@ void Window::handle_input()
             switch (event.type)
             {
                 case SDL_QUIT:
-                //gameover = 1;
-                break;
+                    exit(1);
+                    break;
                 //keyboard presses
                 case SDL_KEYDOWN:
                 {
@@ -53,8 +53,8 @@ void Window::handle_input()
                    {
                         case SDL_BUTTON_LEFT:
                         {
-                            d_objects.at(0).rotationMatrix.rotateSelf(0.0f, 10.0f, 0);
-                            SDL_Log("is this button clicked? %s", d_objects.at(0).rotationMatrix.toString().c_str());
+                            // d_objects.at(0).rotationMatrix.rotateSelf(0.0f, 10.0f, 0);
+                            SDL_Log("clicked left Mouse button.");
 
                             break;
                         }
@@ -63,13 +63,28 @@ void Window::handle_input()
                     }
                     break;
                 }
+                case SDL_MOUSEBUTTONUP:
+                    switch(event.button.button)
+                    {
+                        case SDL_BUTTON_LEFT:
+                        {
+                            SDL_Log("released left Mouse button.");
+                            //release
+                        }
+                    }
                 // moving the mouse:
                 case SDL_MOUSEMOTION:
                 {
-                    if (event.xrel.xrel  < 0)
-                        d_objects.at(0).rotationMatrix.rotateSelf(0.0f, -10.0f, 0);
-                    else if (events.xrel.xrel > 0)
-                        d_objects.at(0).rotationMatrix.rotateSelf(0.0f, 10.0f, 0);
+
+                    if (event.motion.xrel  < 0)
+                        d_objects.at(0).rotationMatrix.rotateSelf(0.0f, -1.0f, 0);
+                    else if (event.motion.xrel > 0)
+                        d_objects.at(0).rotationMatrix.rotateSelf(0.0f, 1.0f, 0);
+
+                    if (event.motion.yrel < 0)
+                        d_objects.at(0).rotationMatrix.rotateSelf(-1.0f, 0.0f, 0);
+                    else if (event.motion.yrel > 0)
+                        d_objects.at(0).rotationMatrix.rotateSelf(1.0f, 0.0f, 0.0f);
 
                     break;
                 }
