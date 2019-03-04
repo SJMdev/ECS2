@@ -24,6 +24,9 @@ error-prone.
 
 # TODO (in order of importance!):
 
+Hold control to move in current plane (in negative z, this is easy. 
+how does this work in arbitrary orientation?)
+
 create a material data class -> see openGL stuff. 
 
 refactor window with a Scene class -> refactor use light object.
@@ -36,8 +39,6 @@ see if we can fix the matrix multiplication. check the GLM matmul stuff.
 try to figure out quaternion rotation!
 
 wrap all SDL_Log by own print function -> create a logger! Logger.log() -> global object(?). This is a more complicated task. see the stackoverflow post.
-
-
 
 Keep the initialization of initSDL, initGLEW, and initOpenGL. but we need some sort of alternative for the rest. The window class is getting cluttered.
 
@@ -63,6 +64,8 @@ unify buffers.
 
 
 # DONE:
+
+hold left mouse button to rotate.
 
 implement rotation.
 
