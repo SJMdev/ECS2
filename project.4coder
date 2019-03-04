@@ -1,0 +1,12 @@
+version(1);
+project_name = "ECS2";
+
+patterns = {
+    "*/*.cc", 
+    "*/*.h",
+    "*/*.ih",
+};
+
+blacklist_patterns = {
+    "*.obj",
+};

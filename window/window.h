@@ -50,7 +50,7 @@ class Window
     std::vector<float> d_lightPositionVector; //Vec3f?
     std::vector<float> d_lightColor; // Vec3f
 
- 
+    bool d_left_mouse_clicked = false; 
 
 
 

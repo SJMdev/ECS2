@@ -28,6 +28,8 @@ create a material data class -> see openGL stuff.
 
 refactor window with a Scene class -> refactor use light object.
 
+Does the scene contain objects? or does the scene exists next to objects? heavy stuff.
+
 see if we can fix the matrix multiplication. check the GLM matmul stuff.
 
 

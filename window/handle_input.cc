@@ -1,5 +1,6 @@
 #include "window.ih"
 
+
 void Window::handle_input()
 {
     SDL_Event event;
@@ -54,8 +55,8 @@ void Window::handle_input()
                         case SDL_BUTTON_LEFT:
                         {
                             // d_objects.at(0).rotationMatrix.rotateSelf(0.0f, 10.0f, 0);
-                            SDL_Log("clicked left Mouse button.");
-
+                            //SDL_Log("clicked left Mouse button.");
+                            d_left_mouse_clicked = true;
                             break;
                         }
                         default:
@@ -70,12 +71,16 @@ void Window::handle_input()
                         {
                             SDL_Log("released left Mouse button.");
                             //release
+                            d_left_mouse_clicked = false;
+                            break;
                         }
                     }
                 // moving the mouse:
                 case SDL_MOUSEMOTION:
                 {
-
+                  if (d_left_mouse_clicked)
+                  {
+                    
                     if (event.motion.xrel  < 0)
                         d_objects.at(0).rotationMatrix.rotateSelf(0.0f, -1.0f, 0);
                     else if (event.motion.xrel > 0)
@@ -85,8 +90,9 @@ void Window::handle_input()
                         d_objects.at(0).rotationMatrix.rotateSelf(-1.0f, 0.0f, 0);
                     else if (event.motion.yrel > 0)
                         d_objects.at(0).rotationMatrix.rotateSelf(1.0f, 0.0f, 0.0f);
-
+                  }
                     break;
+                
                 }
 
                 default:
