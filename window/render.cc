@@ -22,8 +22,8 @@ void Window::render()
 
     // shader mode stuff:
     //if shadermode is something:
-    d_lightPositionVector = {0, 0, 0.5, 1};
-    glUniform4fv(d_lightPositionLocation, 1, d_lightPositionVector.data());
+    // d_lightPositionVector = {0, 0, 0.5, 1};
+     glUniform4fv(d_lightPositionLocation, 1, d_lightPositionVector.data());
     glUniform3fv(d_lightColorLocation,    1, d_lightColor.data());
     glUniform4fv(d_materialLocation,      1, d_material.data());
     

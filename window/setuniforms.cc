@@ -7,6 +7,7 @@ void Window::setUniforms(GLuint currentShaderProgram)
     d_lightPositionLocation          = glGetUniformLocation(currentShaderProgram, "lightPosition");
     d_lightColorLocation             = glGetUniformLocation(currentShaderProgram, "lightColor");
 
+
     
     d_textureLocation                = glGetUniformLocation(currentShaderProgram, "textureUniform");
 

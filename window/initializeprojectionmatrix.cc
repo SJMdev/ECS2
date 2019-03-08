@@ -2,5 +2,5 @@
 
 void Window::initializeProjectionMatrix()
 {
-    resizeGL(d_windowWidth, d_windowHeight);
+    resizeGL(d_width, d_height);
 }

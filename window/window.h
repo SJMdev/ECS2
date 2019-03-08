@@ -19,13 +19,10 @@ class Window
     SDL_Window  *d_window;
     SDL_Surface *d_surface;
     SDL_Surface *d_image;
-    int d_windowWidth;
-    int d_windowHeight;
-
-
-    std::vector<Object> d_objects;
-
-
+    int d_width;
+    int d_height;    
+    // SDL openGL stuff!
+    SDL_GLContext d_gContext;
 
     // openGL stuff
     GLuint d_gProgramID = 0;
@@ -33,31 +30,34 @@ class Window
     GLuint gVBO = 0;
     GLuint gVAO = 0;
     // bool gRenderQuad = true; // this is not used?
-    
+
+    //scene?
+    std::vector<Object> d_objects;
     std::vector<float> d_material; // Vec4f? 
-
-    // scene stuff.
-    // this is part of the scene. Maybe make a struct or something else.
-   
-
-    // LIGHT!
-    Light d_light; // d_lightful!
-    Mat4 d_lightTranslationMatrix;
-    Mat4 d_lightRotationMatrix;
-    Mat4 d_lightScaleMatrix;
-    Mat4 d_lightModelMatrix;
-    std::vector<float> d_lightTranslationVector; //Vec3f?
     std::vector<float> d_lightPositionVector; //Vec3f?
     std::vector<float> d_lightColor; // Vec3f
+    std::vector<float> d_lightTranslationVector; //Vec3f?
 
+    
+    // LIGHT!
+    // Light d_light; // d_lightful!
+    // Mat4 d_lightTranslationMatrix;
+    // Mat4 d_lightRotationMatrix;
+    // Mat4 d_Mat4 d_lightModelMatrix;
+    // std::vector<float> d_lightTranslationVector; //Vec3f?
+
+
+
+    // input handling.
     bool d_left_mouse_clicked = false; 
 
-
-
-
+    //-------------------------
+    //
+    //  CAMERA
+    //
+    //----------------------
     //MODEL
     Mat4 d_modelMatrix;
-
     
     // VIEW
     Mat4 d_viewMatrix;
@@ -67,18 +67,14 @@ class Window
 
     //PROJECTION
     Mat4 d_projectionTransformationMatrix;
+    Mat4 d_projectionMatrix; // this is being set in resizeGL. call everything verbosely.
     
-    
-    // BOOK
-	Mat4 d_viewPortMatrix;
+
+     //    // BOOK
+	// Mat4 d_viewPortMatrix;
 	
 
-
-    Mat4 d_projectionMatrix; // this is being set in resizeGL. call everything verbosely.
-
-
-
-    // uniforms.
+    // uniforms (refactor to map?).
     GLint d_modelMatrixLocation = 0;
     GLint d_viewMatrixLocation = 0;
     GLint d_projectionMatrixLocation = 0; 
@@ -92,12 +88,7 @@ class Window
 
     // GLuint d_objectLocation;       // If location is -1, this will make the program crash! (NICE)
 
-
-    // SDL openGL stuff!
-    SDL_GLContext d_gContext;
     
-
-
     public:
         Window();
         ~Window();
@@ -114,26 +105,26 @@ class Window
         bool initializeOpenGL(); // not sure.
 
 
+
 	
         void initializeScene(); // set up the lighting color, material thing, and the light rotation matrix?
 	
         void initializeViewMatrices();
     	void initializeProjectionMatrix();
+
+
+        // part of the scene too?
         void initializeObjects(std::vector<ObjectFilePaths> &filepaths);
         void initializeBuffers();
-
-
         void setUniforms(GLuint currentShaderProgram); // set the uniforms for the current shader. We thus need to know what the active shader is.
         void fillTexture(Texture &texture, std::string &filename);
-
-
 
         //this belongs in object related stuff. 
         void generateVertices(Object &object);
         void sendObjectToBuffer(Object &object);
         void sendTextureToBuffer(Object &object);
 
-        void calculateTransformation(); //absolutely meaningless.
+        // void calculateTransformation(); //absolutely meaningless.
         void calculateViewTransformation(); // ??
       
         void handle_input();
@@ -153,6 +144,8 @@ class Window
         // object helper functions
         void loadObject(std::string &filename,Object &object);
         bool loadOBJFromFile(std::string &filename, Object &object);
+
+
 
         //this belongs in utility, and not in window
         int decodePNG(std::vector<unsigned char>& out_image,
@@ -176,7 +169,7 @@ class Window
         // void calculateNormals(Model &model); //deprecated   
         // void addFragmentShaderFromSourceFile(std::string &filename);
         // void addVertexShaderFromSourceFile(std::string &filename);
-         void loadBMP(std::string filename);
+         // void loadBMP(std::string filename);
 
     private:
         SDL_Window *windowHandle();

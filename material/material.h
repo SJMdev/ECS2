@@ -9,12 +9,13 @@ class Material
 {
 
 	public:
-		Material();
-		Material(Vec3f &ambient, Vec3f &diffuse, Vec3f &specular);
+		Material() {};
+		Material(Vec3f &ambient, Vec3f &diffuse, Vec3f &specular, float shine_intensity);
 
 		Vec3f d_ambient;
 		Vec3f d_diffuse;
 		Vec3f d_specular;
+		float d_shine_intensity;
 
 
 

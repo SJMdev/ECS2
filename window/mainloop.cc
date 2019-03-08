@@ -10,6 +10,7 @@ void Window::mainLoop()
         SDL_Log("Unable to initialize OpenGL.");
     else
         SDL_Log("initialized openGL.");
+    
     initializeBuffers();
     
 

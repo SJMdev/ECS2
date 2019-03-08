@@ -1,0 +1,9 @@
+#include "loader.h"
+#include "../object/object.h"
+
+// loadobject
+#include <sstream>
+#include <fstream>
+
+
+using namespace std;

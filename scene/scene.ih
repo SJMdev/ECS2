@@ -1,0 +1,7 @@
+#include "scene.h"
+#include "../shared/objectfilepaths.h"
+#include "../shared/model.h"
+#include "../shared/texture.h"
+#include "../shared/object.h"
+
+using namespace std;

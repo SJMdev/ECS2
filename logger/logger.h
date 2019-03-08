@@ -9,6 +9,8 @@ class Logger
 
 //https://stackoverflow.com/questions/8337300/how-do-i-implement-convenient-logging-without-a-singleton
     
+    private:
+    	Logger() {}; // no constructor!
     
 };
 

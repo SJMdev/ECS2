@@ -2,30 +2,33 @@
 
 void Window::createWindow(string title, int xPosition, int yPosition, int width, int height, Uint32 flags)
 {
-    d_window = SDL_CreateWindow(title.c_str(),
-                                xPosition,
-                                yPosition,
-                                width,
-                                height,
-                                flags);
-    if (d_window == nullptr)
+    // #if SDL
     {
-        SDL_Log("Window::CreateWindow: window could not be created!");
-        exit(1);
+        xPosition =  SDL_WINDOWPOS_UNDEFINED;
+        yPosition =  SDL_WINDOWPOS_UNDEFINED,  
+        flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
+
+
+        d_window = SDL_CreateWindow(title.c_str(),
+                                    xPosition,
+                                    yPosition,
+                                    width,
+                                    height,
+                                    flags);
+        if (d_window == nullptr)
+        {
+            SDL_Log("Window::CreateWindow: window could not be created!");
+            exit(1);
+        }
+        d_surface = SDL_GetWindowSurface(d_window);
     }
-    d_surface = SDL_GetWindowSurface(d_window);
-    d_windowWidth = width;
-    d_windowHeight = height;
+
+    d_width = width;
+    d_height = height;
+	float fwidth  = static_cast<float>(d_width);
+	float fheight = static_cast<float>(d_height);
+
 	
-	float fwidth  = static_cast<float>(d_windowWidth);
-	float fheight = static_cast<float>(d_windowHeight);
-	
-//	d_viewPortMatrix = {fwidth / 2.0f, 0, 0, (fwidth -1.0f) / 2.0f,
-	                //0, fheight / 2.0f, 0 , (fheight -1.0f) / 2.0f,
-		                //0, 0, 1, 0,
-		                //0, 0, 0, 1};
-	
-    // initialize openGL
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );

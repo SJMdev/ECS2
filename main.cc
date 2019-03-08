@@ -5,6 +5,7 @@
 #include "window/window.h"
 #include <cstdint>
 #include <iostream>
+
 //not necessary but useful
 #include <vector>
 #include <string>
@@ -13,20 +14,40 @@
 
 using namespace std;
 
+
+
 int main(int argc, char* argv[]) //this is necessary for SDL
 {
-    Window d_window;
-    d_window.createWindow("Editor",
-                          SDL_WINDOWPOS_UNDEFINED,  //starting xpos
-                          SDL_WINDOWPOS_UNDEFINED,  //starting ypos
-                          1280,
-                          1024,
-                          SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
-                          ); 
+
+    //initialize the window.
+    {
+        Window d_window;
+        
+        int start_x_pos = 0;
+        int start_y_pos = 0;
+
+        int start_width = 1280;
+        int start_height = 1024;
+
+        Uint32 flags = 0;
+        d_window.createWindow(
+            "Editor",       
+            start_x_pos,  
+            start_y_pos,  
+            start_width,
+            start_height,
+            flags
+        ); 
+    }
+
+    // initialize the scene
+    {
+        Scene d_scene;
+    }
+
+
     
-     d_window.mainLoop();
-    
-  
-    
+
+    d_window.mainLoop();
     return 0; //necessary for SDL.
 }
