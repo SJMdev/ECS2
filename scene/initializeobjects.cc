@@ -37,6 +37,8 @@ void Scene::initializeObjects(vector<ObjectFilePaths>  &objectFilePaths)
         d_objects.push_back(object);    
     }
     
+    //does this require a manager?
+
     for (auto &object: d_objects)
     {
         sendObjectToBuffer(object);

@@ -42,11 +42,28 @@ int main(int argc, char* argv[]) //this is necessary for SDL
 
     // initialize the scene
     {
-        Scene d_scene;
+        Scene d_scene; //also invokes initializelights.
+
+        ObjectFilePaths cat1
+        {
+            "cat.obj", 
+            "cat_norm_rot_flipped.png"
+        };
+        
+        ObjectFilePaths cat2
+        {
+            "cat.obj", 
+            "cat_diff_rot_flipped.png"
+        };
+        
+        vector<ObjectFilePaths> d_objectFilePaths;
+        
+    //	d_objectFilePaths.push_back(cat1);
+        d_objectFilePaths.push_back(cat2);
+    
+        scene.initializeObjects(d_objectFilePaths);
     }
 
-
-    
 
     d_window.mainLoop();
     return 0; //necessary for SDL.

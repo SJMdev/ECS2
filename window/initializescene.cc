@@ -10,10 +10,14 @@
 
 void Window::initializeScene()
 {
+
+    
     d_material = std::vector<float>{ 0.4, 0.6, 0.8, 64 };
- 	d_light.translationMatrix.toIdentity();
-    d_light.rotationMatrix.toIdentity();
-    d_light.scaleMatrix.toIdentity();
+
+    // this now happens in the scene.
+ 	// d_light.translationMatrix.toIdentity();
+    // d_light.rotationMatrix.toIdentity();
+    // d_light.scaleMatrix.toIdentity();
 
 
     //d_modelMatrix.toIdentity();

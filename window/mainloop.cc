@@ -31,7 +31,7 @@ void Window::mainLoop()
 //	d_objectFilePaths.push_back(cat1);
     d_objectFilePaths.push_back(cat2);
     
-    initializeScene(); // currently, this sets light as well.
+    // initializeScene(); // currently, this sets light as well.
     setUniforms(d_gProgramID);
     
     initializeObjects(d_objectFilePaths); // sendObjectToBuffer,sendTextureToBuffer.

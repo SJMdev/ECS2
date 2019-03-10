@@ -1,6 +1,6 @@
 #ifndef INCLUDED_MATERIAL_
 #define INCLUDED_MATERIAL_
-
+#include "vector/vec3f.h"
 // data class.
 
 // https://learnopengl.com/Lighting/Materials

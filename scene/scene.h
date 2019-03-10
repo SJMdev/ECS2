@@ -4,7 +4,7 @@
 #include "../shared/objectfilepaths.h"
 #include "../shared/model.h"
 #include "../shared/texture.h"
-#include "../shared/object.h"
+#include "../object/object.h"
 #include <vector>
 
 // #include "../object/object.h"
