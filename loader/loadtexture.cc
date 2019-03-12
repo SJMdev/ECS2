@@ -1,7 +1,8 @@
 #include "loader.ih"
 
-void Loader::loadTexture(std::string &filename,Texture &texture);
+bool Loader::loadTexture(std::string &filename,Texture &texture)
 {
+    bool success;
     std::string prepended_path = "textures/" + filename;
     std::vector<unsigned char> buffer, image;
     
@@ -14,6 +15,11 @@ void Loader::loadTexture(std::string &filename,Texture &texture);
     texture.height = height;
     //if there's an error, display it
     if(error != 0)
-        SDL_Log("error! %d", error);
+    {
+        success = false;
+        // SDL_Log("error! %d", error);
+    }
     //the pixels are now in the vector "image", use it as texture
+
+    return success;
 }

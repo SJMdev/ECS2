@@ -3,5 +3,8 @@
 #include "../shared/model.h"
 #include "../shared/texture.h"
 #include "../shared/object.h"
+#include "../loader/loader.h"
+
+#include <sdl/include/SDL.h>
 
 using namespace std;

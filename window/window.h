@@ -11,7 +11,7 @@
 #include "../shared/texture.h"
 #include "../shared/object.h"
 #include "../matrix/mat4.h"
-#include "../camera/lightsource.h"
+#include "../light/light.h"
 
 class Window
 {
@@ -21,15 +21,18 @@ class Window
     SDL_Surface *d_image;
     int d_width;
     int d_height;    
+
+
+
+
     // SDL openGL stuff!
     SDL_GLContext d_gContext;
 
     // openGL stuff
-    GLuint d_gProgramID = 0;
+    // GLuint d_gProgramID = 0; is now public!
     GLint  gVertexPos2DLocation = -1;
     GLuint gVBO = 0;
     GLuint gVAO = 0;
-    // bool gRenderQuad = true; // this is not used?
 
     //scene?
     std::vector<Object> d_objects;
@@ -40,7 +43,7 @@ class Window
 
     
     // LIGHT!
-    // Light d_light; // d_lightful!
+    Light d_light; // d_lightful!
     // Mat4 d_lightTranslationMatrix;
     // Mat4 d_lightRotationMatrix;
     // Mat4 d_Mat4 d_lightModelMatrix;
@@ -68,11 +71,6 @@ class Window
     //PROJECTION
     Mat4 d_projectionTransformationMatrix;
     Mat4 d_projectionMatrix; // this is being set in resizeGL. call everything verbosely.
-    
-
-     //    // BOOK
-	// Mat4 d_viewPortMatrix;
-	
 
     // uniforms (refactor to map?).
     GLint d_modelMatrixLocation = 0;
@@ -99,28 +97,21 @@ class Window
 					      int height,
 					      Uint32 flags);
 
-
         void initializeSDL(); // parameters?
         void initializeGlew(); // does not require parameters.
         bool initializeOpenGL(); // not sure.
-
-
-
-	
         void initializeScene(); // set up the lighting color, material thing, and the light rotation matrix?
-	
         void initializeViewMatrices();
     	void initializeProjectionMatrix();
 
-
         // part of the scene too?
-        void initializeObjects(std::vector<ObjectFilePaths> &filepaths);
+        // void initializeObjects(std::vector<ObjectFilePaths> &filepaths);
         void initializeBuffers();
         void setUniforms(GLuint currentShaderProgram); // set the uniforms for the current shader. We thus need to know what the active shader is.
-        void fillTexture(Texture &texture, std::string &filename);
+        // void fillTexture(Texture &texture, std::string &filename);
 
         //this belongs in object related stuff. 
-        void generateVertices(Object &object);
+        // void generateVertices(Object &object);
         void sendObjectToBuffer(Object &object);
         void sendTextureToBuffer(Object &object);
 
@@ -130,6 +121,8 @@ class Window
         void handle_input();
         //void simulate(); 
         //openGL final steps.
+        void drawObject(Object &object);
+        void prepareToRender();
         void render();
         void swapWindow();
  
@@ -142,24 +135,26 @@ class Window
     	void resizeGL(int width, int height);
 	
         // object helper functions
-        void loadObject(std::string &filename,Object &object);
-        bool loadOBJFromFile(std::string &filename, Object &object);
+        //void loadObject(std::string &filename,Object &object);
+        //bool loadOBJFromFile(std::string &filename, Object &object);
 
 
 
         //this belongs in utility, and not in window
-        int decodePNG(std::vector<unsigned char>& out_image,
-                    unsigned long& image_width,
-                    unsigned long& image_height,
-                    const unsigned char* in_png,
-                    size_t in_size,
-                    bool convert_to_rgba32 = true);
-        void loadPNG(std::vector<unsigned char>& buffer, const std::string& filename); //designed for loading files from hard disk in an std::vector
+        // int decodePNG(std::vector<unsigned char>& out_image,
+        //             unsigned long& image_width,
+        //             unsigned long& image_height,
+        //             const unsigned char* in_png,
+        //             size_t in_size,
+        //             bool convert_to_rgba32 = true);
+        // void loadPNG(std::vector<unsigned char>& buffer, const std::string& filename); //designed for loading files from hard disk in an std::vector
 
     
     
-        void mainLoop();
-    
+        // void mainLoop();
+        
+        GLuint d_gProgramID = 0;
+
     
     
         //deprecated & to be removed

@@ -1,19 +1,40 @@
 #include "loader.ih"
 
-bool Loader::loadObject(string filename, Object &object)
+bool Loader::loadObject(string &filename, Object &object)
 {
     bool success = true;
+    
+
+    string prefixed_filename = "object/" + filename;
+
+    
+    SDL_Log("fsfsdf file %s. ", prefixed_filename.c_str());
     ifstream file;
+    // file.open(prefixed_filename);
+    // ifstream file(prefixed_filename);
 
-    string prefixed_filename = "../objects/" + filename;
+    // file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-    file.open(prefixed_filename);
-
-    if (file.bad())
+ //    std::stringstream sos;
+	// try {
+	//     file.open(prefixed_filename);
+	// } catch (std::system_error& e) {
+	//     sos << e.code().message() << std::endl;
+	//     string test = sos.str();
+	//     SDL_Log("caught %s", test.c_str());
+	// }
+	
+	file.open(prefixed_filename);
+    if (!file)
     {
         success = false;
-        SDL_Log("failed to load OBJ file %s. ", prefixed_filename.c_str());
+        SDL_Log("failed to open OBJ file %s. ", prefixed_filename.c_str());
     }
+    else
+    {
+    	SDL_Log("Managed to open OBJ file %s", prefixed_filename.c_str());
+    }
+
 
     string hex = "#";
     string vn = "vn";
@@ -23,9 +44,10 @@ bool Loader::loadObject(string filename, Object &object)
 
     //@cleanup : preallocate garbage string?
     std::string line;
-    while (getline(file,line))
+    while(getline(file,line))
     {
         string first_token = line.substr(0, line.find(' '));
+        // SDL_Log("first token: %s", first_token.c_str());
 
         // case HEX
         if (first_token == hex) {} // comments can be ignored.
@@ -149,7 +171,10 @@ bool Loader::loadObject(string filename, Object &object)
         }
     }
 
-    generateVertices(Object);
+    SDL_Log("we done here while");
+
+
+    generateVertices(object);
 
     return success;
 }

@@ -1,6 +1,6 @@
 #ifndef INCLUDED_MATH_
 #define INCLUDED_MATH_
-
+#include <cmath>
 #define IEEE_FLT_MANTISSA_BITS	23
 
 

@@ -1,6 +1,7 @@
 #ifndef INCLUDED_LIGHT_
 #define INCLUDED_LIGHT_
 #include "../vector/vec3f.h"
+#include "../matrix/mat4.h"
 
 //@Todo: this uses the old Vec3f.
 struct Light 

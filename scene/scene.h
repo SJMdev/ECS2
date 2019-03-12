@@ -1,6 +1,6 @@
 #ifndef INCLUDED_SCENE_
 #define INCLUDED_SCENE_
-#include "../camera/light.h"
+#include "../light/light.h"
 #include "../shared/objectfilepaths.h"
 #include "../shared/model.h"
 #include "../shared/texture.h"
@@ -12,13 +12,15 @@
 class Scene
 {
 	Light d_light;
-	std::vector<Object> d_objects;
+	// std::vector<Object> d_objects;
 
 	public:
 		Scene();
-		initializeLight(Light &light);
+		void initializeLight(Light &light);
 		void initializeObjects(std::vector<ObjectFilePaths>  &objectFilePaths);
 
+
+	std::vector<Object> d_objects;
 
 
 

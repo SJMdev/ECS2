@@ -1,6 +1,6 @@
 #include "scene.ih"
 
-void Window::initializeLight(Light &light)
+void Scene::initializeLight(Light &light)
 {	
 	light.translationMatrix.toIdentity();
     light.rotationMatrix.toIdentity();

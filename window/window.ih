@@ -21,6 +21,9 @@
 #include "../shared/objectfilepaths.h"
 #include "../vector/vec3f.h"
 
+// sendobjecttobuffer.
+#include "../object/object.h"
+
 //#include "../shared/model.h"
 
 

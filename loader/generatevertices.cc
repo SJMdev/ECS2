@@ -1,7 +1,8 @@
 #include "loader.ih"
 
-void Loader::generateVertices(Object &object)
-
+bool Loader::generateVertices(Object &object)
+{
+	bool success = true;
 	//Generate all face vertices & push them back. WE do this after parsing.
     for (size_t idx =0; idx != object.rawData.vertex_indices.size(); ++idx)
     {
@@ -18,5 +19,6 @@ void Loader::generateVertices(Object &object)
         object.interleaved_vertices.push_back(temp);
     }
 
-    SDL_Log("object.interleaved_vertices.size(): %d", object.interleaved_vertices.size());
+    // SDL_Log("object.interleaved_vertices.size(): %d", object.interleaved_vertices.size());
+    return success;
 }

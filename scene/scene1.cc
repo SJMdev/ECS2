@@ -3,8 +3,9 @@
 Scene::Scene()
 //:
 {
-	initializeLight(&d_light);	
-    d_lightColor = std::vector<float> { 1.0, 1.0, 1.0};
+	initializeLight(d_light);	
+    d_light.color = { 1.0, 1.0, 1.0};
+    // d_material = std::vector<float> {}
 
 
 }
