@@ -27,4 +27,9 @@
 //#include "../shared/model.h"
 
 
+//for transfering input
+#include "../scene/scene.h"
+
+
+
 using namespace std;

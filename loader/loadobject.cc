@@ -1,58 +1,53 @@
 #include "loader.ih"
 
 /*
-    loads .OBJ files.
+    loads .OBJ files. see beyond for try_catch snippet.
 */
+
 
 bool Loader::loadObject(string &filename, Object &object)
 {
-
-
     bool success = true;
+
     string prefixed_filename = "object/" + filename;
     ifstream file;
-    // file.open(prefixed_filename);
-    // ifstream file(prefixed_filename);
-
-    // file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-
- //    std::stringstream sos;
-	// try {
-	//     file.open(prefixed_filename);
-	// } catch (std::system_error& e) {
-	//     sos << e.code().message() << std::endl;
-	//     string test = sos.str();
-	//     SDL_Log("caught %s", test.c_str());
-	// }
-	
 	file.open(prefixed_filename);
+
     if (!file)
     {
         success = false;
         SDL_Log("failed to open OBJ file %s. ", prefixed_filename.c_str());
     }
     else
-    {
     	SDL_Log("Managed to open OBJ file %s", prefixed_filename.c_str());
-    }
 
-
+    // pre-match
     string hex = "#";
     string vn = "vn";
     string vt = "vt";
     string f = "f";
     string v = "v";
+    string usemtl = "usemtl";
+    string g = "g"; // group
+    string o = "o"; // object
 
     //@cleanup : preallocate garbage string?
-    std::string line;
+   string line;
     while(getline(file,line))
     {
         string first_token = line.substr(0, line.find(' '));
-        // SDL_Log("first token: %s", first_token.c_str());
+
+        if (first_token == usemtl)
+        {
+            string mtl_file;
+            string garbage;
+            stringstream(line) >> garbage >> mtl_file;
+
+            loadMTL("object/" + mtl_file);
+        }
 
         // case HEX
         if (first_token == hex) {continue;} // comments can be ignored.
-
 
         // vertex normals.
         if (first_token == vn)
@@ -180,8 +175,25 @@ bool Loader::loadObject(string &filename, Object &object)
             continue;
         }
     }
+    file.close();
     SDL_Log("we done here while");
     generateVertices(object);
 
     return success;
 }
+
+
+    // file.open(prefixed_filename);
+    // ifstream file(prefixed_filename);
+
+    // file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
+    //    std::stringstream sos;
+    // try {
+    //     file.open(prefixed_filename);
+    // } catch (std::system_error& e) {
+    //     sos << e.code().message() << std::endl;
+    //     string test = sos.str();
+    //     SDL_Log("caught %s", test.c_str());
+    // }
+    

@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) //this is necessary for SDL
     int gameover = 0;
     while (!gameover)
     {
-        d_window.handle_input();
+        d_window.handleInput(d_scene);
         
         // simulate(dt);
         //d_window.render();

@@ -3,13 +3,15 @@
 #include <string>
 #include "../object/object.h"
 
+#include <unordered_map>
+
 struct Material {};
 
 class Loader
 {
 
 	public:
-		static bool loadMTL(std::string &filename, Material &Material);
+		static unordered_map<std::string modelName, Material> loadMTL(std::string &filename);
 		static bool loadObject(std::string &filename, Object &object);
 		static bool loadTexture(std::string &filename, Texture &texture);
 		static bool loadPNG(std::vector<unsigned char>& buffer, const std::string& filename); //designed for loading files from hard disk in an std::vector

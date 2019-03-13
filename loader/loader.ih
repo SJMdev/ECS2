@@ -9,5 +9,7 @@
 
 #include <algorithm> //replace
 
+#include <unordered_map>
+#include "../color/color.h"
 
 using namespace std;

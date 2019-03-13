@@ -4,6 +4,7 @@
 class Logger
 {
 
+	static void Log();
 	public:	
 		//Logger();
 

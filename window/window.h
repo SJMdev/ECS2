@@ -13,6 +13,10 @@
 #include "../matrix/mat4.h"
 #include "../light/light.h"
 
+#include "../scene/scene.h"
+
+#include <unordered_map>
+
 class Window
 {
     // Window properties.
@@ -21,10 +25,6 @@ class Window
     SDL_Surface *d_image;
     int d_width;
     int d_height;    
-
-
-
-
     // SDL openGL stuff!
     SDL_GLContext d_gContext;
 
@@ -40,25 +40,14 @@ class Window
     std::vector<float> d_lightPositionVector; //Vec3f?
     std::vector<float> d_lightColor; // Vec3f
     std::vector<float> d_lightTranslationVector; //Vec3f?
-
-    
+ 
     // LIGHT!
     Light d_light; // d_lightful!
-    // Mat4 d_lightTranslationMatrix;
-    // Mat4 d_lightRotationMatrix;
-    // Mat4 d_Mat4 d_lightModelMatrix;
-    // std::vector<float> d_lightTranslationVector; //Vec3f?
-
-
 
     // input handling.
     bool d_left_mouse_clicked = false; 
 
-    //-------------------------
-    //
-    //  CAMERA
-    //
-    //----------------------
+
     //MODEL
     Mat4 d_modelMatrix;
     
@@ -73,19 +62,19 @@ class Window
     Mat4 d_projectionMatrix; // this is being set in resizeGL. call everything verbosely.
 
     // uniforms (refactor to map?).
+
+
     GLint d_modelMatrixLocation = 0;
     GLint d_viewMatrixLocation = 0;
     GLint d_projectionMatrixLocation = 0; 
     GLint d_normalTransformMatrixLocation = 0;
-    // ???
     GLint d_lightPositionLocation = 0;
     GLint d_lightColorLocation = 0;
     GLint d_materialLocation = 0;
     GLint d_textureLocation = 0;
 
-
+    std::unordered_map<std::string, GLuint> d_uniforms;
     // GLuint d_objectLocation;       // If location is -1, this will make the program crash! (NICE)
-
     
     public:
         Window();
@@ -103,29 +92,18 @@ class Window
         void initializeScene(); // set up the lighting color, material thing, and the light rotation matrix?
         void initializeViewMatrices();
     	void initializeProjectionMatrix();
-
-        // part of the scene too?
-        // void initializeObjects(std::vector<ObjectFilePaths> &filepaths);
         void initializeBuffers();
+        
         void setUniforms(GLuint currentShaderProgram); // set the uniforms for the current shader. We thus need to know what the active shader is.
-        // void fillTexture(Texture &texture, std::string &filename);
-
-        //this belongs in object related stuff. 
-        // void generateVertices(Object &object);
         void sendObjectToBuffer(Object &object);
         void sendTextureToBuffer(Object &object);
-
-        // void calculateTransformation(); //absolutely meaningless.
         void calculateViewTransformation(); // ??
-      
-        void handle_input();
-        //void simulate(); 
+        void handleInput(Scene &scene); // we handle
         //openGL final steps.
         void drawObject(Object &object);
         void prepareToRender();
         void render();
         void swapWindow();
- 
 
         //openGL helper functions
     	//@Todo: what shader program do we attach these to?
@@ -134,38 +112,7 @@ class Window
     	void printProgramLog(GLuint program);// helper functions
     	void resizeGL(int width, int height);
 	
-        // object helper functions
-        //void loadObject(std::string &filename,Object &object);
-        //bool loadOBJFromFile(std::string &filename, Object &object);
-
-
-
-        //this belongs in utility, and not in window
-        // int decodePNG(std::vector<unsigned char>& out_image,
-        //             unsigned long& image_width,
-        //             unsigned long& image_height,
-        //             const unsigned char* in_png,
-        //             size_t in_size,
-        //             bool convert_to_rgba32 = true);
-        // void loadPNG(std::vector<unsigned char>& buffer, const std::string& filename); //designed for loading files from hard disk in an std::vector
-
-    
-    
-        // void mainLoop();
-        
         GLuint d_gProgramID = 0;
-
-    
-    
-        //deprecated & to be removed
-        // void drawTriangle();
-
-        // void drawModel(Model &model);
-        // void calculateNormals(Model &model); //deprecated   
-        // void addFragmentShaderFromSourceFile(std::string &filename);
-        // void addVertexShaderFromSourceFile(std::string &filename);
-         // void loadBMP(std::string filename);
-
     private:
         SDL_Window *windowHandle();
     

@@ -14,24 +14,27 @@ cl /MP4 *.cc window/*.cc  /EHsc /std:c++17 /I libraries /link libraries/sdl/lib/
 cl /MP4 *.cc window/*.cc  scene/*.cc loader/*.cc /EHsc /std:c++17 /I libraries /link libraries/sdl/lib/win64/SDL2.lib libraries/sdl/lib/win64/SDL2main.lib libraries/glew/lib/win64/glew32.lib libraries/glew/lib/win64/glew32s.lib openGL32.lib /SUBSYSTEM:WINDOWS
 
 
-
-
-# THINGS TO THINK ABOUT:
+# THINGS TO DEFINITELY THINK ABOUT:
 Matrix multiplication order is reversed in the c++ code because of my column-major implementation. That sucks.
 This affects all the calculations.
 
 
 # The gist of it.
-The system currently uses SDL for constructing a window. I may / may not want to switch to GLFW , which at least does not hijack my logprinting. The Vec3f, Vec4f, Mat3 and Mat4 implementations strongly resemble those of Doom 3. I am unsure whether or not they are meritous, as the way they allow access to their public data members through memory addresses is (very) 
-error-prone.
+The system currently uses SDL for constructing a window. I may / may not want to switch to GLFW , which at least does not hijack my logprinting. The Vec3f, Vec4f, Mat3 and Mat4 implementations strongly resemble those of Doom 3. I am unsure whether or not they are meritous, as the way they allow access to their public data members through memory addresses is (very) error-prone.
 
 
 # TODO (in order of importance!):
 
-Hold control to move in current plane (in negative z, this is easy. 
-how does this work in arbitrary orientation?)
+load an MTL file. Should return a map of Material by name.
 
 create a material data class -> see openGL stuff. 
+
+wrap all SDL_Log by own print function -> create a logger! Logger.log() -> global object(?). This is a more complicated task. see the stackoverflow post.
+
+read about the uniforms : https://gamedev.stackexchange.com/questions/133615/how-do-you-store-uniform-data
+
+Hold control to move in current plane (in negative z, this is easy. 
+how does this work in arbitrary orientation?)
 
 refactor window with a Scene class -> refactor use light object.
 
@@ -39,20 +42,10 @@ Does the scene contain objects? or does the scene exists next to objects? heavy 
 
 see if we can fix the matrix multiplication. check the GLM matmul stuff.
 
-
 try to figure out quaternion rotation!
 
-wrap all SDL_Log by own print function -> create a logger! Logger.log() -> global object(?). This is a more complicated task. see the stackoverflow post.
+Think about how to use color (r,g,b, in floats. but do we just use Vec3f, and create accessors for r,g,b?)
 
-Keep the initialization of initSDL, initGLEW, and initOpenGL. but we need some sort of alternative for the rest. The window class is getting cluttered.
-
-Some is World Modeling stuff, some of it is not. Split!
-
-write / finish  Vec3f.
-
-Pull apart window into more managable classes. Maybe a LOADER class in the first place.
-
-Pull apart window even more: Light needs a struct. Clearer matrix stuff.
 
 Maybe a drawable(blergh) class.
 
@@ -68,6 +61,16 @@ unify buffers.
 
 
 # DONE:
+
+Some is World Modeling stuff, some of it is not. Split!
+
+Pull apart window into more managable classes. Maybe a LOADER class in the first place.
+
+Pull apart window even more: Light needs a struct. Clearer matrix stuff.
+
+write / finish  Vec3f. 
+
+Keep the initialization of initSDL, initGLEW, and initOpenGL. but we need some sort of alternative for the rest. The window class is getting cluttered.
 
 hold left mouse button to rotate.
 
@@ -85,7 +88,6 @@ implement mat4.translate, mat4.rotate and mat4.scale (disallow shear)
 
 split sendObjectTobuffer into initializeBuffer & initializeTexture.
 
-empty main.cc and create a mainLoop in window.
 
 I fixed the projection matrix. The problem with openGL being column major still exists though. hmm. Maybe I want to rewrite the class.
 
@@ -95,6 +97,10 @@ I found some problems w.r.t openGL being  column-major. it explains a lot that I
 I am as of now unsure whether or not the perspective projection works.
 
 Maybe we need to switch to column major. I am not sure yet.
+
+# Bad decisions
+
+empty main.cc and create a mainLoop in window.
 
 
 

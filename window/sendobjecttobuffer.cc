@@ -3,7 +3,6 @@
 
 void Window::sendObjectToBuffer(Object &object)
 {
-    
     // actually send the data to the buffer. We pass a reference to the raw data in interleaved vertices.
     glBufferData(GL_ARRAY_BUFFER, static_cast<int>(object.interleaved_vertices.size() * sizeof(Vertex)), object.interleaved_vertices.data(), GL_STATIC_DRAW);
      
