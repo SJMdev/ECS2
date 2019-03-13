@@ -1,14 +1,15 @@
 #include "loader.ih"
 
+/*
+    loads .OBJ files.
+*/
+
 bool Loader::loadObject(string &filename, Object &object)
 {
+
+
     bool success = true;
-    
-
     string prefixed_filename = "object/" + filename;
-
-    
-    SDL_Log("fsfsdf file %s. ", prefixed_filename.c_str());
     ifstream file;
     // file.open(prefixed_filename);
     // ifstream file(prefixed_filename);
@@ -50,7 +51,7 @@ bool Loader::loadObject(string &filename, Object &object)
         // SDL_Log("first token: %s", first_token.c_str());
 
         // case HEX
-        if (first_token == hex) {} // comments can be ignored.
+        if (first_token == hex) {continue;} // comments can be ignored.
 
 
         // vertex normals.
@@ -80,7 +81,9 @@ bool Loader::loadObject(string &filename, Object &object)
         if (first_token == f)
         {
             int firstVertex, secondVertex, thirdVertex = 0;
-            
+
+            size_t slashCount = std::count(line.begin(), line.end(), '/');
+            SDL_Log("slashCount: %d", slashCount);
             size_t foundSingleSlash = line.find("/");
             size_t foundDoubleSlash = line.find("//");
             string garbage; // we need to skip the character, otherwise parsing doesn't work properly.
@@ -93,6 +96,8 @@ bool Loader::loadObject(string &filename, Object &object)
                 stringstream(line) >> garbage >> firstVertex >> firstNormal
                                    >> secondVertex >> secondNormal
                                    >> thirdVertex >> thirdNormal;
+
+                //subtract one because of indices
                 firstVertex -=1;
                 firstNormal -=1;
                 secondVertex -=1;
@@ -110,7 +115,7 @@ bool Loader::loadObject(string &filename, Object &object)
                 object.rawData.normal_indices.push_back(secondNormal);
                 object.rawData.normal_indices.push_back(thirdNormal);
             }
-            else if (foundSingleSlash != string::npos)
+            else if (slashCount == 6)
             {
 
                 int firstNormal, secondNormal, thirdNormal;
@@ -122,6 +127,8 @@ bool Loader::loadObject(string &filename, Object &object)
                 stringstream(line) >> garbage >> firstVertex >> firstuv  >> firstNormal
                                 >> secondVertex >> seconduv >> secondNormal 
                                 >> thirdVertex >> thirduv >> thirdNormal;
+                
+                //subtract one because of indices
                 firstVertex -=1;
                 firstNormal -=1;
                 firstuv -=1;
@@ -135,9 +142,6 @@ bool Loader::loadObject(string &filename, Object &object)
                 object.rawData.vertex_indices.push_back(firstVertex);
                 object.rawData.vertex_indices.push_back(secondVertex);
                 object.rawData.vertex_indices.push_back(thirdVertex);  
-                //how does this look?
-                // SDL_Log("found vector %s, %d, %d, %d", garbage.c_str(), firstVertex, secondVertex, thirdVertex);
-                // SDL_Log("found normals %d, %d, %d", firstNormal, secondNormal, thirdNormal);
                 object.rawData.uv_indices.push_back(firstuv);
                 object.rawData.uv_indices.push_back(seconduv);
                 object.rawData.uv_indices.push_back(thirduv);
@@ -146,9 +150,15 @@ bool Loader::loadObject(string &filename, Object &object)
                 object.rawData.normal_indices.push_back(secondNormal);
                 object.rawData.normal_indices.push_back(thirdNormal);
             }
-            else
+            else if (slashCount == 3)
             {
+                SDL_Log("single slash slinging slasher");
+            }
+            else if (slashCount == 0)
+            {
+                // only vertices
                 stringstream(line) >> garbage >> firstVertex >> secondVertex >> thirdVertex;
+                //subtract one because of indices
                 firstVertex -=1;
                 secondVertex -=1;
                 thirdVertex -=1;
@@ -170,10 +180,7 @@ bool Loader::loadObject(string &filename, Object &object)
             continue;
         }
     }
-
     SDL_Log("we done here while");
-
-
     generateVertices(object);
 
     return success;

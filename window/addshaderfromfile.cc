@@ -26,13 +26,11 @@ void Window::addShaderFromFile(string &filename, GLenum shaderType, GLuint &shad
 
     if (vShaderCompiled != GL_TRUE)
     {
-        SDL_Log("Window::addVertexShaderFromSourceFile: unable to compile vertex shader %d\n", shader);
+        SDL_Log("Window::addShaderFromFile: unable to compile vertex shader %d\n", shader);
         printShaderLog(shader);
     }
     else
         SDL_Log("Succesfully added shader to program.");
-    // do we do this here or somewhere else?
-    // glAttachShader( d_gProgramID, shader);   
 
 
 }

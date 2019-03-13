@@ -3,15 +3,17 @@
 #include <string>
 #include "../object/object.h"
 
+struct Material {};
+
 class Loader
 {
 
 	public:
+		static bool loadMTL(std::string &filename, Material &Material);
 		static bool loadObject(std::string &filename, Object &object);
 		static bool loadTexture(std::string &filename, Texture &texture);
-
 		static bool loadPNG(std::vector<unsigned char>& buffer, const std::string& filename); //designed for loading files from hard disk in an std::vector
-		// Loader::loadTexture(std::string &filename,Texture &texture) 
+ 
 
 	private:
 		Loader() {}; // should not be able to contruct a loader.

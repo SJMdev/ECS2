@@ -13,6 +13,7 @@ void Window::initializeScene()
 
     
     d_material = std::vector<float>{ 0.4, 0.6, 0.8, 64 };
+    d_material = std::vector<float>{ 0.9, 0.0, 0.2, 59};
 
     // this now happens in the scene.
  	// d_light.translationMatrix.toIdentity();
