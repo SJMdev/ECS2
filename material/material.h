@@ -11,7 +11,7 @@ class Material
 
 	public:
 		Material() {};
-		Material(Vec3f &ambient, Vec3f &diffuse, Vec3f &specular, float shine_intensity);
+		// Material(Vec3f &ambient, Vec3f &diffuse, Vec3f &specular, float shine_intensity);
 
 		// Vec3f d_ambient;
 		// Vec3f d_diffuse;
@@ -20,6 +20,8 @@ class Material
 		Color d_ambient_color;
 		Color d_diffuse_color;
 		Color d_specular_color;
+		Color d_transmission_filter;
+		float d_specular_exponent;
 
 		float shine_intensity;
 
