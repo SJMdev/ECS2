@@ -50,7 +50,8 @@ unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &file
 
         if (first_token == newmtl)
         {
-            
+            std::string garbage;
+            strinstream(line) >> garbage >> 
         }
 
     	if (first_token == Ns)
