@@ -1,7 +1,10 @@
 #include "loader.ih"
 
-
-// return a map 
+/*
+    reads a Wavefront .mtl file, according to original description.
+    File should should be contained within object.
+    Returns: unordered map containing modelname & Material.
+*/
 
 unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &filename)
 {
@@ -20,6 +23,7 @@ unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &file
 
      // pre-match
     //TODO: make this a map.
+    string newmtl = "newmtl";
     string Ns = "Ns";
     string Ni = "Ni";
     string d = "d";
@@ -36,16 +40,21 @@ unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &file
     string line;
 
     // need a new mtl!
-    Material material = {};
+    Material material();
     while (getline(file,line))
     {
     	string first_token = line.substr(0, line.find(' '));
     	// first check whether a new mtl is being created.
     		// create a new material. 
     		// after we are done processing, add it.
+
+        if (first_token == newmtl)
+        {
+            
+        }
+
     	if (first_token == Ns)
     	{
-
     		std::string garbage;
     		float ns_value;
     		stringstream(line) >> garbage >> ns_value;
@@ -72,8 +81,7 @@ unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &file
     	{
             // ka spectral?
     		std::string garbage;
-			Color ambient_color;
-    		stringstream(line) >> garbage >> ambient_color.r >> ambient_color.g >> ambient_color.b;
+    		stringstream(line) >> garbage >> material.d_ambient_color.r >> material.d_ambient_color.g >> material.d_ambient_color.b;
     		ambient_color.a = 1.0f;
     		continue;
     	}

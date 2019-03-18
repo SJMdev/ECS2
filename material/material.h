@@ -11,12 +11,12 @@ class Material
 
 	public:
 		Material() {};
-		// Material(Vec3f &ambient, Vec3f &diffuse, Vec3f &specular, float shine_intensity);
-
 		// Vec3f d_ambient;
 		// Vec3f d_diffuse;
 		// Vec3f d_specular;
 
+
+		std::string name;
 		Color d_ambient_color;
 		Color d_diffuse_color;
 		Color d_specular_color;
