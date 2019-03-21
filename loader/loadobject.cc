@@ -32,7 +32,8 @@ bool Loader::loadObject(string &filename, Object &object)
     string o = "o"; // object
 
     //@cleanup : preallocate garbage string?
-   string line;
+    string group;
+    string line;
     while(getline(file,line))
     {
         string first_token = line.substr(0, line.find(' '));
@@ -46,10 +47,10 @@ bool Loader::loadObject(string &filename, Object &object)
             loadMTL("object/" + mtl_file);
         }
 
-        // case HEX
+        // case #:
         if (first_token == hex) {continue;} // comments can be ignored.
 
-        // vertex normals.
+        // case vn:
         if (first_token == vn)
         {
             // SDL_Log("found vn!");
@@ -61,7 +62,7 @@ bool Loader::loadObject(string &filename, Object &object)
             continue;
         }
 
-        // uv texture maps
+        //  case vt: uv texture maps
         if (first_token == vt)
         {
             // SDL_Log("found vt!");
@@ -72,7 +73,7 @@ bool Loader::loadObject(string &filename, Object &object)
             continue;
         }
 
-        //@Todo: fix reading in without normals with UV textures
+        // case f: index description
         if (first_token == f)
         {
             int firstVertex, secondVertex, thirdVertex = 0;
@@ -174,9 +175,16 @@ bool Loader::loadObject(string &filename, Object &object)
             object.rawData.vertices.push_back(vertex);
             continue;
         }
+
+
+        if (first_token == g)
+        {
+            std::string garbage;
+            stringstream(line) >> garbage  >> group_name;
+            SDL_Log("new group: %s", group_name);
+        }
     }
     file.close();
-    SDL_Log("we done here while");
     generateVertices(object);
 
     return success;

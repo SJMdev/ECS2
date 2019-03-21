@@ -1,3 +1,5 @@
+// #v1
+
 #ifndef INCLUDED_MATERIAL_
 #define INCLUDED_MATERIAL_
 #include "../vector/vec3f.h"
@@ -6,26 +8,18 @@
 
 // https://learnopengl.com/Lighting/Materials
 
-class Material
+struct Material
 {
-
-	public:
-		Material() {};
-		// Vec3f d_ambient;
-		// Vec3f d_diffuse;
-		// Vec3f d_specular;
-
-
-		std::string name;
+		// key?
+		std::string d_name;
+		
 		Color d_ambient_color;
 		Color d_diffuse_color;
 		Color d_specular_color;
 		Color d_transmission_filter;
 		float d_specular_exponent;
-
 		float shine_intensity;
+		float d_opacity;
+};
 
-
-
-
-}
+#endif

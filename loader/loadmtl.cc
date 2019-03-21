@@ -6,7 +6,7 @@
     Returns: unordered map containing modelname & Material.
 */
 
-unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &filename)
+map<std::string, Material> Loader::loadMTL(std::string &filename)
 {
 	bool success = true;
     string prefixed_filename = "object/" + filename;
@@ -40,7 +40,7 @@ unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &file
     string line;
 
     // need a new mtl!
-    Material material();
+    Material material = {};
     while (getline(file,line))
     {
     	string first_token = line.substr(0, line.find(' '));
@@ -51,7 +51,7 @@ unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &file
         if (first_token == newmtl)
         {
             std::string garbage;
-            strinstream(line) >> garbage >> 
+            stringstream(line) >> garbage >> material.d_name;
         }
 
     	if (first_token == Ns)
@@ -68,7 +68,7 @@ unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &file
             string garbage;
             float transparency;
             stringstream(line) >> garbage >> transparency;
-            material.opacity = 1 - transparency;
+            material.d_opacity = 1 - transparency;
         }
 
 
@@ -83,7 +83,7 @@ unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &file
             // ka spectral?
     		std::string garbage;
     		stringstream(line) >> garbage >> material.d_ambient_color.r >> material.d_ambient_color.g >> material.d_ambient_color.b;
-    		ambient_color.a = 1.0f;
+    		material.d_ambient_color.a = 1.0f;
     		continue;
     	}
 
@@ -109,13 +109,11 @@ unordered_map<std::string modelName, Material> Loader::loadMTL(std::string &file
             string garbage;
             stringstream(line) >> garbage >> material.d_specular_exponent;
         }
-        
-
-
+    
 
 
     }
 
-
-	return success;
+    map<string, Material> empty;
+	return empty;
 }
